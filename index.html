@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alexanne's Cookbook</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ð½ï¸</text></svg>">
   <style>
     :root {
       --salmon: #E8836D;
@@ -47,7 +47,7 @@
       .header .recipe-count { margin-top: 6px; padding: 4px 14px; font-size: 0.8rem; }
     }
 
-    /* CONTROLS — sticky, compact */
+    /* CONTROLS â sticky, compact */
     .controls {
       max-width: 1200px; margin: 0 auto; padding: 10px 20px;
       position: sticky; top: 0; background: rgba(26,26,26,0.97);
@@ -55,7 +55,7 @@
       border-bottom: 1px solid #333;
     }
     .controls-row { display: flex; align-items: center; gap: 10px; }
-    /* FILTERS BAR — not sticky, scrolls with content */
+    /* FILTERS BAR â not sticky, scrolls with content */
     .filters-bar {
       max-width: 1200px; margin: 0 auto; padding: 10px 20px 8px;
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
@@ -86,7 +86,7 @@
     .filter-btn.active { background: var(--salmon); color: white; border-color: var(--salmon); }
     .filter-btn .count { opacity: 0.7; font-size: 0.8rem; }
 
-    /* DARK MODE — par défaut */
+    /* DARK MODE â par dÃ©faut */
     :root {
       --dark: #F0F0F0;
       --gray: #AAA;
@@ -744,38 +744,38 @@
 
   <div class="header">
     <h1>Alexanne's Cookbook</h1>
-    <p>Recettes favorites organisées avec amour</p>
+    <p>Recettes favorites organisÃ©es avec amour</p>
     <span class="recipe-count" id="recipeCount">Chargement...</span>
   </div>
 
   <div class="controls" id="mainControls">
     <div class="controls-row">
-      <input type="text" class="search-bar" id="searchBar" placeholder="Rechercher une recette ou un ingrédient..." oninput="filterRecipes()">
-      <button class="random-btn" onclick="openRandomRecipe()" title="Recette aléatoire">🎲</button>
+      <input type="text" class="search-bar" id="searchBar" placeholder="Rechercher une recette ou un ingrÃ©dient..." oninput="filterRecipes()">
+      <button class="random-btn" onclick="openRandomRecipe()" title="Recette alÃ©atoire">ð²</button>
       <button class="add-btn" onclick="openAddModal()">+ Ajouter</button>
     </div>
   </div>
 
   <div class="filters-bar" id="filtersBar">
     <select class="sort-select" id="sortSelect" onchange="sortAndRender()">
-      <option value="temps-asc">⏱ Plus rapide d'abord</option>
-      <option value="temps-desc">⏱ Plus long d'abord</option>
-      <option value="recent">✨ Ajout récent</option>
+      <option value="temps-asc">â± Plus rapide d'abord</option>
+      <option value="temps-desc">â± Plus long d'abord</option>
+      <option value="recent">â¨ Ajout rÃ©cent</option>
     </select>
     <div class="filters" id="filterBar"></div>
   </div>
 
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
-  <button class="mobile-index-btn" onclick="openMobileSidebar()">☰ Index des recettes</button>
+  <button class="mobile-index-btn" onclick="openMobileSidebar()">â° Index des recettes</button>
 
-  <button class="sidebar-open-btn" id="sidebarOpenBtn" onclick="toggleSidebar()">≡ INDEX</button>
+  <button class="sidebar-open-btn" id="sidebarOpenBtn" onclick="toggleSidebar()">â¡ INDEX</button>
 
   <div class="app-layout">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-toggle">
         <span class="sidebar-title">Index</span>
-        <button class="sidebar-collapse-btn" onclick="toggleSidebar()" title="Fermer">✕</button>
+        <button class="sidebar-collapse-btn" onclick="toggleSidebar()" title="Fermer">â</button>
       </div>
       <input type="text" class="sidebar-search" id="sidebarSearch" placeholder="Filtrer..." oninput="renderSidebar()">
       <div id="sidebarContent"></div>
@@ -808,18 +808,18 @@
         </div>
 
         <div class="api-key-section">
-          <label>🔑 Clé API Anthropic</label>
+          <label>ð ClÃ© API Anthropic</label>
           <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off">
-          <p class="hint">Ta clé est utilisée uniquement dans ton navigateur et n'est jamais envoyée ailleurs. Elle est sauvegardée localement.</p>
+          <p class="hint">Ta clÃ© est utilisÃ©e uniquement dans ton navigateur et n'est jamais envoyÃ©e ailleurs. Elle est sauvegardÃ©e localement.</p>
         </div>
 
         <p style="color: var(--gray); margin-bottom: 16px;">
-          Upload tes captures d'écran de la recette (ingrédients, méthode) et/ou la photo du plat.
+          Upload tes captures d'Ã©cran de la recette (ingrÃ©dients, mÃ©thode) et/ou la photo du plat.
         </p>
         <div class="upload-zone" id="uploadZone">
-          <div class="upload-icon">📸</div>
-          <p>Glisse tes images ici ou clique pour sélectionner</p>
-          <p style="font-size: 0.8rem; color: #aaa; margin-top: 6px;">1 à 5 images (recette + photo du plat)</p>
+          <div class="upload-icon">ð¸</div>
+          <p>Glisse tes images ici ou clique pour sÃ©lectionner</p>
+          <p style="font-size: 0.8rem; color: #aaa; margin-top: 6px;">1 Ã  5 images (recette + photo du plat)</p>
           <input type="file" id="fileInput" multiple accept="image/*">
         </div>
         <div class="upload-previews" id="uploadPreviews"></div>
@@ -842,29 +842,29 @@
         <div class="processing">
           <div class="spinner"></div>
           <p style="color: var(--gray);">L'IA lit tes images et extrait la recette...</p>
-          <p style="color: #aaa; font-size: 0.85rem; margin-top: 8px;">Ça prend environ 10-15 secondes</p>
+          <p style="color: #aaa; font-size: 0.85rem; margin-top: 8px;">Ãa prend environ 10-15 secondes</p>
         </div>
       </div>
 
       <!-- Step 3: Preview & confirm -->
       <div id="addStep3" style="display:none">
-        <h2>Vérifier et confirmer</h2>
+        <h2>VÃ©rifier et confirmer</h2>
         <div class="step-indicator">
           <div class="step-dot active"></div>
           <div class="step-dot active"></div>
           <div class="step-dot active"></div>
         </div>
         <p style="color: var(--gray); margin-bottom: 10px;">
-          Vérifie que l'IA a bien compris ta recette. Tu peux modifier avant de sauvegarder.
+          VÃ©rifie que l'IA a bien compris ta recette. Tu peux modifier avant de sauvegarder.
         </p>
         <div class="preview-form" id="previewForm">
           <label>Nom de la recette</label>
           <input type="text" id="prevNom">
 
-          <label>Catégorie</label>
+          <label>CatÃ©gorie</label>
           <select id="prevCategory">
             <option value="Repas">Repas</option>
-            <option value="Déjeuner">Déjeuner</option>
+            <option value="DÃ©jeuner">DÃ©jeuner</option>
             <option value="Collations">Collations</option>
             <option value="Autres">Autres</option>
           </select>
@@ -872,13 +872,13 @@
           <label>Portions</label>
           <input type="text" id="prevPortions" placeholder="Ex: 4 portions">
 
-          <label>Temps de préparation</label>
+          <label>Temps de prÃ©paration</label>
           <input type="text" id="prevTemps" placeholder="Ex: 20 min, 1h30, etc.">
 
-          <label>Ingrédients (un par ligne, ## Section pour les sections)</label>
+          <label>IngrÃ©dients (un par ligne, ## Section pour les sections)</label>
           <textarea id="prevIngredients" rows="8"></textarea>
 
-          <label>Préparation (une étape par ligne)</label>
+          <label>PrÃ©paration (une Ã©tape par ligne)</label>
           <textarea id="prevPreparation" rows="6"></textarea>
 
           <label>Source (URL optionnel)</label>
@@ -893,28 +893,47 @@
     </div>
   </div>
 
+
+  <!-- SHARE MODAL -->
+  <div class="share-modal" id="shareModal">
+    <div class="share-modal-content">
+      <button class="modal-close" onclick="closeShareModal()">&times;</button>
+      <h2>&#128228; Partager la recette</h2>
+      <p class="share-subtitle" id="shareSubtitle"></p>
+      <div class="share-options">
+        <button class="share-option-btn" onclick="shareAsText()"><span class="share-icon">&#128203;</span><span class="share-label">Copier le texte</span><span class="share-desc">Coller dans un message</span></button>
+        <button class="share-option-btn" onclick="shareNative()"><span class="share-icon">&#128241;</span><span class="share-label">Partager</span><span class="share-desc">iMessage, WhatsApp...</span></button>
+        <button class="share-option-btn" onclick="generateShareImage()"><span class="share-icon">&#128444;</span><span class="share-label">CrÃ©er une image</span><span class="share-desc">Belle carte</span></button>
+        <button class="share-option-btn" onclick="downloadShareImage()"><span class="share-icon">&#128190;</span><span class="share-label">TÃ©lÃ©charger</span><span class="share-desc">Sauvegarder</span></button>
+      </div>
+      <div class="share-preview" id="sharePreview"></div>
+      <div class="share-canvas-wrap" id="shareCanvasWrap"><canvas id="shareCanvas"></canvas></div>
+      <div id="shareMsg"></div>
+    </div>
+  </div>
+
   <!-- GROCERY LIST MODAL -->
   <div class="grocery-modal" id="groceryModal">
     <div class="grocery-modal-content">
       <button class="modal-close" onclick="closeGroceryModal()">&times;</button>
-      <h2>🛒 Liste d'épicerie</h2>
+      <h2>ð Liste d'Ã©picerie</h2>
       <p class="grocery-recipe-name" id="groceryRecipeName"></p>
       <div class="portion-multiplier">
         <span>Portions :</span>
-        <button class="mult-btn" onclick="changeMultiplier(-1)">−</button>
-        <span class="mult-value" id="multValue">1×</span>
+        <button class="mult-btn" onclick="changeMultiplier(-1)">â</button>
+        <span class="mult-value" id="multValue">1Ã</span>
         <button class="mult-btn" onclick="changeMultiplier(1)">+</button>
         <span class="mult-label" id="multPortions"></span>
       </div>
       <ul class="grocery-list" id="groceryList"></ul>
-      <button class="grocery-copy-btn" onclick="copyGroceryList()">📋 Copier la liste</button>
+      <button class="grocery-copy-btn" onclick="copyGroceryList()">ð Copier la liste</button>
     </div>
   </div>
 
   <!-- DELETE CONFIRM MODAL -->
   <div class="delete-modal" id="deleteModal">
     <div class="delete-modal-content">
-      <div class="delete-icon">🗑️</div>
+      <div class="delete-icon">ðï¸</div>
       <h3>Supprimer cette recette?</h3>
       <p id="deleteRecipeName"></p>
       <div class="btn-row">
@@ -928,17 +947,17 @@
   <div class="edit-modal" id="editModal">
     <div class="edit-modal-content">
       <button class="modal-close" onclick="closeEditModal()">&times;</button>
-      <h2>✏️ Modifier la recette</h2>
+      <h2>âï¸ Modifier la recette</h2>
       <p class="edit-subtitle">Modifie les informations et sauvegarde.</p>
 
       <!-- Photo -->
       <div class="photo-edit-zone" id="editPhotoZone">
         <div class="no-photo-zone" id="editNoPhoto" style="display:none">
-          <span>📷</span><p>Cliquer pour ajouter une photo</p>
+          <span>ð·</span><p>Cliquer pour ajouter une photo</p>
         </div>
         <img id="editPhotoPreview" src="" alt="" style="display:none">
         <div class="photo-edit-overlay">
-          <span>📷</span>
+          <span>ð·</span>
           <p>Changer la photo</p>
         </div>
         <input type="file" id="editPhotoInput" accept="image/*">
@@ -950,10 +969,10 @@
         <label>Nom de la recette</label>
         <input type="text" id="editNom">
 
-        <label>Catégorie</label>
+        <label>CatÃ©gorie</label>
         <select id="editCategory">
           <option value="Repas">Repas</option>
-          <option value="Déjeuner">Déjeuner</option>
+          <option value="DÃ©jeuner">DÃ©jeuner</option>
           <option value="Collations">Collations</option>
           <option value="Autres">Autres</option>
         </select>
@@ -961,13 +980,13 @@
         <label>Portions</label>
         <input type="text" id="editPortions" placeholder="Ex: Pour 4 portions">
 
-        <label>Temps de préparation</label>
+        <label>Temps de prÃ©paration</label>
         <input type="text" id="editTemps" placeholder="Ex: 20 min, 1h30, etc.">
 
-        <label>Ingrédients (un par ligne, ## Section pour les sections)</label>
+        <label>IngrÃ©dients (un par ligne, ## Section pour les sections)</label>
         <textarea id="editIngredients" rows="9"></textarea>
 
-        <label>Préparation (une étape par ligne)</label>
+        <label>PrÃ©paration (une Ã©tape par ligne)</label>
         <textarea id="editPreparation" rows="7"></textarea>
 
         <label>Source (URL optionnel)</label>
@@ -975,24 +994,1615 @@
 
         <label>Macros par portion (optionnel)</label>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
-          <input type="number" id="editMacroCal" placeholder="🔥 Calories">
-          <input type="number" id="editMacroProt" placeholder="💪 Protéines (g)">
-          <input type="number" id="editMacroCarb" placeholder="🌾 Glucides (g)">
-          <input type="number" id="editMacroFat" placeholder="🫒 Lipides (g)">
+          <input type="number" id="editMacroCal" placeholder="ð¥ Calories">
+          <input type="number" id="editMacroProt" placeholder="ðª ProtÃ©ines (g)">
+          <input type="number" id="editMacroCarb" placeholder="ð¾ Glucides (g)">
+          <input type="number" id="editMacroFat" placeholder="ð« Lipides (g)">
         </div>
       </div>
 
       <div id="editMessage"></div>
       <div class="btn-row" style="margin-top:20px">
         <button class="btn-secondary" onclick="closeEditModal()">Annuler</button>
-        <button class="btn-primary" onclick="saveEdit()">💾 Sauvegarder</button>
+        <button class="btn-primary" onclick="saveEdit()">ð¾ Sauvegarder</button>
       </div>
     </div>
   </div>
 
-  <div class="footer">Alexanne's Cookbook — Édition 2026</div>
+  <div class="footer">Alexanne's Cookbook â Ãdition 2026</div>
 
-  <script src="recipes-data.js"></script>
+  <script>
+const BUILTIN_RECIPES = [
+  {
+    "id": "builtin-1",
+    "nom": "Bol Mexicain aux crevettes",
+    "portions": "Pour 4 portions",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "2 tasses de crevettes au choix",
+        "Riz Basmati"
+      ],
+      "Marinade  Crevettes": [
+        "Paprika",
+        "Poudre dâail",
+        "Chili",
+        "Huile Dâolive Extra Vierge"
+      ],
+      "Salsa BlÃ© dâInde et Haricots Noir": [
+        "1 tasse de BlÃ© dâInde",
+        "1 tasse dâHaricots Noir",
+        "Â½  tasse d'Oignons rouges",
+        "Â½ tasse de Tomates en dÃ©s",
+        "Â½ tasse de Coriandre",
+        "2 C. dâHuile Dâolive Extra Vierge",
+        "Â½ Lime (Jus)",
+        "Poudre Dâail au goÃ»t"
+      ],
+      "Sauce Coriandre et Lime": [
+        "1 tasse de CrÃ¨me Sur LÃ©gÃ¨re",
+        "1 C. dâHuile Dâolive Extra Vierge",
+        "Â½ Lime (Zest et Jus)",
+        "2 Gousses dâail",
+        "Â½ Bouquet de Coriandre"
+      ]
+    },
+    "preparation": [
+      "Faire griller le BlÃ© dâInde et  laisser refroidir au frigo",
+      "MÃ©langer tous les ingrÃ©dients de la Salsa et  laisser refroidir au frigo",
+      "Faire griller les Crevettes et ajouter les Ã©pices (au goÃ»t)",
+      "Faire cuire le riz Basmatti",
+      "MÃ©langer tous les ingrÃ©dients de la Sauce et la blender",
+      "Assembler lâassiette"
+    ],
+    "source": "https://www.instagram.com/reel/CvFmNxVufF2/?igsh=YW9odzI4emt4eDVz",
+    "image_url": "images/recipe_1.jpg"
+  },
+  {
+    "id": "builtin-2",
+    "nom": "Tacos au Haricots Noirs",
+    "portions": "Pour 2 Tacos",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Â½ Canne dâharicots Noirs",
+        "1 Piment Rouge",
+        "2 tasses dâÃ©pinards",
+        "Â½ tasse dâoignons vert",
+        "Â½ tasse de BlÃ© dâinde",
+        "Â½ tasse  de Fromage Cottage",
+        "Â½ tasse de Salsa (ou Tomates  coupÃ©s en dÃ©s)",
+        "Poudre de Chili"
+      ],
+      "Guacamole": [
+        "1 Avocat",
+        "â de tasse de Yogourt Grec",
+        "Â½ Lime ( Jus)",
+        "Poudre dâail"
+      ]
+    },
+    "preparation": [
+      "Mettre tous les ingrÃ©dients Ã  tacos dans une poÃªle (environ 10 minutes)",
+      "MÃ©langer les ingrÃ©dients  pour la guacamole dans un bol",
+      "Mettre les Pains Ã  Tacos dans le Airfryer (environ 3 minutes)",
+      "Mettre le mÃ©lange Ã  tacos dans les pains",
+      "Assembler lâassiette"
+    ],
+    "source": "https://www.instagram.com/reel/C3FjhwpO_r1/?igsh=MXRiaDJzbGllczNxbw==",
+    "image_url": "images/recipe_2.jpg"
+  },
+  {
+    "id": "builtin-3",
+    "nom": "MoÃ»le de Sushi au Crevettes",
+    "portions": "",
+    "category": "Repas",
+    "temps": "40 min",
+    "ingredients": {
+      "Principal": [
+        "Feuilles De Nori",
+        "Crevettes",
+        "Riz Basmati"
+      ],
+      "Sauce Ã  Sushi": [
+        "Mayonnaise",
+        "Fromage Ã  la crÃ¨me",
+        "Sriracha"
+      ]
+    },
+    "preparation": [
+      "Prendre des feuilles de Nori (coupÃ© en carrÃ©)  et Ã©taler du Riz Basmati dessus",
+      "Placer les carrÃ©s  dans un moule Ã  muffin",
+      "Couper les crevettes en morceaux et faire griller Ã  la poÃªle",
+      "Dans un plat sÃ©parÃ© mettre de la Mayo, fromage Ã  la crÃ¨me et sauce sriracha",
+      "Mettre le mÃ©lange sur les crevettes et continuer la cuisson",
+      "Ajouter les crevettes dans les feuilles de Nori",
+      "Mettre au four Ã  350 degrÃ© pour 10 minutes"
+    ],
+    "source": "https://www.instagram.com/reel/CxTzfQAvsnt/?igsh=dWp4aGJxMjJ5bDc4",
+    "image_url": "images/recipe_3.jpg"
+  },
+  {
+    "id": "builtin-4",
+    "nom": "PÃ¢tes Patates Douces",
+    "portions": "",
+    "category": "Repas",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "2 Patates Douces (Ã©pluchÃ©s et coupÃ©s en dÃ©s)",
+        "1 Onion Jaune",
+        "1 Tasse de Carottes",
+        "Poudre dâail",
+        "Poivre",
+        "Huile dâOlive",
+        "2 Tasses  de PÃ¢tes (Au Choix)",
+        "3 Tasses de Bouillon de LÃ©gume (Low Salt)",
+        "1 Tasses de Fromage (Au Choix)"
+      ]
+    },
+    "preparation": [
+      "PrÃ©chauffer le four Ã  430 degrÃ©s. Couper les lÃ©gumes et les Ã©talÃ© sur une tÃ´le",
+      "Ajouter lâHuile,  la Poudre dâAil et le Poivre",
+      "Mettre au four pour 25 Minutes",
+      "Faire bouillir les pÃ¢tes",
+      "Blender les lÃ©gumes avec le bouillon de lÃ©gumes",
+      "MÃ©langer les pÃ¢tes, la sauce et le fromage"
+    ],
+    "source": "https://www.instagram.com/reel/CzXfO2LppqJ/?igsh=MXB0Yjc3ZGNxZ21reA==",
+    "image_url": "images/recipe_4.jpg"
+  },
+  {
+    "id": "builtin-5",
+    "nom": "Bol Pois Chiches",
+    "portions": "",
+    "category": "Repas",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "Pois Chiche",
+        "Canne de Tomates  BroyÃ©s",
+        "Persil"
+      ],
+      "Sauce": [
+        "Beurre Dâamande",
+        "1 Citron (Jus)",
+        "Huile dâOlive",
+        "Moutarde de Dijon",
+        "Ail"
+      ],
+      "Ã CÃ´tÃ©s": [
+        "Broccolis",
+        "Quinoa"
+      ]
+    },
+    "preparation": [
+      "Mettre tous les ingrÃ©dients pour le mÃ©lange de Pois Chiche dans une PoÃªle",
+      "Faire le mÃ©lange pour la Sauce",
+      "Faire cuire le Quinoa et les brocolis",
+      "Assembler lâassiette"
+    ],
+    "source": "https://www.instagram.com/reel/CyOFUPTLQ6K/?igsh=aWJzYW55bG42eHMz",
+    "image_url": "images/recipe_5.jpg"
+  },
+  {
+    "id": "builtin-6",
+    "nom": "Bol de Chili",
+    "portions": "",
+    "category": "Repas",
+    "temps": "35 min",
+    "ingredients": {
+      "Principal": [
+        "2 cuillÃ¨res Ã  soupe d'huile d'olive",
+        "1 oignon jaune coupÃ© en dÃ©s",
+        "2 gousses d'ail Ã©mincÃ©es",
+        "2 C.  de poudre de cumin",
+        "1 Â½ C.  de paprika",
+        "1 C. de poudre de chili",
+        "1 C. d'assaisonnement cajun",
+        "2 carottes coupÃ©es en dÃ©s",
+        "2 patates douces pelÃ©es et coupÃ©es en cubes de 1\"",
+        "1 Canne dâHaricots noirs rincÃ©s et Ã©gouttÃ©s",
+        "1 Canne  de BlÃ© Dâinde  rincÃ© et Ã©gouttÃ©",
+        "2 Canne de tomates broyÃ©",
+        "3 Â½ tasses de bouillon de lÃ©gumes ou d'eau"
+      ]
+    },
+    "preparation": [
+      "Dans une grande casserole Ã  feu moyen, mettre l'huile d'olive et l'oignon jusqu'Ã  ce que les oignons soient translucides. Ajouter l'ail et faire revenir encore 2 minutes.",
+      "Incorporer les Ã©pices",
+      "Ajoutez les carottes, les patates douces, les haricots noirs, le maÃ¯s, les tomates et le bouillon de lÃ©gumes (ou l'eau). MÃ©langez, couvrez et laissez mijoter Ã  feu doux-moyen pendant 20 minutes.",
+      "DÃ©couvrez et laissez mijoter encore 15 minutes ou jusqu'Ã  ce que les patates douces soient cuites.",
+      "Retirer du feu.",
+      "Ã lâaide dâun mixeur plongeant, mÃ©langer environ â du mÃ©lange. Versez ensuite le mÃ©lange mÃ©langÃ© dans la casserole et remuez.",
+      "Assembler le bol et  garnir d'avocat, de crÃ¨me sure, fromage,  chips tortilla et de jalapeÃ±os tranchÃ©s ou d'autres garnitures de votre choix."
+    ],
+    "source": "https://booboosbakery.com/easy-vegan-chili/",
+    "image_url": "images/recipe_6.jpg"
+  },
+  {
+    "id": "builtin-7",
+    "nom": "Orzo aux tomates",
+    "portions": "",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "1 Tasse de Tomates Cerise",
+        "1 C. Huile DâOlive",
+        "2 Gousses dâail",
+        "30 ml de CrÃ¨me 15%",
+        "500 ml de Bouillon de Poulet",
+        "1 C. de Chili Flakes",
+        "1 Â¼ de tasse dâOrzo"
+      ]
+    },
+    "preparation": [
+      "Mettre la moitiÃ© des tomate sur la poÃªle avec lâHuile dâOlive et frire pendant 2-3 minutes",
+      "Ajouter lâail",
+      "Ajouter la crÃ¨me, Le bouillon de poulet et lâorzo",
+      "Couvrir pendant 10 minutes et dÃ©couvrir pendant 10 minutes",
+      "Lorsque lâOrzo est prÃªt, retirer du feu et servir"
+    ],
+    "source": "https://www.instagram.com/reel/C1Y_nGXLDTR/?igsh=YjZvdTQ1cWtjMGZl",
+    "image_url": "images/recipe_7.jpg"
+  },
+  {
+    "id": "builtin-8",
+    "nom": "Crevettes Miel et Sriracha",
+    "portions": "",
+    "category": "Repas",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "0.75-1 Lb Crevettes",
+        "1 Tasse de Riz Basmati",
+        "Flocon de piment fort",
+        "1 C.  dâhuile dâolive",
+        "â de Tasse d'Edamame",
+        "Â½ Tasse de Concombre",
+        "4 C. d'oignon vert",
+        "2 C. de Coriandre"
+      ],
+      "Sauce Ã  Crevettes": [
+        "2 Â½ C. Miel",
+        "2 C. de Sauce Soya",
+        "2 C. de Sriracha",
+        "1 Â½ C. dâHuile DâOlive",
+        "2 C. DâEau"
+      ]
+    },
+    "preparation": [
+      "Faire cuire le Riz",
+      "Faire de mÃ©lange pour la sauce Ã  crevette",
+      "Mettre des crevettes dans la poÃªle et ajouter la sauce",
+      "Monter lâassiette avec les Crevettes, le Riz, Les Edamame,  les concombres et les oignons vert"
+    ],
+    "source": "https://sailorbailey.com/blog/honey-sriracha-shrimp/#h-ingredients-needed",
+    "image_url": "images/recipe_8.jpg"
+  },
+  {
+    "id": "builtin-9",
+    "nom": "Poke Bowl Saumon",
+    "portions": "",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Saumon",
+        "Concombres",
+        "Carottes rÃ¢pÃ©s",
+        "Edamames",
+        "Marinade SucrÃ©/ÃpicÃ©",
+        "1 Tasse de Riz Basmati"
+      ]
+    },
+    "preparation": [
+      "Badigeonner  la marinade sur le saumon et mettre Ã  400 degrÃ© pendant 15 minutes au Airfryer",
+      "CoupÃ© les les concombre et carottes et faire bouillir les Edamames",
+      "Faire cuire le Riz Basmati",
+      "MÃ©langer  les LÃ©gumes et le Riz dans un bol et ajouter  la Sauce SucrÃ©/ÃpicÃ© (Â½ tasse)",
+      "Ajouter le Saumon sur le dessus lorsquâil est prÃªt"
+    ],
+    "source": "https://www.instagram.com/reel/C12z8C0SLxq/?igsh=czE4OGkwdHhlaWVk",
+    "image_url": "images/recipe_9.jpg"
+  },
+  {
+    "id": "builtin-10",
+    "nom": "Rouleaux de Saumon FumÃ©",
+    "portions": "",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "Saumon FumÃ©",
+        "Â½ Tasse de Fromage Ã  la crÃ¨me",
+        "2 C. d'Oignons verts",
+        "2 C. de Zest de Citron",
+        "Concombre couper en fines laniÃ¨res",
+        "Â½ Avocat couper en laniÃ¨res",
+        "Ãpice Bagel plein goÃ»t"
+      ]
+    },
+    "preparation": [
+      "MÃ©langer le fromage Ã  la crÃ¨me, les Oignons Verts et le Zest de Citron",
+      "Mettre une pellicule plastique sur le comptoir et saupoudrer les Ã©pices",
+      "Ãtendre le saumon fumÃ© pour former un rectangle",
+      "Ãtendre  le mÃ©lange de fromage Ã  la crÃ¨me sur le saumon",
+      "Ajouter les tranches dâavocat et de concombres au centre du rectangle",
+      "Utilisez la pellicule plastique pour aider Ã  rouler le saumon sur le concombre et lâavocat et continuez Ã  rouler jusqu'Ã  atteindre l'autre cÃ´tÃ©.",
+      "Mettre les rouleaux  au congÃ©lateur 5-10 minutes pour raffermir le saumon",
+      "Coupeau le rouleau en tranches"
+    ],
+    "source": "https://kaleforniakravings.com/smoked-salmon-sushi-roll-ups-with-citrus-soy-sauce/",
+    "image_url": "images/recipe_10.jpg"
+  },
+  {
+    "id": "builtin-11",
+    "nom": "Bol Mexicain au Poulet",
+    "portions": "Pour 3 Portions",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Pour le Poulet": [
+        "Poitrines de poulet coupÃ© en tranche",
+        "1  C. dâHuile dâOlive",
+        "1 C. de Paprika",
+        "Â½ C. de Cumin",
+        "Â½ C. de poudre de Chili",
+        "Â½ C. de Coriandre",
+        "Â¼ C. de Origan",
+        "Â½ C. de Poudre dâAil"
+      ],
+      "Salsa": [
+        "Tomates Cerises coupÃ©s en 4",
+        "Â¼ de tasse de Jalapenos coupÃ© finement",
+        "Â½ Oignon rouge",
+        "Â¼ de bouquet de coriandre coupÃ© finement",
+        "1 Lime (Jus)",
+        "1 Tasse de BlÃ© Dâinde"
+      ],
+      "Pour le Bol": [
+        "Laitue CoupÃ© finement",
+        "1 Tasse dâHaricots Noirs",
+        "Â¼ de Tasse de Cheddar rÃ¢pÃ©",
+        "1  Avocat en purÃ©"
+      ]
+    },
+    "preparation": [
+      "Couper le poulet en tranches,  ajouter lâHuile et les Ãpices",
+      "Mettre le poulet au AirFryer Ã  390 degrÃ© pour 10 minutes",
+      "Combiner tous les Ã©lÃ©ments pour la Salsa",
+      "Mettre  la laitue, les Haricots Noirs, le Fromage et la purÃ©e dâAvocat dans 3 bols",
+      "Ajouter la Salsa, le poulet et des croustilles de MaÃ¯s (au GoÃ»t)"
+    ],
+    "source": "https://www.instagram.com/reel/C2v8itaupXb/?igsh=angyemt3ZWJmdzJu",
+    "image_url": "images/recipe_11.jpg"
+  },
+  {
+    "id": "builtin-12",
+    "nom": "Boule de Sushi",
+    "portions": "",
+    "category": "Repas",
+    "temps": "35 min",
+    "ingredients": {
+      "Principal": [
+        "Riz Basmati",
+        "Avocat",
+        "Concombre",
+        "Saumon en cube",
+        "Ãpice Bagel Plein GoÃ»t",
+        "Mayonnaise Ã©picÃ©"
+      ]
+    },
+    "preparation": [
+      "Prendre une pellicule plastique et Ã©tendre le riz basmati dessus",
+      "Ajouter le mÃ©lange de Sushi et crÃ©er une boule",
+      "Laissez  raffermir 5 minutes au frigo",
+      "Mettre lâassaisonnement dans une assiette et y rouler les boules",
+      "Mettre 5 minutes Ã  350 degrÃ© au AirFryer",
+      "Ajouter de la mayonnaise Ã©picÃ© sur le dessus"
+    ],
+    "source": "https://www.instagram.com/reel/C2QVc6Ahz6E/?igsh=MW55aXc4bDZnNzB4NA==",
+    "image_url": "images/recipe_12.jpg"
+  },
+  {
+    "id": "builtin-13",
+    "nom": "Bagel Saumon Fromage Ã  la CrÃ¨me",
+    "portions": "",
+    "category": "Repas",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "Saumon FumÃ©",
+        "Fromage Ã  la CrÃ¨me",
+        "Aneth",
+        "Oignon rouge",
+        "Citron (Jus)",
+        "CÃ¢pre",
+        "Bagel"
+      ]
+    },
+    "preparation": [
+      "Mettre tous les ingrÃ©dients dans un assiettes et hachÃ© le mÃ©lange",
+      "Ãtendre sur le Bagel"
+    ],
+    "source": "https://www.instagram.com/reel/C2ZpOmqIa6l/?igsh=MXI4eWlxNHJybmU4dg==",
+    "image_url": "images/recipe_13.jpg"
+  },
+  {
+    "id": "builtin-14",
+    "nom": "Wrap Buffalo Pois Chiches",
+    "portions": "",
+    "category": "Repas",
+    "temps": "10 min",
+    "ingredients": {
+      "Principal": [
+        "1 Canne de Pois Chiches",
+        "2 Cup de Chou-Fleur",
+        "Huile dâOlive",
+        "Â½ Tasse de sauce Buffalo",
+        "Â¼ de Tasse de Yogourt Grec",
+        "Pain Pita",
+        "Laitue HachÃ©"
+      ],
+      "Sauce": [
+        "1/3 de tasse de vinaigre de vin blanc",
+        "1 C. de Sriracha",
+        "1 C. de poudre de chili",
+        "1 C.  de paprika",
+        "1 C. de Poudre dâail",
+        "1/2 C. de poudre dâoignon",
+        "1/2 C. de miel"
+      ]
+    },
+    "preparation": [
+      "Mettre les Pois Chiches et le Chou-Fleur dans le AirFryer Ã  350 degrÃ© pour 20 minutes",
+      "Faire le mÃ©lange pour la Sauce et ajouter le yogourt, les Pois Chiches et le Chou-Fleur",
+      "Mettre le mÃ©lange et la laitue dans le pita et remettre au Airfryer pour 5 minutes"
+    ],
+    "source": "https://www.instagram.com/reel/C2vfzZSxezM/?igsh=b3M4a3U1YWFwem56",
+    "image_url": "images/recipe_14.jpg"
+  },
+  {
+    "id": "builtin-15",
+    "nom": "Bol Arc-en-Ciel",
+    "portions": "Pour 2 Portions",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "2 portion de Nouille de Riz",
+        "Â½ Concombre anglais en Julienne",
+        "2 Carottes en Julienne",
+        "Â¼ de Chou rouge HachÃ©",
+        "1 tasse d'Edamame",
+        "1 Avocat coupÃ© en Cube",
+        "1 Mangue coupÃ© en Cube"
+      ],
+      "Sauce": [
+        "1 Lime (Jus)",
+        "Â¼ de Tasse de Beurre de Peanut",
+        "2 C. de Vinaigre de Riz",
+        "1 C. de Sirop DâÃrable",
+        "2 C. de Sriracha",
+        "1 C. de Sauce Soya"
+      ]
+    },
+    "preparation": [
+      "Faire bouillir les nouilles de Riz",
+      "Couper les lÃ©gumes",
+      "MÃ©langer les ingrÃ©dients pour la Sauce",
+      "Assembler les lÃ©gumes, les Nouilles de Riz et la sauce dans deux Bols pour servir"
+    ],
+    "source": "https://www.instagram.com/reel/C2-9EvhJH6X/?igsh=ZjcxbjBkZmhjbDhh",
+    "image_url": "images/recipe_15.jpg"
+  },
+  {
+    "id": "builtin-16",
+    "nom": "BouchÃ© de Saumon BangBang",
+    "portions": "Pour 2 Portions",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Sauce SucrÃ©/ÃpicÃ©",
+        "2 Filet de Saumon",
+        "1 C. de Poudre dâAil",
+        "1 C. de Paprika",
+        "Â¼ de Tasse de Chapelure Panko",
+        "1 Â¼ de Tasse de Riz Basmati"
+      ]
+    },
+    "preparation": [
+      "Couper le Saumon en morceaux et mettre lâassaisonnement et la sauce SucrÃ©/ÃpicÃ©",
+      "Tremper chaque Morceaux dans la chapelure",
+      "Mettre au four Ã  350 degrÃ© pour 15 minutes",
+      "AssemblÃ© lâassiette et ajouter les oignon vert sur le dessus"
+    ],
+    "source": "https://www.instagram.com/reel/C3aaXpWIQVf/?igsh=MWE3bDRuenQ1bWFlMQ==",
+    "image_url": "images/recipe_16.jpg"
+  },
+  {
+    "id": "builtin-17",
+    "nom": "Bol Crevettes, Chili Lime",
+    "portions": "",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Crevettes",
+        "Poudre de chili",
+        "Cumin",
+        "Paprika",
+        "Poudre dâail",
+        "Vermicelle de Riz",
+        "Lime (Jus)"
+      ],
+      "Sauce": [
+        "Mangues",
+        "Avocats",
+        "Oignon Rouge",
+        "Coriandre",
+        "Jus de Lime"
+      ]
+    },
+    "preparation": [
+      "MÃ©langer les Ã©pices et les crevettes",
+      "Mettre au AirFryer Ã  350 degrÃ© pour 8 minutes",
+      "Couper les ingrÃ©dients pour la Salsa",
+      "AssemblÃ©e le bol avec les crevettes"
+    ],
+    "source": "https://www.instagram.com/reel/C3S4hcmN552/?igsh=MWptcXFtOXNhdnRqYQ==",
+    "image_url": "images/recipe_17.jpg"
+  },
+  {
+    "id": "builtin-18",
+    "nom": "Bol de Poulet Buffalo",
+    "portions": "Pour 4 Portions",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "2 Poitrines de Poulet",
+        "Poudre dâail",
+        "Â½ Tasse de Sauce Buffalo"
+      ],
+      "Bol": [
+        "2 Tasse de Riz ( Chou-Fleur au choix)",
+        "8 Tasse de Salade",
+        "1 Tasse de Carottes rapÃ©s",
+        "1 Tasse de Cornichon",
+        "2 Avocat en Cube",
+        "Â½ Tasse dâoignon vert"
+      ],
+      "Sauce Ranch": [
+        "1 Tasse de Yogourt Grec",
+        "2  C. dâassaisonnement ranch",
+        "1-2 C. de lait Dâamande",
+        "1 C. de Jus de lime",
+        "1 C. de Cidre de pomme ou Vinaigre de vin blanc"
+      ]
+    },
+    "preparation": [
+      "Faire cuire le poulet Ã  la poÃªle 6-7 minutes de chaque cÃ´tÃ©",
+      "Faire la Sauce Buffalo, y ajouter le poulet et mÃ©langer",
+      "Faire Bouillir le Riz",
+      "Couper les lÃ©gumes",
+      "MÃ©langer les ingrÃ©dients pour la sauce Ranch",
+      "Assembler lâAssiette"
+    ],
+    "source": "https://healthylittlepeach.com/healthy-buffalo-chicken-bowls-with-ranch-dressing/",
+    "image_url": "images/recipe_18.jpg"
+  },
+  {
+    "id": "builtin-19",
+    "nom": "Salade Poulet/Avocat",
+    "portions": "",
+    "category": "Repas",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "Poitrines de Poulet",
+        "Tomate Cerise",
+        "BlÃ© Dâinde",
+        "Oignon Rouge",
+        "Oignon Vert",
+        "Concombre",
+        "Avocat",
+        "Laitue Romaine"
+      ],
+      "Sauce Salade": [
+        "1 Citron (Jus)",
+        "3 C. Huile dâOlive",
+        "1 C.  de Miel",
+        "1 C. Coriandre",
+        "Poivre"
+      ],
+      "Assaisonnement Poulet": [
+        "1 C. de Poudre de Piment Rouge",
+        "Â½ C. de Poivre Noir",
+        "Â¼ de C. de Cumin",
+        "Â¼ de Citron (Jus)",
+        "3 C. Dâhuile dâOlive"
+      ]
+    },
+    "preparation": [
+      "Assaisonner le Poulet et mettre au four Ã  400 degrÃ© pour 20 Ã  25 Minutes",
+      "Faire la Vinaigrette",
+      "Assembler la salade",
+      "Ajouter le poulet"
+    ],
+    "source": "https://www.instagram.com/reel/C3XRKs5NfST/?igsh=ZWNvOTZwdWdiMGYz",
+    "image_url": "images/recipe_19.jpg"
+  },
+  {
+    "id": "builtin-20",
+    "nom": "Chili Style Marocain",
+    "portions": "Pour 4 Portions",
+    "category": "Repas",
+    "temps": "45 min",
+    "ingredients": {
+      "Principal": [
+        "3 Gousse dâail",
+        "1 Oignon Rouge",
+        "1 Courgette",
+        "1 Carotte",
+        "1 Patate Douce",
+        "1 Tomate Ã©mincÃ©",
+        "700g de Pois Chiche",
+        "200 ml de Bouillon (LowSalt)",
+        "100g de Datte coupÃ© en petit morceau",
+        "1 C. de Cumin",
+        "Â½ C. de Coriandre",
+        "1 C. de Cannelle"
+      ]
+    },
+    "preparation": [
+      "CoupÃ© lâail, lâoignon, les carottes, courgette et patate douce en petit morceaux",
+      "Dans une casserole, mettre 1 C. Dâhuile DâOlive et lâail , lâoignon, la courgette et les carottes. Faire cuire Ã  feux doux pour 10 minutes en brassant frÃ©quemment",
+      "Ajouter les Ã©pices,  patate douce et Pois Chiche (avec lâeau des Pois Chiche)",
+      "Ajouter les tomates, le bouillon et les dattes.",
+      "Bien mÃ©langer et couvrir pour environ 40 minutes Ã  feux doux",
+      "SÃ©parer en 6 portions et ajouter de la coriandre"
+    ],
+    "source": "https://www.instagram.com/reel/C3qLRP3Kae7/?igsh=MTh4cmw1c3lxeXF1dw==",
+    "image_url": "images/recipe_20.jpg"
+  },
+  {
+    "id": "builtin-21",
+    "nom": "Salade Chou Sauce Peanut ÃpicÃ©",
+    "portions": "",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Chou",
+        "Avocat",
+        "Concombre",
+        "Oignon rouge",
+        "Coriandre"
+      ],
+      "Vinaigrette": [
+        "Beurre de peanut en poudre",
+        "Â½ Lime (Jus)",
+        "Eau",
+        "Sriracha",
+        "Ail"
+      ]
+    },
+    "preparation": [
+      "CoupÃ© lâail, lâoignon, les carottes, courgette et patate douce en petit morceaux",
+      "Dans une casserole, mettre 1 C. Dâhuile DâOlive et lâail , lâoignon, la courgette et les carottes. Faire cuire Ã  feux doux pour 10 minutes en brassant frÃ©quemment",
+      "Ajouter les Ã©pices,  patate douce et Pois Chiche (avec lâeau des Pois Chiche)",
+      "Ajouter les tomates, le bouillon et les dattes.",
+      "Bien mÃ©langer et couvrir pour environ 40 minutes Ã  feux doux",
+      "SÃ©parer en 6 portions et ajouter de la coriandre"
+    ],
+    "source": "https://www.instagram.com/reel/C3ih0lZIWFo/?igsh=c2RpcXI1MWx3ZnM0",
+    "image_url": "images/recipe_21.jpg"
+  },
+  {
+    "id": "builtin-22",
+    "nom": "One Pan Sweet Chili Salmon",
+    "portions": "",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Saumon",
+        "Riz Basmatti",
+        "150g Petits Pois",
+        "Legume congelÃ©",
+        "Â½ Oignon Jaune",
+        "4 C. de Sauce Soya",
+        "2 C. de Miel",
+        "1 C. De Poudre de Chili",
+        "1 Oignon Vert",
+        "Graine de sÃ©same"
+      ]
+    },
+    "preparation": [
+      "Mettre les lÃ©gumes sur la poÃªle Ã  haute intensitÃ© pendant 5 minutes",
+      "Descendre la tempÃ©rature et ajouter le saumon badigeonner de la sauce Chili",
+      "Lorsque le saumon est prÃªt, ajouter le riz cuit au mÃ©lange",
+      "Ajouter les graine de sÃ©same"
+    ],
+    "source": "https://www.instagram.com/reel/C3YOEZJoST_/?igsh=bnlmZjN3cDN2Ym5z",
+    "image_url": "images/recipe_22.jpg"
+  },
+  {
+    "id": "builtin-23",
+    "nom": "Salade de Thon",
+    "portions": "Pour 2 Portions",
+    "category": "Repas",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "1 Canne de thon",
+        "Â¼ de Tasse de BlÃ© dâInde",
+        "Â¼ de Tasse de Concombre",
+        "Â¼ de Tasse dâOignon rouge",
+        "1 C.  de Persil",
+        "2 C. de Yogourt Grec",
+        "2 C. de Fromage Cottage"
+      ]
+    },
+    "preparation": [
+      "MÃ©langer tous les ingrÃ©dients dans un bol",
+      "Ãtendre sur Galette de Riz"
+    ],
+    "source": "https://www.instagram.com/reel/C29OTM9PXGJ/?igsh=b3hsNWVvdW4ydmd6",
+    "image_url": "images/recipe_23.jpg"
+  },
+  {
+    "id": "builtin-24",
+    "nom": "MÃ©lange Avocat/Thon",
+    "portions": "",
+    "category": "Repas",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "1 Canne de Thon",
+        "1 Avocat",
+        "Mayonnaise ÃpicÃ©",
+        "Oignons verts hachÃ©s",
+        "Feuilles de Nori"
+      ]
+    },
+    "preparation": [
+      "MÃ©langer tous les ingrÃ©dients dans un bol",
+      "Ãtendre sur Galette de Riz ou Feuilles de Nori"
+    ],
+    "source": "https://www.instagram.com/reel/C2bEYBQvOFm/?igsh=MmRheW9jbnhrMWtp",
+    "image_url": "images/recipe_24.jpg"
+  },
+  {
+    "id": "builtin-25",
+    "nom": "Orzo Saumon Petits Pois et BlÃ© Dâinde",
+    "portions": "",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "2 Filet de Saumon",
+        "Â½ Oignon",
+        "Â¾ de tasse de Petits Pois",
+        "Â¾ de tasse de BlÃ© DâInde",
+        "500 ml de Bouillon de LÃ©gumes",
+        "Â¾ de tasse dâOrzo",
+        "100 ml de CrÃ¨me 15%",
+        "2 C. de Fromage Ã  la CrÃ¨me",
+        "Marinade SucrÃ©/ÃpicÃ©"
+      ]
+    },
+    "preparation": [
+      "Badigeonner  la marinade sur le saumon et mettre Ã  400 degrÃ© pendant 15 minutes au Airfryer",
+      "Couper les oignons et les ajouter avec les petit pois dans une poÃªle",
+      "Faire frire Ã  feu mÃ©dium pendant 10 minutes",
+      "Ajouter lâOrzo et laisser frire quelque minutes",
+      "Ajouter le bouillon de LÃ©gume et la CrÃ¨me",
+      "Couvrir et laisser mijoter Ã  feu  mÃ©dium pendant 10 minutes",
+      "Ajouter le Fromage Ã  la CrÃ¨me et le saumon",
+      "MÃ©langer et laisser mijoter un autre 10 minutes environ"
+    ],
+    "source": "https://www.instagram.com/reel/C2u7sQ4oBXK/?igsh=MWd0dDAyZzY4Y2g3Mg==",
+    "image_url": "images/recipe_25.jpg"
+  },
+  {
+    "id": "builtin-26",
+    "nom": "Bol de Hummus Garni",
+    "portions": "",
+    "category": "Repas",
+    "temps": "10 min",
+    "ingredients": {
+      "Poulet": [
+        "1 lb de poulet",
+        "Sel et poivre",
+        "Poudre d'ail",
+        "Paprika"
+      ],
+      "Tzatziki": [
+        "1 tasse de yogourt grec",
+        "1 mini concombre, rÃ¢pÃ©",
+        "Jus de Â½ citron",
+        "1 c. Ã  thÃ© de poudre d'ail",
+        "2 c. Ã  thÃ© d'aneth",
+        "Sel au goÃ»t"
+      ],
+      "Pour le Bol": [
+        "Hummus",
+        "Cayenne (optionnel)",
+        "Tzatziki",
+        "Poulet",
+        "Concombre",
+        "Tomates cerises",
+        "Oignon rouge",
+        "Olives marinÃ©es",
+        "Feta Ã©miettÃ©e",
+        "Huile d'olive",
+        "Aneth",
+        "Quartier de citron"
+      ]
+    },
+    "preparation": [
+      "Assaisonner le poulet avec sel, poivre, poudre d'ail et paprika. Cuire Ã  la poÃªle ou au four.",
+      "PrÃ©parer le tzatziki en mÃ©langeant tous les ingrÃ©dients dans un bol.",
+      "Monter le bol : une couche de hummus, un filet de cayenne, le tzatziki, le poulet coupÃ©.",
+      "Garnir de concombre, tomates cerises, oignon rouge, olives, feta, aneth et un filet d'huile d'olive. Servir avec un quartier de citron."
+    ],
+    "source": "",
+    "image_url": "images/recipe_26.jpg"
+  },
+  {
+    "id": "builtin-27",
+    "nom": "Salade de PÃ¢tes Poulet Pesto",
+    "portions": "Pour 4 portions",
+    "category": "Repas",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "2 poitrines de poulet (pochÃ©es et effilochÃ©es)",
+        "300g de pÃ¢tes au choix (non cuites)",
+        "180g de pesto au basilic",
+        "Â¼ tasse de yogourt grec",
+        "Sel et poivre",
+        "1 grosse poignÃ©e d'Ã©pinards bÃ©bÃ©",
+        "1 barquette de tomates cerises, tranchÃ©es",
+        "Â½ tasse de feta Ã©miettÃ©e",
+        "Coriandre, hachÃ©e finement"
+      ]
+    },
+    "preparation": [
+      "Cuire les pÃ¢tes selon les instructions sur l'emballage.",
+      "MÃ©langer le pesto, le yogourt grec, le sel et le poivre.",
+      "Dans un grand bol, ajouter tous les ingrÃ©dients et bien mÃ©langer.",
+      "Servir dans des bols. Bonne appÃ©tit!"
+    ],
+    "source": "https://kizactivelife.com/pesto-chicken-pasta-salad/",
+    "image_url": "images/recipe_27.jpg"
+  },
+  {
+    "id": "builtin-28",
+    "nom": "Flatbread Poulet Pesto",
+    "portions": "Pour 2 portions",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Poulet": [
+        "250g de poitrine de poulet, coupÃ©e en dÃ©s",
+        "Poudre d'ail",
+        "Poudre d'oignon",
+        "Herbes mÃ©langÃ©es"
+      ],
+      "Garnitures": [
+        "2 Flatbreads (pains plats)",
+        "2 c. Ã  soupe de pesto vert (+ extra pour garnir)",
+        "Mozzarella (mini billes ou rÃ¢pÃ©e)",
+        "Â½ Poivron rouge, tranchÃ©",
+        "Â½ Oignon rouge, tranchÃ©",
+        "Parmesan rÃ¢pÃ©",
+        "Poivre noir",
+        "Feuilles de basilic frais"
+      ]
+    },
+    "preparation": [
+      "Dans une poÃªle, cuire le poulet en dÃ©s avec la poudre d'ail, poudre d'oignon et herbes. Retirer quand cuit. PrÃ©chauffer le four Ã  350Â°F (180Â°C).",
+      "Placer les flatbreads sur une plaque et Ã©tendre 1 c. Ã  soupe de pesto vert sur chacun.",
+      "Garnir de mozzarella, poulet cuit et oignon rouge. RÃ¢per du parmesan par-dessus et cuire au four 10 minutes.",
+      "Ã la sortie du four, ajouter du parmesan, du poivre noir, des feuilles de basilic et un peu plus de pesto. Bonne appÃ©tit!"
+    ],
+    "source": "",
+    "image_url": "images/recipe_28.jpg"
+  },
+  {
+    "id": "builtin-29",
+    "nom": "Lasagne Poulet Patate Douce (Sans PÃ¢tes)",
+    "portions": "",
+    "category": "Repas",
+    "temps": "1h",
+    "ingredients": {
+      "Principal": [
+        "2 grosses patates douces, tranchÃ©es mince en longueur",
+        "Huile d'olive",
+        "8 hauts de cuisses de poulet dÃ©sossÃ©s, coupÃ©s en dÃ©s",
+        "1 c. Ã  soupe de paprika fumÃ©",
+        "1 c. Ã  soupe d'assaisonnement Badia complet",
+        "1 c. Ã  thÃ© de poivre",
+        "1 c. Ã  thÃ© de basilic",
+        "1 c. Ã  thÃ© d'assaisonnement italien",
+        "1 c. Ã  soupe d'ail hachÃ©",
+        "1Â½ tasse de crÃ¨me Ã  fouetter",
+        "1 c. Ã  thÃ© de poivre",
+        "1 c. Ã  soupe d'assaisonnement Badia complet",
+        "Â½ bloc de fromage Ã  la crÃ¨me",
+        "Â½ tasse de parmesan rÃ¢pÃ©",
+        "1 contenant de ricotta",
+        "1 oeuf",
+        "Sel",
+        "Persil frais hachÃ©",
+        "1 c. Ã  thÃ© d'assaisonnement italien",
+        "Mozzarella rÃ¢pÃ©e"
+      ]
+    },
+    "preparation": [
+      "PrÃ©chauffer le four Ã  375Â°F.",
+      "Peler les patates douces et trancher mince en longueur. Frotter avec huile d'olive et cuire 12 minutes jusqu'Ã  tendretÃ©.",
+      "Dans un bol, mÃ©langer le poulet avec paprika fumÃ©, assaisonnement Badia, poivre, basilic, assaisonnement italien et huile d'olive.",
+      "Cuire le poulet dans un poÃªlon jusqu'Ã  cuisson complÃ¨te, mettre de cÃ´tÃ©.",
+      "Dans le mÃªme poÃªlon, cuire l'ail hachÃ©. Ajouter la crÃ¨me Ã  fouetter et laisser chauffer.",
+      "Ajouter le poivre, fromage Ã  la crÃ¨me, parmesan et mÃ©langer jusqu'Ã  consistance lisse.",
+      "Ajouter le poulet cuit.",
+      "Dans un bol, mÃ©langer la ricotta, oeuf, sel, persil et assaisonnement italien.",
+      "Monter les couches: sauce poulet â patates douces â mÃ©lange ricotta â mozzarella. RÃ©pÃ©ter.",
+      "Cuire Ã  375Â°F pendant 35 minutes.",
+      "Gratiner Ã  500Â°F pendant 2-3 minutes jusqu'Ã  dorÃ©."
+    ],
+    "source": "https://www.instagram.com/cozykitchenwithsteph/",
+    "image_url": "images/recipe_29.jpg"
+  },
+  {
+    "id": "builtin-30",
+    "nom": "Alfredo Poulet au Fromage Cottage",
+    "portions": "",
+    "category": "Repas",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "8 oz de poitrine de poulet",
+        "CroÃ»te d'amandes optionnelle: 1 oeuf, Â¼ tasse de farine d'amandes",
+        "1 courge spaghetti",
+        "1Â¾ tasse de fromage cottage 2%",
+        "â tasse de parmesan rÃ¢pÃ©",
+        "Â½ c. Ã  thÃ© de chaque: sel, poivre, poudre d'ail, assaisonnement italien"
+      ]
+    },
+    "preparation": [
+      "PrÃ©chauffer le four Ã  425Â°F. Couper la courge en deux, enlever les graines et cuire cÃ´tÃ© coupÃ© vers le bas pendant 40 minutes, ou jusqu'Ã  ce que les fils se dÃ©tachent facilement.",
+      "Si croÃ»te d'amandes: tremper le poulet dans l'oeuf battu, enrober de farine d'amandes et poÃªler 5 minutes de chaque cÃ´tÃ©. Sinon, simplement assaisonner et cuire.",
+      "Au mÃ©langeur, combiner le fromage cottage, parmesan et assaisonnements jusqu'Ã  consistance lisse. Ajouter un peu d'eau si nÃ©cessaire.",
+      "Servir la sauce sur la courge spaghetti et le poulet!"
+    ],
+    "source": "https://www.instagram.com/caitlincalahannutrition/",
+    "image_url": "images/recipe_30.jpg"
+  },
+  {
+    "id": "builtin-31",
+    "nom": "Riz Sauvage \"Dirty\"",
+    "portions": "",
+    "category": "Repas",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "1 lb de boeuf hachÃ© (ou protÃ©ine au choix)",
+        "1 tasse d'oignons en dÃ©s",
+        "Poivrons et cÃ©leri en dÃ©s",
+        "3 gousses d'ail hachÃ©",
+        "Ãpices: sel, paprika, poudre de chili, Â½ c. Ã  thÃ© de thym, persil, poivre noir, Â¼ c. Ã  thÃ© de cayenne",
+        "â tasse de pÃ¢te de tomate (une demi-canne)",
+        "3 tasses de riz sauvage cuit"
+      ]
+    },
+    "preparation": [
+      "Dans un grand poÃªlon Ã  feu moyen-Ã©levÃ©, cuire le boeuf hachÃ© (ou protÃ©ine au choix), 1 tasse d'oignons en dÃ©s, poivrons, cÃ©leri, 3 gousses d'ail et les Ã©pices.",
+      "Une fois le boeuf cuit et les lÃ©gumes ramollis, ajouter la pÃ¢te de tomate et 3 tasses de riz sauvage cuit. Cuire Ã  feu moyen 5 minutes en mÃ©langeant.",
+      "Servir avec du persil frais et des oignons verts."
+    ],
+    "source": "https://www.instagram.com/mirsmicros/",
+    "image_url": "images/recipe_31.jpg"
+  },
+  {
+    "id": "builtin-32",
+    "nom": "Bols Fajita Steak Chipotle Miel",
+    "portions": "3 portions",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Steak chipotle miel": [
+        "1 lb de bifteck de surlonge, coupÃ© en bouchÃ©es",
+        "2 c. Ã  soupe de purÃ©e de chipotle",
+        "1 c. Ã  soupe de miel",
+        "Jus de Â½ lime (~1 c. Ã  soupe)",
+        "Poudre d'ail, poudre d'oignon, poivre noir",
+        "Mariner 20+ minutes",
+        "Huile d'olive lÃ©gÃ¨re pour la cuisson"
+      ],
+      "Poivrons et oignons": [
+        "1-2 poivrons oranges, tranchÃ©s",
+        "Â½ oignon rouge",
+        "Huile d'olive lÃ©gÃ¨re en spray",
+        "Assaisonnement southwest chipotle"
+      ],
+      "Salade de maÃ¯s": [
+        "1 tasse de maÃ¯s grillÃ©",
+        "1 c. Ã  soupe de jalapeÃ±o",
+        "1 c. Ã  soupe d'oignon rouge",
+        "2 c. Ã  soupe de mayo lÃ©gÃ¨re",
+        "Â½ c. Ã  soupe de cilantro",
+        "Â½ c. Ã  soupe de jus de lime",
+        "Assaisonnement \"elote\""
+      ],
+      "Guacamole": [
+        "1 avocat Ã©crasÃ©",
+        "Â½ jalapeÃ±o (environ 1 c. Ã  soupe)",
+        "2 c. Ã  soupe d'oignon rouge",
+        "1 c. Ã  soupe de cilantro",
+        "Jus de lime et sel au goÃ»t"
+      ],
+      "Pico de gallo": [
+        "3 tomates Roma moyennes, Ã©pÃ©pinÃ©es et coupÃ©es",
+        "1 jalapeÃ±o",
+        "Â¼ d'oignon rouge",
+        "Jus de Â½ lime",
+        "1-2 c. Ã  soupe de cilantro",
+        "Sel et poivre au goÃ»t"
+      ],
+      "Riz cilantro lime": [
+        "2 tasses de riz blanc cuit",
+        "2 c. Ã  soupe de cilantro",
+        "Jus d'une lime",
+        "Sel"
+      ]
+    },
+    "preparation": [
+      "Mariner le steak avec la purÃ©e chipotle, miel, lime et Ã©pices pendant 20+ minutes.",
+      "Cuire le steak Ã  feu vif 2 minutes de chaque cÃ´tÃ©. Retirer et ajouter les poivrons et oignons dans le mÃªme poÃªlon.",
+      "PrÃ©parer la salade de maÃ¯s, le guacamole et le pico de gallo selon les ingrÃ©dients.",
+      "PrÃ©parer le riz cilantro lime en mÃ©langeant le riz cuit avec cilantro, jus de lime et sel.",
+      "Assembler les bols: riz, steak chipotle, pico de gallo, Â¼ tasse de laitue, poivrons et oignons, maÃ¯s, Â¼ tasse de fromage rÃ¢pÃ©, guacamole."
+    ],
+    "source": "https://www.instagram.com/nutritionwithnat/",
+    "image_url": "images/recipe_32.jpg"
+  },
+  {
+    "id": "builtin-33",
+    "nom": "Boulettes Buffalo Poulet Fromage Cottage",
+    "portions": "",
+    "category": "Repas",
+    "temps": "35 min",
+    "ingredients": {
+      "Principal": [
+        "1 lb de poulet hachÃ©",
+        "Â½ tasse de fromage cottage",
+        "Â½ tasse de parmesan rÃ¢pÃ©",
+        "Â¾ tasse de farine d'amandes",
+        "â tasse de sauce buffalo",
+        "1 oeuf",
+        "1 c. Ã  thÃ© de sel, poivre noir, poudre d'ail, poudre d'oignon, thym",
+        "Oignons verts hachÃ©s (facultatif)"
+      ]
+    },
+    "preparation": [
+      "PrÃ©chauffer le four Ã  400Â°F.",
+      "MÃ©langer tous les ingrÃ©dients dans un grand bol.",
+      "Utiliser une cuillÃ¨re Ã  crÃ¨me glacÃ©e pour former des boulettes et dÃ©poser sur une plaque.",
+      "Cuire Ã  400Â°F pendant 20 minutes et gratiner Ã  la fin pour un extÃ©rieur croustillant.",
+      "Servir avec vos lÃ©gumes favoris ou dans un bol avec du riz, vinaigrette ranch et sauce buffalo."
+    ],
+    "source": "https://www.instagram.com/dayamifrommiami/",
+    "image_url": "images/recipe_33.jpg"
+  },
+  {
+    "id": "builtin-34",
+    "nom": "Salade Caprese Ã  l'Avocat",
+    "portions": "",
+    "category": "Repas",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "2 tasses de tomates cerises coupÃ©es en deux (rouges et jaunes si possible)",
+        "225 g de billes de mozzarella fraÃ®ches (bocconcini)",
+        "2 avocats mÃ»rs tranchÃ©s",
+        "2 cuillÃ¨res Ã  soupe d'huile d'olive",
+        "1 cuillÃ¨re Ã  soupe de glaÃ§age balsamique",
+        "1 cuillÃ¨re Ã  soupe de jus de citron",
+        "Â½ cuillÃ¨re Ã  cafÃ© d'assaisonnement italien",
+        "Â½ cuillÃ¨re Ã  cafÃ© de sel",
+        "Â¼ cuillÃ¨re Ã  cafÃ© de poivre noir",
+        "10 Ã  12 feuilles de basilic frais dÃ©chirÃ©es",
+        "Flocons de piment (optionnel)",
+        "Pain grillÃ© ou crackers pour servir (optionnel)"
+      ]
+    },
+    "preparation": [
+      "Couper les tomates cerises en deux et trancher les avocats. Arroser les avocats de jus de citron pour Ã©viter l'oxydation.",
+      "Disposer sur un grand plat les tomates, les tranches d'avocat et les billes de mozzarella en alternant les couleurs.",
+      "Arroser uniformÃ©ment d'huile d'olive et du reste de jus de citron.",
+      "Ajouter de fins filets de glaÃ§age balsamique.",
+      "Assaisonner avec l'assaisonnement italien, le sel et le poivre.",
+      "Parsemer de feuilles de basilic dÃ©chirÃ©es et, si dÃ©sirÃ©, de flocons de piment.",
+      "Servir immÃ©diatement pour conserver toute la fraÃ®cheur."
+    ],
+    "source": "https://www.mirecettes.com",
+    "image_url": "images/recipe_34.jpg"
+  },
+  {
+    "id": "builtin-35",
+    "nom": "Biscuits Banane et Chocolat Noir",
+    "portions": "Pour 2 GÃ©ants biscuits",
+    "category": "Collations",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "1 Banane en purÃ©e",
+        "Â¼ de tasse de beurre dâamande (ou noix, peanut,etc)",
+        "Â½ C. dâextrait de Vanille",
+        "Â¾ de tasse de gruau",
+        "Â¼ de tasse de pÃ©pite au Chocolat Noir"
+      ]
+    },
+    "preparation": [
+      "Mettre tous les ingrÃ©dients dans un bol et mÃ©langer",
+      "Laisser reposer dans le frigo pour 10 min",
+      "CrÃ©er les biscuits sur une plaque",
+      "Cuire Ã  350 degrÃ© pour 15 minutes",
+      "Laisser refroidir"
+    ],
+    "source": "https://www.instagram.com/reel/CwNeSaAqfzr/?igsh=MWF3ZmRrMzlzcHhmOQ==",
+    "image_url": "images/recipe_35.jpg"
+  },
+  {
+    "id": "builtin-36",
+    "nom": "Barres SucrÃ©/SalÃ©e",
+    "portions": "",
+    "category": "Collations",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "â de tasse de beurre dâamande (ou noix, peanut,etc)",
+        "â de tasse de miel",
+        "1 C. dâextrait de Vanille",
+        "2 Galette de Riz lÃ©gÃ¨re",
+        "Â¼ de tasse de peanut hachÃ©s",
+        "4 Dattes (coupÃ©e en petits morceaux)"
+      ]
+    },
+    "preparation": [
+      "Mettre le beurre dâamande, le miel et la vanille dans un bol et mÃ©langer jusquâÃ  se que ce soit lisse",
+      "Ajouter les galettes de riz Ã©miettÃ© et les peanut et mÃ©langer",
+      "Prendre un moule Ã  pain 9x5 et mettre du papier parchemin",
+      "Ãtendre le mix dans le moule et Ã©galiser",
+      "Ajouter les date sur le dessus et peser pour quâelles tiennent sur la barre",
+      "Mettre au congÃ©lateur  et faire fondre le chocolat noir dans un petit bol avec de lâhuile de coco",
+      "Ajouter le chocolat sur la barre avec un peu de sel de mer",
+      "Remettre au congÃ©lateur pour 30-40 minutes minimum"
+    ],
+    "source": "https://www.instagram.com/reel/CwicD5ZMosx/?igsh=OWVsc2U1dXhkNjI0",
+    "image_url": "images/recipe_36.jpg"
+  },
+  {
+    "id": "builtin-37",
+    "nom": "PÃ¢te Ã  Biscuit Pois Chiches",
+    "portions": "",
+    "category": "Collations",
+    "temps": "10 min",
+    "ingredients": {
+      "Principal": [
+        "Â¼ de tasse de Sirop dâÃ©rable",
+        "Â¾ de tasse de Farine dâAvoine",
+        "1 Â½  tasse de Pois Chiches",
+        "Â½ tasse de Beurre dâamande",
+        "Â½ tasse de PÃ©pites de Chocolat Noir"
+      ]
+    },
+    "preparation": [
+      "Mettre tout les ingrÃ©dient dans un mixeur (sauf les PÃ©pites de Chocolat)",
+      "Mixer jusquâÃ  ce que la texture soit lisse",
+      "Ajouter les PÃ©pites de Chocolat",
+      "Faire des petites boule avec le mÃ©lange et rÃ©frigÃ©rer"
+    ],
+    "source": "https://www.rainbownourishments.com/chickpea-cookie-dough/",
+    "image_url": "images/recipe_37.jpg"
+  },
+  {
+    "id": "builtin-38",
+    "nom": "Barre ProtÃ©inÃ© au Chocolat",
+    "portions": "Pour 6 Portions",
+    "category": "Collations",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "Â½ Tasse de Farine",
+        "Â¼ de Tasse de Beurre dâAmande",
+        "2 Tasses de poudre de ProtÃ©ines au Chocolat",
+        "100 ml de lait dâAmande",
+        "50 ml de Sirop dâÃ©rable (ou Miel)",
+        "Â½ Tasse de Chocolat Noir"
+      ]
+    },
+    "preparation": [
+      "Ajouter tous les ingrÃ©dients dans un bol (sauf le Chocolat Noir)",
+      "MÃ©langer",
+      "Prendre un moule Ã  pain 9x5 et mettre du papier parchemin",
+      "Ãtendre le mÃ©lange uniformÃ©ment dans le moule",
+      "Mettre au congÃ©lateur",
+      "Faire fondre le Chocolat noir",
+      "Ajouter le Chocolat noir sur la mixture",
+      "Laisser raffermir le mÃ©lange  au congÃ©lateur pour minimum 30 minutes"
+    ],
+    "source": "https://www.instagram.com/reel/C2pxeeTJhGo/?igsh=MTloZHZhZ3VkaWIyaQ==",
+    "image_url": "images/recipe_38.jpg"
+  },
+  {
+    "id": "builtin-39",
+    "nom": "Pois Chiches ProtÃ©inÃ©s au Chocolat",
+    "portions": "",
+    "category": "Collations",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "1 Canne de Pois Chiche",
+        "Â¼ de Tasse de Chocolat Noir",
+        "1 C. dâHuile de Coco",
+        "1 Tasse de Poudre de Proteine au Chocolat",
+        "Flocon de Sel de Mer"
+      ]
+    },
+    "preparation": [
+      "Mettre les Pois Chiches dans le AirFryer Ã  350 degrÃ© pour 20 minutes",
+      "Faire fondre le Chocolat Noir avec lâHuile de Coco au micro-onde pour 20 Secondes",
+      "Mettre le Chocolat, la Poudre de Proteine et  les Pois Chiches dans un bol",
+      "MÃ©langer",
+      "Ãtendre tout le mÃ©lange sur une plaque avec papier parchemin",
+      "Mettre au congÃ©lateur"
+    ],
+    "source": "https://www.instagram.com/reel/C2ZpOmqIa6l/?igsh=MXI4eWlxNHJybmU4dg==",
+    "image_url": "images/recipe_39.jpg"
+  },
+  {
+    "id": "builtin-40",
+    "nom": "Barres Gruau ProtÃ©inÃ©",
+    "portions": "",
+    "category": "Collations",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "1 tasse dâAvoine",
+        "2 tasse de poudre de  ProtÃ©ine",
+        "2 C. de beurre dâAmande",
+        "1 C. de Miel",
+        "5-6 C. de lait dâAmande"
+      ]
+    },
+    "preparation": [
+      "Mettre lâAvoine, la Poudre de ProtÃ©ine et le Miel dans un Bol",
+      "MÃ©langer et ajouter le lait dâAmande",
+      "Prendre un moule Ã  pain 9x5 et mettre du papier parchemin",
+      "Ãtendre le mÃ©lange uniformÃ©ment dans le moule",
+      "Laisse refroidir dans le Frigo pour au moins 20 minutes"
+    ],
+    "source": "https://www.instagram.com/reel/C2-4WOGRdhY/?igsh=YzByNGY2MXdwbXA1",
+    "image_url": "images/recipe_40.jpg"
+  },
+  {
+    "id": "builtin-41",
+    "nom": "Coupes de Cajou au Chocolat",
+    "portions": "",
+    "category": "Collations",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "1 Â½ tasses de dattes Medjool moelleuses (225g)",
+        "1 tasse de cajous (140g)",
+        "PincÃ©e de sel de mer (optionnel)",
+        "Â½ tasse de chocolat noir (75g)"
+      ]
+    },
+    "preparation": [
+      "DÃ©noyauter les dattes et les mettre au robot culinaire avec les cajous. Si vos dattes sont dures, ajouter 1-2 c. Ã  soupe d'eau en mixant. Ajouter un peu de sel de mer pour un goÃ»t caramel salÃ©.",
+      "Rouler en boules et placer dans un moule Ã  mini-cupcakes. Presser avec un doigt ou le manche d'une cuillÃ¨re en bois pour crÃ©er un petit creux.",
+      "Faire fondre le chocolat noir au bain-marie et verser une cuillÃ¨re dans chaque creux. RÃ©frigÃ©rer pour faire prendre."
+    ],
+    "source": "https://helenridgeway.com/recipes/",
+    "image_url": "images/recipe_41.jpg"
+  },
+  {
+    "id": "builtin-42",
+    "nom": "Barres Shortbread Coco et Chocolat",
+    "portions": "",
+    "category": "Collations",
+    "temps": "25 min",
+    "ingredients": {
+      "Base": [
+        "2 tasses de farine d'amande",
+        "Â¼ tasse de sirop d'Ã©rable (ajouter plus si trop sec)"
+      ],
+      "Caramel": [
+        "Â½ tasse de beurre de noix (amande)",
+        "â tasse de sirop d'Ã©rable",
+        "3 c. Ã  soupe de noix de coco rÃ¢pÃ©e"
+      ],
+      "Garniture": [
+        "Chocolat noir",
+        "Noix de coco rÃ¢pÃ©e"
+      ]
+    },
+    "preparation": [
+      "MÃ©langer les ingrÃ©dients de la base et presser dans un moule carrÃ©. Mettre au congÃ©lateur.",
+      "MÃ©langer les ingrÃ©dients du caramel et Ã©tendre sur la base.",
+      "Avant de mettre au frigo, ajouter la couche de chocolat fondu mÃ©langÃ© avec la noix de coco rÃ¢pÃ©e (le chocolat solidifie vite!).",
+      "Laisser prendre au frigo jusqu'Ã  ce que ce soit ferme. Couper en barres et dÃ©guster!"
+    ],
+    "source": "",
+    "image_url": "images/recipe_42.jpg"
+  },
+  {
+    "id": "builtin-43",
+    "nom": "Muffins Banane Chocolat ProtÃ©inÃ©s",
+    "portions": "12 muffins",
+    "category": "Collations",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "3 bananes Ã©crasÃ©es",
+        "2 oeufs",
+        "Â¼ tasse de miel",
+        "1 c. Ã  soupe d'extrait de vanille",
+        "1 tasse de fromage cottage, mÃ©langÃ©",
+        "Â½ tasse de sucre de coco ou sirop d'Ã©rable",
+        "1 c. Ã  thÃ© de bicarbonate de soude",
+        "1 c. Ã  thÃ© de poudre Ã  pÃ¢te",
+        "1 c. Ã  thÃ© de cannelle",
+        "2 tasses de farine (peut Ãªtre sans gluten)",
+        "Â½ tasse de pÃ©pites de chocolat noir"
+      ]
+    },
+    "preparation": [
+      "PrÃ©chauffer le four Ã  350Â°F et prÃ©parer un moule Ã  muffins pour 12.",
+      "MÃ©langer tous les ingrÃ©dients humides, puis ajouter graduellement les ingrÃ©dients secs.",
+      "Ajouter les pÃ©pites de chocolat en dernier. Ne pas trop mÃ©langer!",
+      "Cuire 22-23 minutes."
+    ],
+    "source": "https://www.instagram.com/allie.dailywellness/",
+    "image_url": "images/recipe_43.jpg"
+  },
+  {
+    "id": "builtin-44",
+    "nom": "Frites de Carottes",
+    "portions": "",
+    "category": "Collations",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "3-4  Carottes, coupÃ© en longueur",
+        "2-3 C. dâHuile DâOlive",
+        "Poudre de Chili",
+        "Poudre dâonion",
+        "Paprika",
+        "Origan/Basilic"
+      ],
+      "Sauce": [
+        "â de tasse de Yogourt Grec",
+        "1 C. dâHuile dâolive",
+        "Â½ C. de Miel",
+        "Chili,  Paprika, Basilic"
+      ]
+    },
+    "preparation": [
+      "Couper les Carottes en longueur",
+      "Mettre dans un bol avec lâhuile et les Ã©pices",
+      "Ãtaler sur une plaque Ã  350 degrÃ© pendant 20-30 minutes",
+      "MÃ©langer les ingrÃ©dients pour la sauce"
+    ],
+    "source": "https://www.instagram.com/reel/C2NYMB9K9hC/?igsh=N3FnZHowYTRhbHV2",
+    "image_url": "images/recipe_44.jpg"
+  },
+  {
+    "id": "builtin-45",
+    "nom": "GÃ¢teau ProtÃ©inÃ© au Chocolat",
+    "portions": "Pour 2 Portions",
+    "category": "Collations",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Â½ Tasse dâavoine",
+        "â de Tasse Dâeau",
+        "1 Tasse de ProtÃ©ine en Poudre",
+        "2 C. de Poudre de Cacao",
+        "Â½ C. de Sirop d'Ã©rable (ou Miel)",
+        "1 C. de Beurre Dâamande"
+      ]
+    },
+    "preparation": [
+      "Mettre tous les ingrÃ©dients dans un Blender",
+      "Verser dans un bol",
+      "Mettre au Micro-Onde pour 1 Ã  2 minutes"
+    ],
+    "source": "https://www.instagram.com/reel/C3R8vRYxh32/?igsh=aTdzc3N3c29uajht",
+    "image_url": "images/recipe_45.jpg"
+  },
+  {
+    "id": "builtin-46",
+    "nom": "Pain aux Bananes, Fraises et Chocolat",
+    "portions": "",
+    "category": "Collations",
+    "temps": "1h",
+    "ingredients": {
+      "Principal": [
+        "3 bananes moyennes, mÃ»res et Ã©crasÃ©es",
+        "Â¾ tasse de sucre (blanc, brun ou de coco)",
+        "1 gros Åuf, tempÃ©rature ambiante",
+        "â tasse d'huile de coco, fondue",
+        "1 Â½ c. Ã  thÃ© d'extrait de vanille",
+        "Â½ c. Ã  thÃ© de bicarbonate de soude",
+        "1 Â½ tasses de farine tout usage sans gluten",
+        "1 c. Ã  thÃ© de cannelle",
+        "Â½ tasse de pÃ©pites de chocolat noir",
+        "Â½ tasse de fraises coupÃ©es en dÃ©s"
+      ]
+    },
+    "preparation": [
+      "MÃ©langer les bananes Ã©crasÃ©es, le sucre, l'huile de coco fondue, l'Åuf et la vanille dans un bol.",
+      "Ajouter les ingrÃ©dients secs tamisÃ©s et bien mÃ©langer au batteur Ã  main.",
+      "Incorporer le chocolat et les fraises, puis verser dans un moule Ã  pain chemisÃ©.",
+      "Cuire au four Ã  350Â°F pendant 55-60 minutes. Retirer et laisser refroidir avant de trancher."
+    ],
+    "source": "",
+    "image_url": "images/recipe_46.jpg"
+  },
+  {
+    "id": "builtin-47",
+    "nom": "Pain aux Bananes GÃ¢teau aux Carottes",
+    "portions": "",
+    "category": "Collations",
+    "temps": "1h",
+    "ingredients": {
+      "IngrÃ©dients humides": [
+        "1Â½ de carottes rÃ¢pÃ©es",
+        "2-3 bananes mÃ»res",
+        "Â½ tasse d'huile d'olive",
+        "Â½ tasse de yogourt grec",
+        "Â¾ de tasse de sirop d'Ã©rable",
+        "1 oeuf",
+        "1 cuillÃ¨re Ã  thÃ© d'extrait de vanille"
+      ],
+      "IngrÃ©dients secs": [
+        "1Â½ tasse de farine",
+        "1 cuillÃ¨re Ã  thÃ© de poudre Ã  pÃ¢te",
+        "1 cuillÃ¨re Ã  thÃ© de bicarbonate de soude",
+        "1 cuillÃ¨re Ã  thÃ© de cannelle moulue",
+        "1 cuillÃ¨re Ã  thÃ© de muscade",
+        "1 scoop de protÃ©ine vanille (facultatif)"
+      ],
+      "CrÃ©mage": [
+        "1 bloc de fromage Ã  la crÃ¨me faible en gras",
+        "Â½ tasse de yogourt grec",
+        "1 cuillÃ¨re Ã  thÃ© d'extrait de vanille",
+        "2-3 cuillÃ¨res Ã  soupe de sirop d'Ã©rable (ou plus au goÃ»t)",
+        "1 scoop de protÃ©ine vanille (facultatif)"
+      ]
+    },
+    "preparation": [
+      "Dans un mÃ©langeur, broyer les carottes (ou rÃ¢per Ã  la main).",
+      "Ajouter le reste des ingrÃ©dients humides et mÃ©langer jusqu'Ã  texture homogÃ¨ne.",
+      "Dans un autre bol, mÃ©langer les ingrÃ©dients secs.",
+      "Ajouter les ingrÃ©dients humides aux secs et bien mÃ©langer.",
+      "Ajouter les noix hachÃ©es et dÃ©poser dans un moule Ã  pain.",
+      "Cuire au four Ã  350 degrÃ©s de 45 Ã  55 minutes ou jusqu'Ã  ce qu'un cure-dent en ressorte propre.",
+      "PrÃ©parer le crÃ©mage en mÃ©langeant tous les ingrÃ©dients et Ã©taler sur le pain refroidi."
+    ],
+    "source": "https://www.instagram.com/catherine.hamel_/",
+    "image_url": "images/recipe_47.jpg"
+  },
+  {
+    "id": "builtin-48",
+    "nom": "Beignets aux Pommes Sans Sucre",
+    "portions": "",
+    "category": "Collations",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "2 petites pommes coupÃ©es finement (environ 70g)",
+        "1 gros oeuf",
+        "1 c. Ã  soupe d'huile de coco fondue",
+        "1 c. Ã  thÃ© de cannelle",
+        "PincÃ©e de poudre Ã  pÃ¢te",
+        "Â¼ tasse de flocons d'avoine (environ 25g)",
+        "Â¼ tasse de farine de riz (environ 25g)"
+      ],
+      "Garniture optionnelle": [
+        "Sirop d'Ã©rable",
+        "Sucre glacÃ©",
+        "Beurre de coco ou beurre de monkfruit"
+      ]
+    },
+    "preparation": [
+      "PrÃ©chauffer le four Ã  190Â°C / 380Â°F.",
+      "Dans un bol, casser l'oeuf et ajouter l'huile de coco fondue. Fouetter.",
+      "Couper les pommes finement et les ajouter au bol.",
+      "Ajouter la cannelle, les flocons d'avoine, la farine et la poudre Ã  pÃ¢te. MÃ©langer.",
+      "Placer sur une plaque Ã  cuisson avec du papier parchemin en formant des petits tas.",
+      "Cuire 14-17 minutes ou jusqu'Ã  dorÃ©."
+    ],
+    "source": "https://www.instagram.com/yourwellnessgirly/",
+    "image_url": "images/recipe_48.jpg"
+  },
+  {
+    "id": "builtin-49",
+    "nom": "Pain Pita aux Ãpinards",
+    "portions": "Pour 2 Portions",
+    "category": "Autres",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "1 Tasse dâÃpinards",
+        "2 Oeufs"
+      ]
+    },
+    "preparation": [
+      "Blender les deux ingrÃ©dients",
+      "Faire cuire sur la poÃªle"
+    ],
+    "source": "https://www.instagram.com/reel/C2csYUKOFFt/?igsh=ZXYwb2E4MzBwbXpl",
+    "image_url": "images/recipe_49.jpg"
+  },
+  {
+    "id": "builtin-50",
+    "nom": "Smoothie",
+    "portions": "",
+    "category": "Autres",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "Poudre de ProtÃ©ine",
+        "Ãpinard",
+        "Fruit",
+        "Chou-Fleur",
+        "Greens",
+        "CollagÃ¨ne",
+        "Lait dâamande"
+      ]
+    },
+    "preparation": [],
+    "source": "https://www.instagram.com/reel/C3TKNsIPy_F/?igsh=MzJxOWoxZWw5bDNw",
+    "image_url": "images/recipe_50.jpg"
+  },
+  {
+    "id": "builtin-51",
+    "nom": "Marinade SucrÃ©/ÃpicÃ©",
+    "portions": "",
+    "category": "Autres",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "Sauce Soya",
+        "Sauce ThaÃ¯",
+        "Ail (Petit pot Couvercle vert)",
+        "Miel",
+        "Sriracha"
+      ]
+    },
+    "preparation": [
+      "MÃ©langer tout ensemble",
+      "Ajouter oignons  verts et Ã©pices Plein GoÃ»t sur le poulet ou saumon"
+    ],
+    "source": "https://www.instagram.com/reel/CUajzpHlEWm/?igsh=Yzdld3UxbzRsZnJh",
+    "image_url": "images/recipe_51.jpg"
+  }
+];
+
+</script>
   <script>
     // ==========================================
     // STATE
@@ -1057,20 +2667,20 @@
         const imgStyle = r.image_url
           ? `background-image: url('${r.image_url}')`
           : `background: linear-gradient(135deg, #F5C4BA 0%, #E8836D 100%)`;
-        const placeholder = r.image_url ? '' : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;">🍽️</div>';
+        const placeholder = r.image_url ? '' : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;">ð½ï¸</div>';
 
         const isFav = favorites.has(String(r.id));
         cardsHtml += `
           <div class="recipe-card" data-category="${esc(r.category)}" data-id="${esc(String(r.id))}" data-ingredients="${esc(JSON.stringify(r.ingredients))}" onclick="openRecipe('${rid}')" style="animation-delay: ${(i % 12) * 0.05}s">
             <div class="card-image" style="${imgStyle}">${placeholder}
               <span class="card-category">${esc(r.category)}</span>
-              ${isFav ? '<span class="card-fav-badge">⭐</span>' : ''}
+              ${isFav ? '<span class="card-fav-badge">â­</span>' : ''}
             </div>
             <div class="card-content">
               <h3>${esc(r.nom)}</h3>
               <div class="card-meta">
                 ${r.portions ? '<span class="card-portions">' + esc(r.portions) + '</span>' : ''}
-                ${r.temps ? '<span class="card-time">⏱ ' + esc(r.temps) + '</span>' : ''}
+                ${r.temps ? '<span class="card-time">â± ' + esc(r.temps) + '</span>' : ''}
               </div>
             </div>
           </div>`;
@@ -1081,7 +2691,7 @@
         for (const [section, items] of Object.entries(ingredients || {})) {
           if (section !== 'Principal') ingHtml += `<li class="ing-section">${esc(section)}</li>`;
           (items || []).forEach(item => {
-            ingHtml += `<li><span class="bullet">●</span> ${esc(item)}</li>`;
+            ingHtml += `<li><span class="bullet">â</span> ${esc(item)}</li>`;
           });
         }
 
@@ -1093,57 +2703,57 @@
         });
 
         const sourceHtml = r.source
-          ? `<div class="modal-source"><a href="${esc(r.source)}" target="_blank">Voir la source ↗</a></div>`
+          ? `<div class="modal-source"><a href="${esc(r.source)}" target="_blank">Voir la source â</a></div>`
           : '';
 
         const modalImg = r.image_url
           ? `<div class="modal-image" style="background-image: url('${r.image_url}')"></div>`
-          : `<div class="modal-image" style="background: linear-gradient(135deg, #F5C4BA 0%, #E8836D 100%); display:flex;align-items:center;justify-content:center;font-size:4rem;">🍽️</div>`;
+          : `<div class="modal-image" style="background: linear-gradient(135deg, #F5C4BA 0%, #E8836D 100%); display:flex;align-items:center;justify-content:center;font-size:4rem;">ð½ï¸</div>`;
 
         const isFavModal = favorites.has(String(r.id));
         modalsHtml += `
           <div id="${rid}" class="modal">
             <div class="modal-content">
               <button class="modal-close" onclick="closeRecipe()">&times;</button>
-              <button class="fav-btn" onclick="toggleFav('${r.id}'); event.stopPropagation();" title="Favori">${isFavModal ? '⭐' : '☆'}</button>
+              <button class="fav-btn" onclick="toggleFav('${r.id}'); event.stopPropagation();" title="Favori">${isFavModal ? 'â­' : 'â'}</button>
               <div class="modal-header">
                 ${modalImg}
                 <div class="modal-title-area">
                   <p class="modal-label">RECETTE</p>
                   <h2>${esc(r.nom)}</h2>
                   ${r.portions ? '<p class="modal-portions">' + esc(r.portions) + '</p>' : ''}
-                  ${r.temps ? '<p class="modal-portions">⏱ ' + esc(r.temps) + '</p>' : ''}
+                  ${r.temps ? '<p class="modal-portions">â± ' + esc(r.temps) + '</p>' : ''}
                   <span class="modal-cat-badge">${esc(r.category)}</span>
                 </div>
               </div>
               <div class="modal-body">
-                <div class="modal-section"><h3>Ingrédients</h3><ul class="ingredients-list">${ingHtml}</ul></div>
-                <div class="modal-section"><h3>Préparation</h3><ol class="steps-list">${stepsHtml}</ol></div>
+                <div class="modal-section"><h3>IngrÃ©dients</h3><ul class="ingredients-list">${ingHtml}</ul></div>
+                <div class="modal-section"><h3>PrÃ©paration</h3><ol class="steps-list">${stepsHtml}</ol></div>
                 ${sourceHtml}
                 ${r.macros ? `<div class="macros-bar">
-                  ${r.macros.cal ? '<span class="macro-badge macro-cal">🔥 ' + esc(r.macros.cal) + ' cal</span>' : ''}
-                  ${r.macros.prot ? '<span class="macro-badge macro-prot">💪 ' + esc(r.macros.prot) + 'g prot</span>' : ''}
-                  ${r.macros.carb ? '<span class="macro-badge macro-carb">🌾 ' + esc(r.macros.carb) + 'g carb</span>' : ''}
-                  ${r.macros.fat ? '<span class="macro-badge macro-fat">🫒 ' + esc(r.macros.fat) + 'g lip</span>' : ''}
+                  ${r.macros.cal ? '<span class="macro-badge macro-cal">ð¥ ' + esc(r.macros.cal) + ' cal</span>' : ''}
+                  ${r.macros.prot ? '<span class="macro-badge macro-prot">ðª ' + esc(r.macros.prot) + 'g prot</span>' : ''}
+                  ${r.macros.carb ? '<span class="macro-badge macro-carb">ð¾ ' + esc(r.macros.carb) + 'g carb</span>' : ''}
+                  ${r.macros.fat ? '<span class="macro-badge macro-fat">ð« ' + esc(r.macros.fat) + 'g lip</span>' : ''}
                 </div>` : ''}
                 <div class="recipe-notes-section">
-                  <h4>📝 Mes notes <span class="notes-saved-badge" id="notesBadge-${r.id}">✓ Sauvegardé</span></h4>
+                  <h4>ð Mes notes <span class="notes-saved-badge" id="notesBadge-${r.id}">â SauvegardÃ©</span></h4>
                   <textarea class="recipe-notes-textarea" id="notes-${r.id}" placeholder="Ajoute tes trucs perso ici... ex: plus de sriracha, parfait pour meal prep..." oninput="saveNote('${r.id}')">${esc(getNoteFor(r.id))}</textarea>
                 </div>
                 <div class="btn-row" style="margin-top:16px">
-                  <button class="btn-secondary" onclick="openGroceryModal('${r.id}'); closeRecipe();">🛒 Épicerie</button>
+                  <button class="btn-secondary" onclick="openGroceryModal('${r.id}'); closeRecipe();">ð Ãpicerie</button>
                 </div>
                 <div class="btn-row" style="margin-top:8px">
-                  <button class="btn-secondary" onclick="openShareModal('${r.id}'); closeRecipe();">📤 Partager</button>
-                  <button class="btn-secondary" onclick="openEditModal('${r.id}'); closeRecipe();">✏️ Modifier</button>
-                  <button class="btn-danger" style="flex:1;padding:12px;border-radius:10px;font-size:0.95rem" onclick="openDeleteModal('${r.id}', '${esc(r.nom)}'); closeRecipe();">🗑️ Supprimer</button>
+                  <button class="btn-secondary" onclick="openShareModal('${r.id}'); closeRecipe();">ð¤ Partager</button>
+                  <button class="btn-secondary" onclick="openEditModal('${r.id}'); closeRecipe();">âï¸ Modifier</button>
+                  <button class="btn-danger" style="flex:1;padding:12px;border-radius:10px;font-size:0.95rem" onclick="openDeleteModal('${r.id}', '${esc(r.nom)}'); closeRecipe();">ðï¸ Supprimer</button>
                 </div>
               </div>
             </div>
           </div>`;
       });
 
-      cardsHtml += '<div id="noResults" class="no-results">Aucune recette trouvée 🔍</div>';
+      cardsHtml += '<div id="noResults" class="no-results">Aucune recette trouvÃ©e ð</div>';
       grid.innerHTML = cardsHtml;
       modals.innerHTML = modalsHtml;
 
@@ -1155,10 +2765,10 @@
     function renderFilters() {
       const counts = {};
       allRecipes.forEach(r => { counts[r.category] = (counts[r.category] || 0) + 1; });
-      const categories = ['Repas', 'Déjeuner', 'Collations', 'Autres'];
+      const categories = ['Repas', 'DÃ©jeuner', 'Collations', 'Autres'];
 
       let html = `<button class="filter-btn ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">Toutes</button>`;
-      html += `<button class="filter-btn ${activeFilter === 'favoris' ? 'active' : ''}" data-filter="favoris">⭐ Favoris <span class="count">(${favorites.size})</span></button>`;
+      html += `<button class="filter-btn ${activeFilter === 'favoris' ? 'active' : ''}" data-filter="favoris">â­ Favoris <span class="count">(${favorites.size})</span></button>`;
       categories.forEach(cat => {
         const count = counts[cat] || 0;
         html += `<button class="filter-btn ${activeFilter === cat ? 'active' : ''}" data-filter="${cat}">${cat} <span class="count">(${count})</span></button>`;
@@ -1300,13 +2910,13 @@
     }
 
     // ==========================================
-    // AI ANALYSIS — appel direct à l'API Anthropic
+    // AI ANALYSIS â appel direct Ã  l'API Anthropic
     // ==========================================
     async function analyzeImages() {
       const apiKey = document.getElementById('apiKeyInput').value.trim();
       if (!apiKey || !apiKey.startsWith('sk-')) {
         document.getElementById('addMessage1').innerHTML =
-          '<div class="error-msg">Entre ta clé API Anthropic pour continuer (commence par sk-ant-...).</div>';
+          '<div class="error-msg">Entre ta clÃ© API Anthropic pour continuer (commence par sk-ant-...).</div>';
         return;
       }
       // Save key locally
@@ -1335,17 +2945,17 @@
           text: `Analyse ces images de recette et retourne un JSON UNIQUEMENT (pas de markdown, pas de texte autour) avec cette structure exacte:
 {
   "nom": "Nom de la recette",
-  "category": "Repas" | "Déjeuner" | "Collations" | "Autres",
-  "portions": "Pour X portions (ou vide si pas mentionné)",
-  "temps": "Temps total de préparation (ex: 20 min, 1h, vide si pas mentionné)",
+  "category": "Repas" | "DÃ©jeuner" | "Collations" | "Autres",
+  "portions": "Pour X portions (ou vide si pas mentionnÃ©)",
+  "temps": "Temps total de prÃ©paration (ex: 20 min, 1h, vide si pas mentionnÃ©)",
   "ingredients": {
-    "Principal": ["ingrédient 1", "ingrédient 2"],
-    "Nom Section Optionnelle": ["ingrédient A"]
+    "Principal": ["ingrÃ©dient 1", "ingrÃ©dient 2"],
+    "Nom Section Optionnelle": ["ingrÃ©dient A"]
   },
-  "preparation": ["Étape 1", "Étape 2"],
+  "preparation": ["Ãtape 1", "Ãtape 2"],
   "source": ""
 }
-IMPORTANT: Rédige TOUT en français — le nom de la recette, les ingrédients, les étapes de préparation et les noms de sections. Si la recette source est en anglais, traduis tout en français.
+IMPORTANT: RÃ©dige TOUT en franÃ§ais â le nom de la recette, les ingrÃ©dients, les Ã©tapes de prÃ©paration et les noms de sections. Si la recette source est en anglais, traduis tout en franÃ§ais.
 Retourne SEULEMENT le JSON, rien d'autre.`
         });
 
@@ -1404,7 +3014,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
     }
 
     // ==========================================
-    // SAVE RECIPE — sauvegarde locale (localStorage)
+    // SAVE RECIPE â sauvegarde locale (localStorage)
     // ==========================================
     function saveRecipe() {
       const saveBtn = document.getElementById('saveBtn');
@@ -1647,7 +3257,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
       groceryRecipeData = r;
       currentMultiplier = 1;
       document.getElementById('groceryRecipeName').textContent = r.nom;
-      document.getElementById('multValue').textContent = '1×';
+      document.getElementById('multValue').textContent = '1Ã';
       document.getElementById('multPortions').textContent = r.portions ? 'Base : ' + r.portions : '';
       renderGroceryItems();
       document.getElementById('groceryModal').classList.add('open');
@@ -1662,13 +3272,13 @@ Retourne SEULEMENT le JSON, rien d'autre.`
     function copyGroceryList() {
       const items = [...document.querySelectorAll('#groceryList li:not(.grocery-section-title)')]
         .filter(li => !li.classList.contains('checked'))
-        .map(li => '• ' + li.querySelector('span:last-child').textContent);
+        .map(li => 'â¢ ' + li.querySelector('span:last-child').textContent);
       const recipeName = document.getElementById('groceryRecipeName').textContent;
-      const text = `Liste d'épicerie — ${recipeName}\n\n${items.join('\n')}`;
+      const text = `Liste d'Ã©picerie â ${recipeName}\n\n${items.join('\n')}`;
       navigator.clipboard.writeText(text).then(() => {
         const btn = document.querySelector('.grocery-copy-btn');
-        btn.textContent = '✅ Copié!';
-        setTimeout(() => btn.textContent = '📋 Copier la liste', 2000);
+        btn.textContent = 'â CopiÃ©!';
+        setTimeout(() => btn.textContent = 'ð Copier la liste', 2000);
       });
     }
 
@@ -1679,7 +3289,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
 
     function openDeleteModal(recipeId, recipeName) {
       recipeToDelete = recipeId;
-      document.getElementById('deleteRecipeName').textContent = `"${recipeName}" sera supprimée définitivement.`;
+      document.getElementById('deleteRecipeName').textContent = `"${recipeName}" sera supprimÃ©e dÃ©finitivement.`;
       document.getElementById('deleteModal').classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -1764,18 +3374,18 @@ Retourne SEULEMENT le JSON, rien d'autre.`
       const ingredients = typeof r.ingredients === 'string' ? JSON.parse(r.ingredients) : r.ingredients;
       const prep = typeof r.preparation === 'string' ? JSON.parse(r.preparation) : r.preparation;
 
-      let text = `🍽️ ${r.nom}\n`;
-      if (r.portions) text += `👥 ${r.portions}\n`;
-      if (r.temps) text += `⏱ ${r.temps}\n`;
-      text += `\n📦 INGRÉDIENTS\n`;
+      let text = `ð½ï¸ ${r.nom}\n`;
+      if (r.portions) text += `ð¥ ${r.portions}\n`;
+      if (r.temps) text += `â± ${r.temps}\n`;
+      text += `\nð¦ INGRÃDIENTS\n`;
       for (const [section, items] of Object.entries(ingredients || {})) {
         if (section !== 'Principal') text += `\n${section.toUpperCase()}\n`;
-        (items || []).forEach(item => { text += `• ${item}\n`; });
+        (items || []).forEach(item => { text += `â¢ ${item}\n`; });
       }
-      text += `\n👩‍🍳 PRÉPARATION\n`;
+      text += `\nð©âð³ PRÃPARATION\n`;
       (prep || []).forEach((step, i) => { text += `${i+1}. ${step}\n`; });
-      if (r.source) text += `\n🔗 Source : ${r.source}`;
-      text += `\n\n— Alexanne's Cookbook 🍴`;
+      if (r.source) text += `\nð Source : ${r.source}`;
+      text += `\n\nâ Alexanne's Cookbook ð´`;
       return text;
     }
 
@@ -1788,10 +3398,10 @@ Retourne SEULEMENT le JSON, rien d'autre.`
       document.getElementById('shareCanvasWrap').classList.remove('visible');
 
       navigator.clipboard.writeText(text).then(() => {
-        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">✅ Texte copié dans le presse-papiers!</div>';
+        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">â Texte copiÃ© dans le presse-papiers!</div>';
         setTimeout(() => document.getElementById('shareMsg').innerHTML = '', 3000);
       }).catch(() => {
-        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">📋 Sélectionne et copie le texte ci-dessus.</div>';
+        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">ð SÃ©lectionne et copie le texte ci-dessus.</div>';
       });
     }
 
@@ -1802,7 +3412,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
         navigator.share({ title: shareRecipeData.nom, text }).catch(() => {});
       } else {
         navigator.clipboard.writeText(text).then(() => {
-          document.getElementById('shareMsg').innerHTML = '<div class="success-msg">✅ Texte copié — partage non disponible sur ce navigateur.</div>';
+          document.getElementById('shareMsg').innerHTML = '<div class="success-msg">â Texte copiÃ© â partage non disponible sur ce navigateur.</div>';
           setTimeout(() => document.getElementById('shareMsg').innerHTML = '', 3000);
         });
       }
@@ -1848,8 +3458,8 @@ Retourne SEULEMENT le JSON, rien d'autre.`
         let badgeY = 80 + lines.length * 34 + 10;
         ctx.font = '14px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
         let badges = [];
-        if (r.portions) badges.push('👥 ' + r.portions);
-        if (r.temps) badges.push('⏱ ' + r.temps);
+        if (r.portions) badges.push('ð¥ ' + r.portions);
+        if (r.temps) badges.push('â± ' + r.temps);
         if (badges.length) {
           ctx.fillStyle = 'rgba(255,255,255,0.25)';
           const badgeText = badges.join('   ');
@@ -1893,7 +3503,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
         ctx.fillRect(0, y, W, h);
         ctx.font = '60px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('🍽️', W/2, y + h/2 + 20);
+        ctx.fillText('ð½ï¸', W/2, y + h/2 + 20);
       }
 
       function drawContent(startY) {
@@ -1917,7 +3527,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
           const maxItems = isSteps ? 4 : 8;
           const shown = items.slice(0, maxItems);
           shown.forEach((item, idx) => {
-            const prefix = isSteps ? `${idx+1}. ` : '• ';
+            const prefix = isSteps ? `${idx+1}. ` : 'â¢ ';
             const text = prefix + item;
             // simple word wrap
             const words = text.split(' ');
@@ -1942,10 +3552,10 @@ Retourne SEULEMENT le JSON, rien d'autre.`
         // Ingredients
         const allIng = [];
         for (const [sec, items] of Object.entries(ingredients || {})) (items||[]).forEach(i => allIng.push(i));
-        section('Ingrédients', allIng, false);
+        section('IngrÃ©dients', allIng, false);
 
         // Steps
-        section('Préparation', prep, true);
+        section('PrÃ©paration', prep, true);
 
         // Footer
         ctx.fillStyle = salmon;
@@ -1953,11 +3563,11 @@ Retourne SEULEMENT le JSON, rien d'autre.`
         ctx.fillStyle = '#FFFFFF';
         ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Alexanne\'s Cookbook 🍴', W/2, H - 16);
+        ctx.fillText('Alexanne\'s Cookbook ð´', W/2, H - 16);
 
         document.getElementById('shareCanvasWrap').classList.add('visible');
         document.getElementById('sharePreview').classList.remove('visible');
-        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">✅ Image prête — appuie longuement dessus sur mobile pour la sauvegarder.</div>';
+        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">â Image prÃªte â appuie longuement dessus sur mobile pour la sauvegarder.</div>';
       }
 
       drawImage();
@@ -1980,6 +3590,180 @@ Retourne SEULEMENT le JSON, rien d'autre.`
       link.download = (r ? r.nom.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'recette') + '.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
+    }
+
+    // ==========================================
+    // SORT
+    // ==========================================
+    let currentSort = 'temps-asc';
+
+    function parseTempsMinutes(temps) {
+      if (!temps) return 9999;
+      var h = temps.match(/(\d+)\s*h/i);
+      var m = temps.match(/(\d+)\s*min/i);
+      return (h ? parseInt(h[1]) * 60 : 0) + (m ? parseInt(m[1]) : 0);
+    }
+
+    function sortAndRender() {
+      currentSort = document.getElementById('sortSelect').value;
+      renderRecipes();
+      renderSidebar();
+    }
+
+    function getSortedRecipes() {
+      var sorted = allRecipes.map(function(r, idx) { return Object.assign({}, r, {_idx: idx}); });
+      if (currentSort === 'temps-asc') {
+        sorted.sort(function(a, b) { return parseTempsMinutes(a.temps) - parseTempsMinutes(b.temps); });
+      } else if (currentSort === 'temps-desc') {
+        sorted.sort(function(a, b) { return parseTempsMinutes(b.temps) - parseTempsMinutes(a.temps); });
+      } else if (currentSort === 'recent') {
+        sorted.sort(function(a, b) {
+          var idA = String(a.id), idB = String(b.id);
+          var tsA = idA.startsWith('local-') ? parseInt(idA.replace('local-','')) : 0;
+          var tsB = idB.startsWith('local-') ? parseInt(idB.replace('local-','')) : 0;
+          if (tsA > 0 && tsB === 0) return -1;
+          if (tsA === 0 && tsB > 0) return 1;
+          if (tsA > 0 && tsB > 0) return tsB - tsA;
+          return b._idx - a._idx;
+        });
+      } else {
+        sorted.sort(function(a, b) { return a._idx - b._idx; });
+      }
+      return sorted.map(function(r) { var o = Object.assign({}, r); delete o._idx; return o; });
+    }
+
+    // ==========================================
+    // SIDEBAR
+    // ==========================================
+    var sidebarOpen = true;
+    var sidebarCatOpen = {'Repas': true, 'Dejeuner': true, 'Collations': true, 'Autres': true};
+
+    function toggleSidebar() {
+      sidebarOpen = !sidebarOpen;
+      var sidebar = document.getElementById('sidebar');
+      var openBtn = document.getElementById('sidebarOpenBtn');
+      sidebar.classList.toggle('collapsed', !sidebarOpen);
+      if (openBtn) openBtn.classList.toggle('visible', !sidebarOpen);
+    }
+
+    function openMobileSidebar() {
+      document.getElementById('sidebar').classList.add('mobile-open');
+      document.getElementById('sidebarOverlay').classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileSidebar() {
+      var s = document.getElementById('sidebar');
+      var o = document.getElementById('sidebarOverlay');
+      if (s) s.classList.remove('mobile-open');
+      if (o) o.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+
+    function renderSidebar() {
+      var searchEl = document.getElementById('sidebarSearch');
+      var query = searchEl ? searchEl.value.toLowerCase().trim() : '';
+      var categories = ['Repas', 'D\u00e9jeuner', 'Collations', 'Autres'];
+      var container = document.getElementById('sidebarContent');
+      if (!container) return;
+      var html = '';
+      categories.forEach(function(cat) {
+        var items = allRecipes.filter(function(r) { return r.category === cat; });
+        if (query) items = items.filter(function(r) { return r.nom.toLowerCase().includes(query); });
+        if (!items.length) return;
+        var isOpen = query ? true : (sidebarCatOpen[cat] !== false);
+        var maxH = isOpen ? (items.length * 44 + 'px') : '0';
+        var arrowCls = 'sidebar-cat-arrow' + (isOpen ? ' open' : '');
+        var itemsHtml = '';
+        items.forEach(function(r) {
+          var favDot = favorites.has(String(r.id)) ? '<span class="fav-dot">\u2B50</span>' : '';
+          var timeSpan = r.temps ? '<span style="font-size:0.72rem;color:var(--salmon);margin-left:auto;white-space:nowrap">\u23F1 ' + esc(r.temps) + '</span>' : '';
+          var rid = String(r.id);
+          itemsHtml += '<div class="sidebar-item" id="sidebarItem-' + rid + '" onclick="openRecipeFromSidebar(\'' + rid + '\')">' + favDot + '<span>' + esc(r.nom) + '</span>' + timeSpan + '</div>';
+        });
+        html += '<div class="sidebar-category">'
+          + '<div class="sidebar-cat-header" onclick="toggleSidebarCat(\'' + cat + '\')">'
+          + '<span class="sidebar-cat-name">' + cat + '</span>'
+          + '<span style="display:flex;align-items:center;gap:6px">'
+          + '<span class="sidebar-cat-count">' + items.length + '</span>'
+          + '<span class="' + arrowCls + '" id="arrow-' + cat + '">\u25B6</span>'
+          + '</span></div>'
+          + '<div class="sidebar-items" id="sidebarCat-' + cat + '" style="max-height:' + maxH + '">' + itemsHtml + '</div>'
+          + '</div>';
+      });
+      container.innerHTML = html || '<p style="padding:16px;color:var(--gray);font-size:0.85rem;">Aucun r\u00e9sultat</p>';
+    }
+
+    function toggleSidebarCat(cat) {
+      sidebarCatOpen[cat] = !sidebarCatOpen[cat];
+      var el = document.getElementById('sidebarCat-' + cat);
+      var arrow = document.getElementById('arrow-' + cat);
+      if (!el) return;
+      var items = allRecipes.filter(function(r) { return r.category === cat; });
+      el.style.maxHeight = sidebarCatOpen[cat] ? (items.length * 44 + 'px') : '0';
+      if (arrow) arrow.classList.toggle('open', sidebarCatOpen[cat]);
+    }
+
+    function openRecipeFromSidebar(recipeId) {
+      document.querySelectorAll('.sidebar-item').forEach(function(el) { el.classList.remove('active'); });
+      var item = document.getElementById('sidebarItem-' + recipeId);
+      if (item) item.classList.add('active');
+      closeMobileSidebar();
+      openRecipe('recipe-' + recipeId);
+    }
+
+    // ==========================================
+    // GROCERY MULTIPLIER
+    // ==========================================
+    var currentMultiplier = 1;
+    var groceryRecipeData = null;
+
+    function changeMultiplier(delta) {
+      currentMultiplier = Math.max(1, Math.min(10, currentMultiplier + delta));
+      document.getElementById('multValue').textContent = currentMultiplier + '\u00D7';
+      if (groceryRecipeData) {
+        var base = groceryRecipeData.portions || '';
+        document.getElementById('multPortions').textContent = base ? 'Base : ' + base : '';
+        renderGroceryItems();
+      }
+    }
+
+    function renderGroceryItems() {
+      var r = groceryRecipeData;
+      if (!r) return;
+      var list = document.getElementById('groceryList');
+      list.innerHTML = '';
+      var ingredients = typeof r.ingredients === 'string' ? JSON.parse(r.ingredients) : r.ingredients;
+      for (var section in ingredients) {
+        if (!ingredients.hasOwnProperty(section)) continue;
+        if (section !== 'Principal') {
+          var sep = document.createElement('li');
+          sep.className = 'grocery-section-title';
+          sep.textContent = section.toUpperCase();
+          sep.style.cssText = 'cursor:default;border:none;padding-bottom:2px;';
+          list.appendChild(sep);
+        }
+        var items = ingredients[section] || [];
+        items.forEach(function(item) {
+          var li = document.createElement('li');
+          var multiplied = currentMultiplier > 1 ? multiplyIngredient(item, currentMultiplier) : item;
+          li.innerHTML = '<span class="check-box"></span><span>' + esc(multiplied) + '</span>';
+          li.addEventListener('click', function() {
+            li.classList.toggle('checked');
+            li.querySelector('.check-box').textContent = li.classList.contains('checked') ? '\u2713' : '';
+          });
+          list.appendChild(li);
+        });
+      }
+    }
+
+    function multiplyIngredient(item, mult) {
+      return item.replace(/(\d+(?:[.,]\d+)?)/g, function(match) {
+        var num = parseFloat(match.replace(',', '.'));
+        var result = num * mult;
+        var rounded = Number.isInteger(result) ? result : Math.round(result * 4) / 4;
+        return String(rounded).replace('.', ',');
+      });
     }
 
     // ==========================================
