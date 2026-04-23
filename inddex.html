@@ -1,0 +1,3805 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alexanne's Cookbook</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
+  <style>
+    :root {
+      --salmon: #E8836D;
+      --salmon-light: #F5C4BA;
+      --salmon-bg: #FDF0ED;
+      --salmon-hover: #D4725E;
+      --dark: #2D2D2D;
+      --gray: #666;
+      --light-gray: #F5F5F5;
+      --white: #FFFFFF;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+      --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+      --radius: 16px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #1A1A1A;
+      color: #F0F0F0;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    .header {
+      text-align: center;
+      padding: 60px 20px 30px;
+      background: linear-gradient(180deg, var(--salmon-bg) 0%, var(--white) 100%);
+    }
+    .header h1 { font-size: 2.8rem; font-weight: 700; color: var(--salmon); letter-spacing: -0.5px; }
+    .header p { color: var(--gray); font-size: 1.1rem; margin-top: 8px; }
+    .header .recipe-count {
+      display: inline-block; margin-top: 12px; padding: 6px 18px;
+      background: var(--salmon); color: white; border-radius: 20px;
+      font-size: 0.85rem; font-weight: 600;
+    }
+    @media (max-width: 800px) {
+      .header { padding: 24px 16px 16px; }
+      .header h1 { font-size: 1.8rem; }
+      .header p { font-size: 0.9rem; margin-top: 4px; }
+      .header .recipe-count { margin-top: 6px; padding: 4px 14px; font-size: 0.8rem; }
+    }
+
+    /* CONTROLS &mdash; sticky, compact */
+    .controls {
+      max-width: 1200px; margin: 0 auto; padding: 10px 20px;
+      position: sticky; top: 0; background: rgba(26,26,26,0.97);
+      backdrop-filter: blur(10px); z-index: 10;
+      border-bottom: 1px solid #333;
+    }
+    .controls-row { display: flex; align-items: center; gap: 10px; }
+    /* FILTERS BAR &mdash; not sticky, scrolls with content */
+    .filters-bar {
+      max-width: 1200px; margin: 0 auto; padding: 10px 20px 8px;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      border-bottom: 1px solid #333;
+    }
+    @media (max-width: 800px) {
+      .filters-bar { padding: 8px 14px; }
+    }
+    .search-bar {
+      flex: 1; padding: 12px 20px; border: 2px solid #eee; border-radius: 12px;
+      font-size: 1rem; outline: none; transition: border-color 0.2s;
+    }
+    .search-bar:focus { border-color: var(--salmon); }
+    .search-bar::placeholder { color: #bbb; }
+    .add-btn {
+      padding: 12px 20px; background: var(--salmon); color: white; border: none;
+      border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer;
+      transition: background 0.2s; white-space: nowrap;
+    }
+    .add-btn:hover { background: var(--salmon-hover); }
+    .filters { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 8px 18px; border: 2px solid #eee; background: white;
+      border-radius: 25px; cursor: pointer; font-size: 0.9rem; font-weight: 500;
+      color: var(--gray); transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--salmon-light); color: var(--salmon); }
+    .filter-btn.active { background: var(--salmon); color: white; border-color: var(--salmon); }
+    .filter-btn .count { opacity: 0.7; font-size: 0.8rem; }
+
+    /* DARK MODE &mdash; par d&#233;faut */
+    :root {
+      --dark: #F0F0F0;
+      --gray: #AAA;
+      --light-gray: #2A2A2A;
+      --white: #1A1A1A;
+      --shadow: 0 2px 12px rgba(0,0,0,0.3);
+      --shadow-hover: 0 8px 30px rgba(0,0,0,0.45);
+      --salmon-bg: #2A1F1C;
+    }
+    body { background: #1A1A1A; }
+    .recipe-card { background: #242424; }
+    .modal-content, .add-modal-content, .edit-modal-content { background: #242424; }
+    .controls { background: rgba(26,26,26,0.97); border-bottom-color: #333; }
+    .filter-btn { background: #242424; border-color: #333; color: #AAA; }
+    .filter-btn:hover { border-color: var(--salmon-light); }
+    .search-bar { background: #242424; border-color: #333; color: #F0F0F0; }
+    .search-bar::placeholder { color: #555; }
+    .preview-form input, .preview-form select, .preview-form textarea,
+    .edit-form input, .edit-form select, .edit-form textarea { background: #2E2E2E; border-color: #444; color: #F0F0F0; }
+    .btn-secondary { background: #2E2E2E; border-color: #444; color: #AAA; }
+    .api-key-section { background: #2A1F1C; }
+    .api-key-section input { background: #2E2E2E; border-color: #555; color: #F0F0F0; }
+    .modal-section h3 { border-bottom-color: #333; }
+    .modal-source { border-top-color: #333; }
+    .header { background: linear-gradient(180deg, var(--salmon-bg) 0%, #1A1A1A 100%); }
+    .footer { color: #444; }
+    .card-content h3 { color: #F0F0F0; }
+    .ingredients-list li, .steps-list li { color: #E0E0E0; }
+    .ingredients-list .ing-section { color: #F0F0F0; }
+    .no-photo-zone { background: #2E2E2E; }
+    .add-modal-content h2, .edit-modal-content h2 { color: var(--salmon); }
+    .edit-form label, .preview-form label { color: #DDD; }
+    .sidebar { background: #1A1A1A; border-right-color: #333; }
+    .sidebar-item { color: #DDD; }
+    .sidebar-item:hover, .sidebar-item.active { background: #2A1F1C; }
+    .sidebar-search { border-color: #333; color: #F0F0F0; background: #242424; }
+    @media (prefers-color-scheme: dark) {
+      .sidebar-item { color: #DDD; }
+      .sidebar-item:hover, .sidebar-item.active { background: #2A1F1C; }
+      .sidebar-search { border-color: #333; color: #F0F0F0; }
+    }
+    .sort-select { background-color: #242424; border-color: #333; color: #F0F0F0; }
+    .share-modal-content { background: #242424; }
+    .share-option-btn { background: #2E2E2E; border-color: #444; }
+    .share-option-btn .share-label { color: #F0F0F0; }
+    .share-preview { background: #2A1F1C; color: #F0F0F0; }
+    .delete-modal-content, .grocery-modal-content, .edit-modal-content { background: #242424; }
+    .grocery-list li { border-bottom-color: #333; color: #E0E0E0; }
+    .modal-portions { color: #AAA; }
+    .modal-label { color: #AAA; }
+    .card-portions { color: #AAA; }
+
+    /* GRID */
+    .grid {
+      max-width: 1200px; margin: 30px auto; padding: 0 24px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px;
+    }
+    .recipe-card {
+      background: white; border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow); cursor: pointer; transition: all 0.3s ease;
+      opacity: 0; transform: translateY(16px);
+      animation: cardIn 0.4s ease forwards;
+    }
+    .recipe-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+    @keyframes cardIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card-image {
+      width: 100%; height: 260px; background-size: cover;
+      background-position: center; position: relative;
+    }
+    .card-image .card-category {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(232, 131, 109, 0.9); color: white;
+      padding: 4px 12px; border-radius: 20px; font-size: 0.75rem;
+      font-weight: 600; letter-spacing: 0.3px;
+    }
+    .card-content { padding: 16px 20px 20px; }
+    .card-content h3 { font-size: 1.1rem; font-weight: 700; color: #F0F0F0; line-height: 1.3; }
+    .card-meta { display: flex; align-items: center; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
+    .card-portions { color: var(--gray); font-size: 0.85rem; }
+    .card-time { color: var(--salmon); font-size: 0.82rem; font-weight: 600; background: var(--salmon-bg); padding: 2px 8px; border-radius: 10px; }
+    .no-results { text-align: center; padding: 60px 20px; color: var(--gray); display: none; grid-column: 1 / -1; }
+    .no-results.visible { display: block; }
+
+    /* RECIPE MODAL */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); z-index: 100;
+      justify-content: center; align-items: flex-start;
+      padding: 40px 20px; overflow-y: auto;
+    }
+    .modal.open { display: flex; }
+    .modal-content {
+      background: white; border-radius: var(--radius); max-width: 700px;
+      width: 100%; position: relative; animation: slideUp 0.3s ease; margin: auto;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; width: 36px; height: 36px;
+      border-radius: 50%; border: none; background: rgba(255,255,255,0.9);
+      font-size: 1.4rem; cursor: pointer; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray); transition: all 0.2s;
+    }
+    .modal-close:hover { background: var(--salmon); color: white; }
+    .modal-header { display: flex; gap: 0; flex-direction: column; }
+    .modal-image {
+      width: 100%; height: 300px; background-size: cover;
+      background-position: center; border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .modal-title-area { padding: 24px 30px 0; }
+    .modal-label { font-size: 0.75rem; color: var(--gray); letter-spacing: 2px; font-weight: 500; }
+    .modal-title-area h2 { font-size: 1.8rem; color: var(--salmon); font-weight: 700; margin: 4px 0 6px; line-height: 1.2; }
+    .modal-portions { color: var(--gray); font-size: 0.9rem; font-style: italic; }
+    .modal-cat-badge {
+      display: inline-block; margin-top: 8px; padding: 4px 14px;
+      background: var(--salmon-bg); color: var(--salmon);
+      border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+    }
+    .modal-body { padding: 24px 30px 30px; }
+    .modal-section { margin-bottom: 24px; }
+    .modal-section h3 {
+      font-size: 1.3rem; color: var(--salmon); font-weight: 600;
+      margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--salmon-bg);
+    }
+    .ingredients-list { list-style: none; }
+    .ingredients-list li { padding: 4px 0; font-size: 0.95rem; color: #E0E0E0; font-weight: 400; }
+    .ingredients-list .bullet { color: var(--salmon); margin-right: 8px; }
+    .ingredients-list .ing-section { font-weight: 700; margin-top: 12px; margin-bottom: 4px; font-size: 0.95rem; color: #F0F0F0; }
+    .steps-list { list-style: none; }
+    .steps-list li { padding: 6px 0; font-size: 0.95rem; line-height: 1.5; color: #E0E0E0; }
+    .steps-list .step-num { color: var(--salmon); font-weight: 700; margin-right: 8px; }
+    .modal-source { margin-top: 20px; padding-top: 16px; border-top: 1px solid #333; }
+    .modal-source a { color: var(--salmon); text-decoration: none; font-size: 0.85rem; }
+    .modal-source a:hover { text-decoration: underline; }
+
+    /* ADD RECIPE MODAL */
+    .add-modal {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); z-index: 200;
+      justify-content: center; align-items: flex-start;
+      padding: 40px 20px; overflow-y: auto;
+    }
+    .add-modal.open { display: flex; }
+    .add-modal-content {
+      background: white; border-radius: var(--radius); max-width: 600px;
+      width: 100%; padding: 30px; position: relative;
+      animation: slideUp 0.3s ease; margin: auto;
+    }
+    .add-modal-content h2 { color: var(--salmon); font-size: 1.5rem; margin-bottom: 20px; }
+
+    /* API Key input */
+    .api-key-section {
+      background: var(--salmon-bg); border-radius: 12px;
+      padding: 14px 18px; margin-bottom: 20px;
+    }
+    .api-key-section label { display: block; font-weight: 600; font-size: 0.85rem; color: var(--dark); margin-bottom: 6px; }
+    .api-key-section input {
+      width: 100%; padding: 8px 12px; border: 2px solid var(--salmon-light);
+      border-radius: 8px; font-size: 0.9rem; outline: none; font-family: monospace;
+      transition: border-color 0.2s; background: white;
+    }
+    .api-key-section input:focus { border-color: var(--salmon); }
+    .api-key-section .hint { font-size: 0.78rem; color: var(--gray); margin-top: 5px; }
+
+    /* Upload zone */
+    .upload-zone {
+      border: 3px dashed var(--salmon-light); border-radius: var(--radius);
+      padding: 40px 20px; text-align: center; cursor: pointer;
+      transition: all 0.3s; margin-bottom: 20px; position: relative;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--salmon); background: var(--salmon-bg);
+    }
+    .upload-zone p { color: var(--gray); font-size: 1rem; }
+    .upload-zone .upload-icon { font-size: 3rem; margin-bottom: 10px; }
+    .upload-zone input[type="file"] {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0; cursor: pointer;
+    }
+    .upload-previews {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .upload-previews img {
+      width: 100px; height: 100px; object-fit: cover;
+      border-radius: 10px; border: 2px solid var(--salmon-light);
+    }
+
+    /* Steps indicator */
+    .step-indicator {
+      display: flex; justify-content: center; gap: 8px; margin-bottom: 24px;
+    }
+    .step-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #ddd; transition: background 0.3s;
+    }
+    .step-dot.active { background: var(--salmon); }
+
+    /* Processing */
+    .processing { text-align: center; padding: 40px 0; }
+    .spinner {
+      width: 50px; height: 50px; border: 4px solid var(--salmon-light);
+      border-top-color: var(--salmon); border-radius: 50%;
+      animation: spin 0.8s linear infinite; margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Preview form */
+    .preview-form label {
+      display: block; font-weight: 600; margin-top: 14px; margin-bottom: 4px;
+      color: var(--dark); font-size: 0.9rem;
+    }
+    .preview-form input, .preview-form select, .preview-form textarea {
+      width: 100%; padding: 10px 14px; border: 2px solid #eee; border-radius: 10px;
+      font-size: 0.95rem; outline: none; font-family: inherit; transition: border-color 0.2s;
+    }
+    .preview-form input:focus, .preview-form select:focus, .preview-form textarea:focus {
+      border-color: var(--salmon);
+    }
+    .preview-form textarea { resize: vertical; min-height: 80px; }
+    .btn-row { display: flex; gap: 10px; margin-top: 20px; }
+    .btn-primary {
+      flex: 1; padding: 12px; background: var(--salmon); color: white;
+      border: none; border-radius: 10px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--salmon-hover); }
+    .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+    .btn-secondary {
+      flex: 1; padding: 12px; background: white; color: var(--gray);
+      border: 2px solid #eee; border-radius: 10px; font-size: 1rem;
+      font-weight: 500; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--salmon-light); color: var(--salmon); }
+
+    .error-msg { color: #e74c3c; background: #fdf0ef; padding: 10px 14px; border-radius: 8px; margin-top: 10px; font-size: 0.9rem; }
+    .success-msg { color: #27ae60; background: #eafaf1; padding: 10px 14px; border-radius: 8px; margin-top: 10px; font-size: 0.9rem; }
+
+    .footer { text-align: center; padding: 40px 20px; color: #ccc; font-size: 0.85rem; }
+
+    /* RANDOM BUTTON */
+    .random-btn {
+      padding: 12px 16px; background: white; color: var(--salmon);
+      border: 2px solid var(--salmon-light); border-radius: 12px;
+      font-size: 1.1rem; cursor: pointer; transition: all 0.2s;
+    }
+    .random-btn:hover { background: var(--salmon-bg); border-color: var(--salmon); }
+
+    /* FAVORITE STAR */
+    .fav-btn {
+      position: absolute; top: 16px; right: 60px;
+      width: 36px; height: 36px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,0.9); font-size: 1.1rem; cursor: pointer;
+      z-index: 10; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .fav-btn:hover { transform: scale(1.15); }
+    .card-fav-badge {
+      position: absolute; top: 12px; right: 12px;
+      font-size: 1.1rem; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+    }
+
+    /* GROCERY LIST MODAL */
+    .grocery-modal {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); z-index: 400;
+      justify-content: center; align-items: flex-start;
+      padding: 40px 20px; overflow-y: auto;
+    }
+    .grocery-modal.open { display: flex; }
+    .grocery-modal-content {
+      background: white; border-radius: var(--radius); max-width: 500px;
+      width: 100%; padding: 30px; position: relative;
+      animation: slideUp 0.3s ease; margin: auto;
+    }
+    .grocery-modal-content h2 { color: var(--salmon); font-size: 1.4rem; margin-bottom: 4px; }
+    .grocery-recipe-name { color: var(--gray); font-size: 0.9rem; margin-bottom: 20px; font-style: italic; }
+    .grocery-list { list-style: none; margin-bottom: 20px; }
+    .grocery-list li {
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 4px; border-bottom: 1px solid #f0f0f0;
+      font-size: 0.95rem; cursor: pointer; transition: opacity 0.2s;
+    }
+    .grocery-list li.checked { opacity: 0.4; text-decoration: line-through; }
+    .grocery-list li .check-box {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid var(--salmon-light); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .grocery-list li.checked .check-box { background: var(--salmon); border-color: var(--salmon); color: white; font-size: 0.7rem; }
+    .grocery-section-title { font-weight: 700; color: var(--salmon); font-size: 0.85rem; padding: 10px 4px 4px; letter-spacing: 0.5px; }
+    .grocery-copy-btn {
+      width: 100%; padding: 12px; background: var(--salmon); color: white;
+      border: none; border-radius: 10px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .grocery-copy-btn:hover { background: var(--salmon-hover); }
+
+    /* DELETE CONFIRM */
+    .delete-modal {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); z-index: 500;
+      justify-content: center; align-items: center; padding: 20px;
+    }
+    .delete-modal.open { display: flex; }
+    .delete-modal-content {
+      background: white; border-radius: var(--radius); max-width: 420px;
+      width: 100%; padding: 30px; animation: slideUp 0.3s ease; text-align: center;
+    }
+    .delete-modal-content h3 { color: var(--dark); font-size: 1.2rem; margin-bottom: 8px; }
+    .delete-modal-content p { color: var(--gray); font-size: 0.95rem; margin-bottom: 24px; }
+    .delete-icon { font-size: 3rem; margin-bottom: 12px; }
+    .btn-danger {
+      flex: 1; padding: 12px; background: #e74c3c; color: white;
+      border: none; border-radius: 10px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-danger:hover { background: #c0392b; }
+
+    /* NOTES */
+    .recipe-notes-section { margin-top: 16px; padding: 16px; background: var(--salmon-bg); border-radius: 12px; }
+    .recipe-notes-section h4 { color: var(--salmon); font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+    .recipe-notes-textarea { width: 100%; border: none; background: transparent; font-family: inherit; font-size: 0.9rem; color: var(--dark); resize: none; outline: none; min-height: 60px; line-height: 1.5; }
+    .recipe-notes-textarea::placeholder { color: #bbb; }
+    .notes-saved-badge { font-size: 0.75rem; color: var(--salmon); opacity: 0; transition: opacity 0.5s; }
+    .notes-saved-badge.show { opacity: 1; }
+
+    /* MACROS */
+    .macros-bar { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+    .macro-badge { padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 600; }
+    .macro-cal  { background: #FDF0ED; color: #D4725E; }
+    .macro-prot { background: #E1F5EE; color: #0F6E56; }
+    .macro-carb { background: #E6F1FB; color: #185FA5; }
+    .macro-fat  { background: #FAEEDA; color: #854F0B; }
+    @media (prefers-color-scheme: dark) {
+      .recipe-notes-textarea { color: #F0F0F0; }
+      .recipe-notes-section { background: #2A1F1C; }
+      .macro-cal  { background: #2A1F1C; color: #F5C4BA; }
+      .macro-prot { background: #04342C; color: #9FE1CB; }
+      .macro-carb { background: #042C53; color: #B5D4F4; }
+      .macro-fat  { background: #412402; color: #FAC775; }
+    }
+
+    /* EDIT MODAL */
+    .edit-modal {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6); z-index: 300;
+      justify-content: center; align-items: flex-start;
+      padding: 40px 20px; overflow-y: auto;
+    }
+    .edit-modal.open { display: flex; }
+    .edit-modal-content {
+      background: white; border-radius: var(--radius); max-width: 620px;
+      width: 100%; padding: 30px; position: relative;
+      animation: slideUp 0.3s ease; margin: auto;
+    }
+    .edit-modal-content h2 { color: var(--salmon); font-size: 1.5rem; margin-bottom: 6px; }
+    .edit-modal-content .edit-subtitle { color: var(--gray); font-size: 0.9rem; margin-bottom: 20px; }
+
+    /* Photo edit zone */
+    .photo-edit-zone {
+      position: relative; width: 100%; height: 180px;
+      border-radius: 12px; overflow: hidden; margin-bottom: 20px;
+      background: linear-gradient(135deg, #F5C4BA 0%, #E8836D 100%);
+      cursor: pointer;
+    }
+    .photo-edit-zone img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .photo-edit-overlay {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.35);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: white; opacity: 0; transition: opacity 0.2s;
+    }
+    .photo-edit-zone:hover .photo-edit-overlay { opacity: 1; }
+    .photo-edit-overlay span { font-size: 2rem; }
+    .photo-edit-overlay p { font-size: 0.85rem; margin-top: 4px; font-weight: 600; }
+    .photo-edit-zone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer;
+    }
+    .no-photo-zone {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100%; color: white;
+    }
+    .no-photo-zone span { font-size: 2.5rem; }
+    .no-photo-zone p { font-size: 0.85rem; margin-top: 6px; font-weight: 600; }
+
+    /* Edit form */
+    .edit-form label {
+      display: block; font-weight: 600; margin-top: 14px; margin-bottom: 4px;
+      color: var(--dark); font-size: 0.9rem;
+    }
+    .edit-form input, .edit-form select, .edit-form textarea {
+      width: 100%; padding: 10px 14px; border: 2px solid #eee; border-radius: 10px;
+      font-size: 0.95rem; outline: none; font-family: inherit; transition: border-color 0.2s;
+    }
+    .edit-form input:focus, .edit-form select:focus, .edit-form textarea:focus {
+      border-color: var(--salmon);
+    }
+    .edit-form textarea { resize: vertical; min-height: 80px; }
+
+    /* Edit button in modal */
+    .modal-edit-btn {
+      position: absolute; top: 16px; left: 16px;
+      padding: 6px 14px; background: rgba(255,255,255,0.92);
+      border: none; border-radius: 20px; font-size: 0.82rem; font-weight: 600;
+      color: var(--salmon); cursor: pointer; z-index: 10;
+      transition: all 0.2s; display: flex; align-items: center; gap: 5px;
+    }
+    .modal-edit-btn:hover { background: var(--salmon); color: white; }
+
+    /* SIDEBAR */
+    .app-layout {
+      display: flex; align-items: flex-start;
+      max-width: 1400px; margin: 0 auto;
+    }
+    .sidebar {
+      width: 260px; flex-shrink: 0;
+      position: sticky; top: 81px;
+      height: calc(100vh - 81px); overflow-y: auto;
+      border-right: 1px solid #eee;
+      padding: 16px 0;
+      transition: all 0.3s;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--salmon-light); border-radius: 4px; }
+    @media (prefers-color-scheme: dark) {
+      .sidebar { border-right-color: #333; background: #1A1A1A; }
+    }
+    .sidebar-toggle {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 16px 12px; margin-bottom: 4px;
+    }
+    .sidebar-title { font-size: 0.75rem; font-weight: 700; color: var(--gray); letter-spacing: 1.5px; text-transform: uppercase; }
+    .sidebar-collapse-btn {
+      background: none; border: none; color: var(--gray); cursor: pointer;
+      font-size: 1rem; padding: 2px 6px; border-radius: 6px; transition: all 0.2s;
+    }
+    .sidebar-collapse-btn:hover { background: var(--salmon-bg); color: var(--salmon); }
+    .sidebar-category { margin-bottom: 4px; }
+    .sidebar-cat-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 16px; cursor: pointer; user-select: none;
+      transition: background 0.15s;
+    }
+    .sidebar-cat-header:hover { background: var(--salmon-bg); }
+    .sidebar-cat-name { font-size: 0.88rem; font-weight: 700; color: var(--salmon); }
+    .sidebar-cat-count { font-size: 0.75rem; color: var(--gray); }
+    .sidebar-cat-arrow { font-size: 0.7rem; color: var(--gray); transition: transform 0.2s; }
+    .sidebar-cat-arrow.open { transform: rotate(90deg); }
+    .sidebar-items { overflow: hidden; transition: max-height 0.3s ease; }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 16px 6px 24px; cursor: pointer;
+      font-size: 0.85rem; color: var(--dark); line-height: 1.3;
+      transition: background 0.15s; border-left: 3px solid transparent;
+    }
+    .sidebar-item:hover { background: var(--salmon-bg); border-left-color: var(--salmon-light); }
+    .sidebar-item.active { background: var(--salmon-bg); border-left-color: var(--salmon); color: var(--salmon); font-weight: 600; }
+    .sidebar-item .fav-dot { font-size: 0.6rem; flex-shrink: 0; }
+    @media (prefers-color-scheme: dark) {
+      .sidebar-item { color: #DDD; }
+      .sidebar-item:hover, .sidebar-item.active { background: #2A1F1C; }
+    }
+    .sidebar-search {
+      margin: 0 12px 12px; padding: 7px 12px;
+      border: 1.5px solid #eee; border-radius: 10px;
+      font-size: 0.85rem; outline: none; width: calc(100% - 24px);
+      transition: border-color 0.2s; background: transparent; color: var(--dark);
+    }
+    .sidebar-search:focus { border-color: var(--salmon); }
+    @media (prefers-color-scheme: dark) {
+      .sidebar-search { border-color: #333; color: #F0F0F0; }
+    }
+
+    /* Main content adjusts when sidebar present */
+    .main-content { flex: 1; min-width: 0; }
+    .main-content .grid { max-width: none; margin: 30px 0; padding: 0 20px; }
+    .main-content .controls { max-width: none; }
+
+    /* Sidebar hidden state */
+    .sidebar.collapsed { width: 0; overflow: hidden; padding: 0; border: none; }
+    .sidebar-open-btn {
+      position: fixed; left: 0; top: 50%;
+      transform: translateY(-50%);
+      background: var(--salmon); color: white; border: none;
+      padding: 12px 6px; border-radius: 0 8px 8px 0;
+      cursor: pointer; z-index: 50; font-size: 0.8rem;
+      writing-mode: vertical-lr; letter-spacing: 1px;
+      font-weight: 600; transition: all 0.2s; display: none;
+    }
+    .sidebar-open-btn:hover { padding-right: 10px; }
+    .sidebar-open-btn.visible { display: block; }
+
+    @media (max-width: 800px) {
+      .sidebar {
+        display: block !important;
+        position: fixed; top: 0; left: 0; bottom: 0;
+        width: 280px; z-index: 150;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.4);
+      }
+      .sidebar.mobile-open { transform: translateX(0); }
+      .sidebar-open-btn { display: none !important; }
+      .sidebar-overlay {
+        display: none; position: fixed; inset: 0;
+        background: rgba(0,0,0,0.5); z-index: 149;
+      }
+      .sidebar-overlay.visible { display: block; }
+      .mobile-index-btn {
+        display: flex !important;
+      }
+    }
+    .mobile-index-btn {
+      display: none;
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: var(--salmon); color: white; border: none;
+      padding: 12px 28px; border-radius: 30px; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; z-index: 100; align-items: center; gap: 8px;
+      box-shadow: 0 4px 16px rgba(232,131,109,0.4);
+    }
+    @media (max-width: 600px) {
+      .header h1 { font-size: 2rem; }
+      .modal, .add-modal { padding: 20px 10px; }
+      .modal-body { padding: 20px; }
+      .modal-title-area { padding: 16px 20px 0; }
+      .modal-image { height: 220px; }
+      .add-modal-content { padding: 20px; }
+      .controls-row { flex-direction: column; }
+      .add-btn { width: 100%; }
+      .grid { padding-bottom: 80px !important; }
+    }
+
+    /* SHARE MODAL */
+    .share-modal {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.55); z-index: 400;
+      justify-content: center; align-items: flex-start;
+      padding: 40px 20px; overflow-y: auto;
+    }
+    .share-modal.open { display: flex; }
+    .share-modal-content {
+      background: white; border-radius: var(--radius); max-width: 520px;
+      width: 100%; padding: 28px; position: relative;
+      animation: slideUp 0.3s ease; margin: auto;
+    }
+    .share-modal-content h2 { color: var(--salmon); font-size: 1.4rem; margin-bottom: 4px; }
+    .share-subtitle { color: var(--gray); font-size: 0.88rem; margin-bottom: 20px; }
+    .share-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .share-option-btn {
+      padding: 16px 12px; border-radius: 14px; border: 2px solid #eee;
+      background: white; cursor: pointer; text-align: center;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .share-option-btn:hover { border-color: var(--salmon); background: var(--salmon-bg); }
+    .share-option-btn .share-icon { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+    .share-option-btn .share-label { font-size: 0.88rem; font-weight: 600; color: var(--dark); display: block; }
+    .share-option-btn .share-desc { font-size: 0.76rem; color: var(--gray); display: block; margin-top: 2px; }
+    .share-preview {
+      background: var(--salmon-bg); border-radius: 12px;
+      padding: 14px 16px; font-size: 0.82rem; color: var(--dark);
+      line-height: 1.6; white-space: pre-wrap; max-height: 180px;
+      overflow-y: auto; margin-bottom: 14px; display: none;
+      font-family: inherit;
+    }
+    .share-preview.visible { display: block; }
+    .share-canvas-wrap { text-align: center; margin-bottom: 14px; display: none; }
+    .share-canvas-wrap.visible { display: block; }
+    .share-canvas-wrap canvas { border-radius: 12px; max-width: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+    @media (prefers-color-scheme: dark) {
+      .share-modal-content { background: #242424; }
+      .share-option-btn { background: #2E2E2E; border-color: #444; }
+      .share-option-btn .share-label { color: #F0F0F0; }
+      .share-preview { background: #2A1F1C; color: #F0F0F0; }
+    }
+    .sort-select {
+      padding: 10px 14px; border: 2px solid #eee; border-radius: 12px;
+      font-size: 0.9rem; outline: none; background: white; color: var(--dark);
+      cursor: pointer; transition: border-color 0.2s; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 10px center;
+      padding-right: 32px;
+    }
+    .sort-select:focus { border-color: var(--salmon); }
+    @media (prefers-color-scheme: dark) {
+      .sort-select { background-color: #242424; border-color: #333; color: #F0F0F0; }
+    }
+
+    /* THEME PICKER */
+    .theme-modal {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); z-index: 400;
+      justify-content: center; align-items: center; padding: 20px;
+    }
+    .theme-modal.open { display: flex; }
+    .theme-modal-content {
+      background: white; border-radius: var(--radius); max-width: 420px;
+      width: 100%; padding: 28px; animation: slideUp 0.3s ease;
+    }
+    .theme-modal-content h2 { color: var(--salmon); font-size: 1.4rem; margin-bottom: 6px; }
+    .theme-modal-content p { color: var(--gray); font-size: 0.9rem; margin-bottom: 20px; }
+    .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .theme-option {
+      border-radius: 12px; padding: 16px 12px; text-align: center; cursor: pointer;
+      border: 2px solid transparent; transition: all 0.2s;
+    }
+    .theme-option:hover { transform: translateY(-2px); }
+    .theme-option.selected { border-color: var(--salmon); }
+    .theme-swatch { width: 36px; height: 36px; border-radius: 50%; margin: 0 auto 8px; }
+    .theme-name { font-size: 0.82rem; font-weight: 600; color: var(--dark); }
+    @media (prefers-color-scheme: dark) {
+      .theme-modal-content { background: #242424; }
+      .theme-name { color: #F0F0F0; }
+    }
+    .theme-btn {
+      padding: 10px 14px; background: white; border: 2px solid #eee;
+      border-radius: 12px; font-size: 1rem; cursor: pointer; transition: all 0.2s;
+      color: var(--dark);
+    }
+    .theme-btn:hover { border-color: var(--salmon); }
+    @media (prefers-color-scheme: dark) {
+      .theme-btn { background: #242424; border-color: #333; color: #F0F0F0; }
+    }
+
+    /* PORTION MULTIPLIER */
+    .portion-multiplier {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--salmon-bg); border-radius: 12px;
+      padding: 10px 16px; margin-bottom: 16px;
+    }
+    .portion-multiplier span { font-size: 0.88rem; color: var(--dark); font-weight: 500; }
+    .mult-btn {
+      width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--salmon);
+      background: white; color: var(--salmon); font-size: 1.1rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0; line-height: 1;
+    }
+    .mult-btn:hover { background: var(--salmon); color: white; }
+    .mult-value { font-size: 1.1rem; font-weight: 700; color: var(--salmon); min-width: 24px; text-align: center; }
+    .mult-label { font-size: 0.82rem; color: var(--gray); margin-left: auto; }
+    @media (prefers-color-scheme: dark) {
+      .portion-multiplier { background: #2A1F1C; }
+      .portion-multiplier span { color: #F0F0F0; }
+      .mult-btn { background: #242424; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Alexanne's Cookbook</h1>
+    <p>Recettes favorites organis&#233;es avec amour</p>
+    <span class="recipe-count" id="recipeCount">Chargement...</span>
+  </div>
+
+  <div class="controls" id="mainControls">
+    <div class="controls-row">
+      <input type="text" class="search-bar" id="searchBar" placeholder="Rechercher une recette ou un ingr&#233;dient..." oninput="filterRecipes()">
+      <button class="random-btn" onclick="openRandomRecipe()" title="Recette al&#233;atoire">?</button>
+      <button class="add-btn" onclick="openAddModal()">+ Ajouter</button>
+    </div>
+  </div>
+
+  <div class="filters-bar" id="filtersBar">
+    <select class="sort-select" id="sortSelect" onchange="sortAndRender()">
+      <option value="temps-asc">Plus rapide d'abord</option>
+      <option value="temps-desc">Plus long d'abord</option>
+      <option value="recent"> Ajout r&#233;cent</option>
+    </select>
+    <div class="filters" id="filterBar"></div>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
+  <button class="mobile-index-btn" onclick="openMobileSidebar()">= Index des recettes</button>
+
+  <button class="sidebar-open-btn" id="sidebarOpenBtn" onclick="toggleSidebar()">= INDEX</button>
+
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-toggle">
+        <span class="sidebar-title">Index</span>
+        <button class="sidebar-collapse-btn" onclick="toggleSidebar()" title="Fermer">X</button>
+      </div>
+      <input type="text" class="sidebar-search" id="sidebarSearch" placeholder="Filtrer..." oninput="renderSidebar()">
+      <div id="sidebarContent"></div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="grid" id="recipeGrid">
+        <div style="display:flex;justify-content:center;align-items:center;padding:100px 0;grid-column:1/-1">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalsContainer"></div>
+
+  <!-- ADD RECIPE MODAL -->
+  <div class="add-modal" id="addModal">
+    <div class="add-modal-content">
+      <button class="modal-close" onclick="closeAddModal()">&times;</button>
+
+      <!-- Step 1: Upload -->
+      <div id="addStep1">
+        <h2>Ajouter une recette</h2>
+        <div class="step-indicator">
+          <div class="step-dot active"></div>
+          <div class="step-dot"></div>
+          <div class="step-dot"></div>
+        </div>
+
+        <div class="api-key-section">
+          <label> Cl&#233; API Anthropic</label>
+          <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off">
+          <p class="hint">Ta cl&#233; est utilis&#233;e uniquement dans ton navigateur et n'est jamais envoy&#233;e ailleurs. Elle est sauvegard&#233;e localement.</p>
+        </div>
+
+        <p style="color: var(--gray); margin-bottom: 16px;">
+          Upload tes captures d'&#233;cran de la recette (ingr&#233;dients, m&#233;thode) et/ou la photo du plat.
+        </p>
+        <div class="upload-zone" id="uploadZone">
+          <div class="upload-icon"></div>
+          <p>Glisse tes images ici ou clique pour s&#233;lectionner</p>
+          <p style="font-size: 0.8rem; color: #aaa; margin-top: 6px;">1 &#224; 5 images (recette + photo du plat)</p>
+          <input type="file" id="fileInput" multiple accept="image/*">
+        </div>
+        <div class="upload-previews" id="uploadPreviews"></div>
+        <div id="addMessage1"></div>
+        <div class="btn-row">
+          <button class="btn-primary" id="analyzeBtn" onclick="analyzeImages()" disabled>
+            Analyser avec l'IA
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Processing -->
+      <div id="addStep2" style="display:none">
+        <h2>Analyse en cours...</h2>
+        <div class="step-indicator">
+          <div class="step-dot active"></div>
+          <div class="step-dot active"></div>
+          <div class="step-dot"></div>
+        </div>
+        <div class="processing">
+          <div class="spinner"></div>
+          <p style="color: var(--gray);">L'IA lit tes images et extrait la recette...</p>
+          <p style="color: #aaa; font-size: 0.85rem; margin-top: 8px;">&#199;a prend environ 10-15 secondes</p>
+        </div>
+      </div>
+
+      <!-- Step 3: Preview & confirm -->
+      <div id="addStep3" style="display:none">
+        <h2>V&#233;rifier et confirmer</h2>
+        <div class="step-indicator">
+          <div class="step-dot active"></div>
+          <div class="step-dot active"></div>
+          <div class="step-dot active"></div>
+        </div>
+        <p style="color: var(--gray); margin-bottom: 10px;">
+          V&#233;rifie que l'IA a bien compris ta recette. Tu peux modifier avant de sauvegarder.
+        </p>
+        <div class="preview-form" id="previewForm">
+          <label>Nom de la recette</label>
+          <input type="text" id="prevNom">
+
+          <label>Cat&#233;gorie</label>
+          <select id="prevCategory">
+            <option value="Repas">Repas</option>
+            <option value="D&#233;jeuner">D&#233;jeuner</option>
+            <option value="Collations">Collations</option>
+            <option value="Autres">Autres</option>
+          </select>
+
+          <label>Portions</label>
+          <input type="text" id="prevPortions" placeholder="Ex: 4 portions">
+
+          <label>Temps de pr&#233;paration</label>
+          <input type="text" id="prevTemps" placeholder="Ex: 20 min, 1h30, etc.">
+
+          <label>Ingr&#233;dients (un par ligne, ## Section pour les sections)</label>
+          <textarea id="prevIngredients" rows="8"></textarea>
+
+          <label>Pr&#233;paration (une &#233;tape par ligne)</label>
+          <textarea id="prevPreparation" rows="6"></textarea>
+
+          <label>Source (URL optionnel)</label>
+          <input type="text" id="prevSource" placeholder="https://...">
+        </div>
+        <div id="addMessage"></div>
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goToStep(1)">Recommencer</button>
+          <button class="btn-primary" id="saveBtn" onclick="saveRecipe()">Sauvegarder</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SHARE MODAL -->
+  <div class="share-modal" id="shareModal">
+    <div class="share-modal-content">
+      <button class="modal-close" onclick="closeShareModal()">&times;</button>
+      <h2>Partager la recette</h2>
+      <p class="share-subtitle" id="shareSubtitle"></p>
+      <div class="share-options">
+        <button class="share-option-btn" onclick="shareAsText()"><span class="share-label">Copier le texte</span></button>
+        <button class="share-option-btn" onclick="shareNative()"><span class="share-label">Partager</span></button>
+        <button class="share-option-btn" onclick="generateShareImage()"><span class="share-label">Image</span></button>
+        <button class="share-option-btn" onclick="downloadShareImage()"><span class="share-label">T&eacute;l&eacute;charger</span></button>
+      </div>
+      <div class="share-preview" id="sharePreview"></div>
+      <div class="share-canvas-wrap" id="shareCanvasWrap"><canvas id="shareCanvas"></canvas></div>
+      <div id="shareMsg"></div>
+    </div>
+  </div>
+
+  <!-- GROCERY LIST MODAL -->
+  <div class="grocery-modal" id="groceryModal">
+    <div class="grocery-modal-content">
+      <button class="modal-close" onclick="closeGroceryModal()">&times;</button>
+      <h2> Liste d'&#233;picerie</h2>
+      <p class="grocery-recipe-name" id="groceryRecipeName"></p>
+      <div class="portion-multiplier">
+        <span>Portions :</span>
+        <button class="mult-btn" onclick="changeMultiplier(-1)">-</button>
+        <span class="mult-value" id="multValue">1&#215;</span>
+        <button class="mult-btn" onclick="changeMultiplier(1)">+</button>
+        <span class="mult-label" id="multPortions"></span>
+      </div>
+      <ul class="grocery-list" id="groceryList"></ul>
+      <button class="grocery-copy-btn" onclick="copyGroceryList()"> Copier la liste</button>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRM MODAL -->
+  <div class="delete-modal" id="deleteModal">
+    <div class="delete-modal-content">
+      <div class="delete-icon"></div>
+      <h3>Supprimer cette recette?</h3>
+      <p id="deleteRecipeName"></p>
+      <div class="btn-row">
+        <button class="btn-secondary" onclick="closeDeleteModal()">Annuler</button>
+        <button class="btn-danger" onclick="confirmDelete()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT RECIPE MODAL -->
+  <div class="edit-modal" id="editModal">
+    <div class="edit-modal-content">
+      <button class="modal-close" onclick="closeEditModal()">&times;</button>
+      <h2> Modifier la recette</h2>
+      <p class="edit-subtitle">Modifie les informations et sauvegarde.</p>
+
+      <!-- Photo -->
+      <div class="photo-edit-zone" id="editPhotoZone">
+        <div class="no-photo-zone" id="editNoPhoto" style="display:none">
+          <span></span><p>Cliquer pour ajouter une photo</p>
+        </div>
+        <img id="editPhotoPreview" src="" alt="" style="display:none">
+        <div class="photo-edit-overlay">
+          <span></span>
+          <p>Changer la photo</p>
+        </div>
+        <input type="file" id="editPhotoInput" accept="image/*">
+      </div>
+
+      <div class="edit-form">
+        <input type="hidden" id="editRecipeId">
+
+        <label>Nom de la recette</label>
+        <input type="text" id="editNom">
+
+        <label>Cat&#233;gorie</label>
+        <select id="editCategory">
+          <option value="Repas">Repas</option>
+          <option value="D&#233;jeuner">D&#233;jeuner</option>
+          <option value="Collations">Collations</option>
+          <option value="Autres">Autres</option>
+        </select>
+
+        <label>Portions</label>
+        <input type="text" id="editPortions" placeholder="Ex: Pour 4 portions">
+
+        <label>Temps de pr&#233;paration</label>
+        <input type="text" id="editTemps" placeholder="Ex: 20 min, 1h30, etc.">
+
+        <label>Ingr&#233;dients (un par ligne, ## Section pour les sections)</label>
+        <textarea id="editIngredients" rows="9"></textarea>
+
+        <label>Pr&#233;paration (une &#233;tape par ligne)</label>
+        <textarea id="editPreparation" rows="7"></textarea>
+
+        <label>Source (URL optionnel)</label>
+        <input type="text" id="editSource" placeholder="https://...">
+
+        <label>Macros par portion (optionnel)</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+          <input type="number" id="editMacroCal" placeholder=" Calories">
+          <input type="number" id="editMacroProt" placeholder=" Prot&#233;ines (g)">
+          <input type="number" id="editMacroCarb" placeholder=" Glucides (g)">
+          <input type="number" id="editMacroFat" placeholder=" Lipides (g)">
+        </div>
+      </div>
+
+      <div id="editMessage"></div>
+      <div class="btn-row" style="margin-top:20px">
+        <button class="btn-secondary" onclick="closeEditModal()">Annuler</button>
+        <button class="btn-primary" onclick="saveEdit()"> Sauvegarder</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Alexanne's Cookbook &mdash; &#201;dition 2026</div>
+
+  <script>
+const BUILTIN_RECIPES = [
+  {
+    "id": "builtin-1",
+    "nom": "Bol Mexicain aux crevettes",
+    "portions": "Pour 4 portions",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "2 tasses de crevettes au choix",
+        "Riz Basmati"
+      ],
+      "Marinade  Crevettes": [
+        "Paprika",
+        "Poudre d&#8217;ail",
+        "Chili",
+        "Huile D&#8217;olive Extra Vierge"
+      ],
+      "Salsa Bl&#233; d&#8217;Inde et Haricots Noir": [
+        "1 tasse de Bl&#233; d&#8217;Inde",
+        "1 tasse d&#8217;Haricots Noir",
+        "&#189;  tasse d'Oignons rouges",
+        "&#189; tasse de Tomates en d&#233;s",
+        "&#189; tasse de Coriandre",
+        "2 C. d&#8217;Huile D&#8217;olive Extra Vierge",
+        "&#189; Lime (Jus)",
+        "Poudre D&#8217;ail au go&#251;t"
+      ],
+      "Sauce Coriandre et Lime": [
+        "1 tasse de Cr&#232;me Sur L&#233;g&#232;re",
+        "1 C. d&#8217;Huile D&#8217;olive Extra Vierge",
+        "&#189; Lime (Zest et Jus)",
+        "2 Gousses d&#8217;ail",
+        "&#189; Bouquet de Coriandre"
+      ]
+    },
+    "preparation": [
+      "Faire griller le Bl&#233; d&#8217;Inde et  laisser refroidir au frigo",
+      "M&#233;langer tous les ingr&#233;dients de la Salsa et  laisser refroidir au frigo",
+      "Faire griller les Crevettes et ajouter les &#233;pices (au go&#251;t)",
+      "Faire cuire le riz Basmatti",
+      "M&#233;langer tous les ingr&#233;dients de la Sauce et la blender",
+      "Assembler l&#8217;assiette"
+    ],
+    "source": "https://www.instagram.com/reel/CvFmNxVufF2/?igsh=YW9odzI4emt4eDVz",
+    "image_url": "images/recipe_1.jpg"
+  },
+  {
+    "id": "builtin-2",
+    "nom": "Tacos au Haricots Noirs",
+    "portions": "Pour 2 Tacos",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "&#189; Canne d&#8217;haricots Noirs",
+        "1 Piment Rouge",
+        "2 tasses d&#8217;&#233;pinards",
+        "&#189; tasse d&#8217;oignons vert",
+        "&#189; tasse de Bl&#233; d&#8217;inde",
+        "&#189; tasse  de Fromage Cottage",
+        "&#189; tasse de Salsa (ou Tomates  coup&#233;s en d&#233;s)",
+        "Poudre de Chili"
+      ],
+      "Guacamole": [
+        "1 Avocat",
+        "&#8531; de tasse de Yogourt Grec",
+        "&#189; Lime ( Jus)",
+        "Poudre d&#8217;ail"
+      ]
+    },
+    "preparation": [
+      "Mettre tous les ingr&#233;dients &#224; tacos dans une po&#234;le (environ 10 minutes)",
+      "M&#233;langer les ingr&#233;dients  pour la guacamole dans un bol",
+      "Mettre les Pains &#224; Tacos dans le Airfryer (environ 3 minutes)",
+      "Mettre le m&#233;lange &#224; tacos dans les pains",
+      "Assembler l&#8217;assiette"
+    ],
+    "source": "https://www.instagram.com/reel/C3FjhwpO_r1/?igsh=MXRiaDJzbGllczNxbw==",
+    "image_url": "images/recipe_2.jpg"
+  },
+  {
+    "id": "builtin-3",
+    "nom": "Mo&#251;le de Sushi au Crevettes",
+    "portions": "",
+    "category": "Repas",
+    "temps": "40 min",
+    "ingredients": {
+      "Principal": [
+        "Feuilles De Nori",
+        "Crevettes",
+        "Riz Basmati"
+      ],
+      "Sauce &#224; Sushi": [
+        "Mayonnaise",
+        "Fromage &#224; la cr&#232;me",
+        "Sriracha"
+      ]
+    },
+    "preparation": [
+      "Prendre des feuilles de Nori (coup&#233; en carr&#233;)  et &#233;taler du Riz Basmati dessus",
+      "Placer les carr&#233;s  dans un moule &#224; muffin",
+      "Couper les crevettes en morceaux et faire griller &#224; la po&#234;le",
+      "Dans un plat s&#233;par&#233; mettre de la Mayo, fromage &#224; la cr&#232;me et sauce sriracha",
+      "Mettre le m&#233;lange sur les crevettes et continuer la cuisson",
+      "Ajouter les crevettes dans les feuilles de Nori",
+      "Mettre au four &#224; 350 degr&#233; pour 10 minutes"
+    ],
+    "source": "https://www.instagram.com/reel/CxTzfQAvsnt/?igsh=dWp4aGJxMjJ5bDc4",
+    "image_url": "images/recipe_3.jpg"
+  },
+  {
+    "id": "builtin-4",
+    "nom": "P&#226;tes Patates Douces",
+    "portions": "",
+    "category": "Repas",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "2 Patates Douces (&#233;pluch&#233;s et coup&#233;s en d&#233;s)",
+        "1 Onion Jaune",
+        "1 Tasse de Carottes",
+        "Poudre d&#8217;ail",
+        "Poivre",
+        "Huile d&#8217;Olive",
+        "2 Tasses  de P&#226;tes (Au Choix)",
+        "3 Tasses de Bouillon de L&#233;gume (Low Salt)",
+        "1 Tasses de Fromage (Au Choix)"
+      ]
+    },
+    "preparation": [
+      "Pr&#233;chauffer le four &#224; 430 degr&#233;s. Couper les l&#233;gumes et les &#233;tal&#233; sur une t&#244;le",
+      "Ajouter l&#8217;Huile,  la Poudre d&#8217;Ail et le Poivre",
+      "Mettre au four pour 25 Minutes",
+      "Faire bouillir les p&#226;tes",
+      "Blender les l&#233;gumes avec le bouillon de l&#233;gumes",
+      "M&#233;langer les p&#226;tes, la sauce et le fromage"
+    ],
+    "source": "https://www.instagram.com/reel/CzXfO2LppqJ/?igsh=MXB0Yjc3ZGNxZ21reA==",
+    "image_url": "images/recipe_4.jpg"
+  },
+  {
+    "id": "builtin-5",
+    "nom": "Bol Pois Chiches",
+    "portions": "",
+    "category": "Repas",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "Pois Chiche",
+        "Canne de Tomates  Broy&#233;s",
+        "Persil"
+      ],
+      "Sauce": [
+        "Beurre D&#8217;amande",
+        "1 Citron (Jus)",
+        "Huile d&#8217;Olive",
+        "Moutarde de Dijon",
+        "Ail"
+      ],
+      "&#192; C&#244;t&#233;s": [
+        "Broccolis",
+        "Quinoa"
+      ]
+    },
+    "preparation": [
+      "Mettre tous les ingr&#233;dients pour le m&#233;lange de Pois Chiche dans une Po&#234;le",
+      "Faire le m&#233;lange pour la Sauce",
+      "Faire cuire le Quinoa et les brocolis",
+      "Assembler l&#8217;assiette"
+    ],
+    "source": "https://www.instagram.com/reel/CyOFUPTLQ6K/?igsh=aWJzYW55bG42eHMz",
+    "image_url": "images/recipe_5.jpg"
+  },
+  {
+    "id": "builtin-6",
+    "nom": "Bol de Chili",
+    "portions": "",
+    "category": "Repas",
+    "temps": "35 min",
+    "ingredients": {
+      "Principal": [
+        "2 cuill&#232;res &#224; soupe d'huile d'olive",
+        "1 oignon jaune coup&#233; en d&#233;s",
+        "2 gousses d'ail &#233;minc&#233;es",
+        "2 C.  de poudre de cumin",
+        "1 &#189; C.  de paprika",
+        "1 C. de poudre de chili",
+        "1 C. d'assaisonnement cajun",
+        "2 carottes coup&#233;es en d&#233;s",
+        "2 patates douces pel&#233;es et coup&#233;es en cubes de 1\"",
+        "1 Canne d&#8217;Haricots noirs rinc&#233;s et &#233;goutt&#233;s",
+        "1 Canne  de Bl&#233; D&#8217;inde  rinc&#233; et &#233;goutt&#233;",
+        "2 Canne de tomates broy&#233;",
+        "3 &#189; tasses de bouillon de l&#233;gumes ou d'eau"
+      ]
+    },
+    "preparation": [
+      "Dans une grande casserole &#224; feu moyen, mettre l'huile d'olive et l'oignon jusqu'&#224; ce que les oignons soient translucides. Ajouter l'ail et faire revenir encore 2 minutes.",
+      "Incorporer les &#233;pices",
+      "Ajoutez les carottes, les patates douces, les haricots noirs, le ma&#239;s, les tomates et le bouillon de l&#233;gumes (ou l'eau). M&#233;langez, couvrez et laissez mijoter &#224; feu doux-moyen pendant 20 minutes.",
+      "D&#233;couvrez et laissez mijoter encore 15 minutes ou jusqu'&#224; ce que les patates douces soient cuites.",
+      "Retirer du feu.",
+      "&#192; l&#8217;aide d&#8217;un mixeur plongeant, m&#233;langer environ &#8531; du m&#233;lange. Versez ensuite le m&#233;lange m&#233;lang&#233; dans la casserole et remuez.",
+      "Assembler le bol et  garnir d'avocat, de cr&#232;me sure, fromage,  chips tortilla et de jalape&#241;os tranch&#233;s ou d'autres garnitures de votre choix."
+    ],
+    "source": "https://booboosbakery.com/easy-vegan-chili/",
+    "image_url": "images/recipe_6.jpg"
+  },
+  {
+    "id": "builtin-7",
+    "nom": "Orzo aux tomates",
+    "portions": "",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "1 Tasse de Tomates Cerise",
+        "1 C. Huile D&#8217;Olive",
+        "2 Gousses d&#8217;ail",
+        "30 ml de Cr&#232;me 15%",
+        "500 ml de Bouillon de Poulet",
+        "1 C. de Chili Flakes",
+        "1 &#188; de tasse d&#8217;Orzo"
+      ]
+    },
+    "preparation": [
+      "Mettre la moiti&#233; des tomate sur la po&#234;le avec l&#8217;Huile d&#8217;Olive et frire pendant 2-3 minutes",
+      "Ajouter l&#8217;ail",
+      "Ajouter la cr&#232;me, Le bouillon de poulet et l&#8217;orzo",
+      "Couvrir pendant 10 minutes et d&#233;couvrir pendant 10 minutes",
+      "Lorsque l&#8217;Orzo est pr&#234;t, retirer du feu et servir"
+    ],
+    "source": "https://www.instagram.com/reel/C1Y_nGXLDTR/?igsh=YjZvdTQ1cWtjMGZl",
+    "image_url": "images/recipe_7.jpg"
+  },
+  {
+    "id": "builtin-8",
+    "nom": "Crevettes Miel et Sriracha",
+    "portions": "",
+    "category": "Repas",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "0.75-1 Lb Crevettes",
+        "1 Tasse de Riz Basmati",
+        "Flocon de piment fort",
+        "1 C.  d&#8217;huile d&#8217;olive",
+        "&#8531; de Tasse d'Edamame",
+        "&#189; Tasse de Concombre",
+        "4 C. d'oignon vert",
+        "2 C. de Coriandre"
+      ],
+      "Sauce &#224; Crevettes": [
+        "2 &#189; C. Miel",
+        "2 C. de Sauce Soya",
+        "2 C. de Sriracha",
+        "1 &#189; C. d&#8217;Huile D&#8217;Olive",
+        "2 C. D&#8217;Eau"
+      ]
+    },
+    "preparation": [
+      "Faire cuire le Riz",
+      "Faire de m&#233;lange pour la sauce &#224; crevette",
+      "Mettre des crevettes dans la po&#234;le et ajouter la sauce",
+      "Monter l&#8217;assiette avec les Crevettes, le Riz, Les Edamame,  les concombres et les oignons vert"
+    ],
+    "source": "https://sailorbailey.com/blog/honey-sriracha-shrimp/#h-ingredients-needed",
+    "image_url": "images/recipe_8.jpg"
+  },
+  {
+    "id": "builtin-9",
+    "nom": "Poke Bowl Saumon",
+    "portions": "",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Saumon",
+        "Concombres",
+        "Carottes r&#226;p&#233;s",
+        "Edamames",
+        "Marinade Sucr&#233;/&#201;pic&#233;",
+        "1 Tasse de Riz Basmati"
+      ]
+    },
+    "preparation": [
+      "Badigeonner  la marinade sur le saumon et mettre &#224; 400 degr&#233; pendant 15 minutes au Airfryer",
+      "Coup&#233; les les concombre et carottes et faire bouillir les Edamames",
+      "Faire cuire le Riz Basmati",
+      "M&#233;langer  les L&#233;gumes et le Riz dans un bol et ajouter  la Sauce Sucr&#233;/&#201;pic&#233; (&#189; tasse)",
+      "Ajouter le Saumon sur le dessus lorsqu&#8217;il est pr&#234;t"
+    ],
+    "source": "https://www.instagram.com/reel/C12z8C0SLxq/?igsh=czE4OGkwdHhlaWVk",
+    "image_url": "images/recipe_9.jpg"
+  },
+  {
+    "id": "builtin-10",
+    "nom": "Rouleaux de Saumon Fum&#233;",
+    "portions": "",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "Saumon Fum&#233;",
+        "&#189; Tasse de Fromage &#224; la cr&#232;me",
+        "2 C. d'Oignons verts",
+        "2 C. de Zest de Citron",
+        "Concombre couper en fines lani&#232;res",
+        "&#189; Avocat couper en lani&#232;res",
+        "&#201;pice Bagel plein go&#251;t"
+      ]
+    },
+    "preparation": [
+      "M&#233;langer le fromage &#224; la cr&#232;me, les Oignons Verts et le Zest de Citron",
+      "Mettre une pellicule plastique sur le comptoir et saupoudrer les &#233;pices",
+      "&#201;tendre le saumon fum&#233; pour former un rectangle",
+      "&#201;tendre  le m&#233;lange de fromage &#224; la cr&#232;me sur le saumon",
+      "Ajouter les tranches d&#8217;avocat et de concombres au centre du rectangle",
+      "Utilisez la pellicule plastique pour aider &#224; rouler le saumon sur le concombre et l&#8217;avocat et continuez &#224; rouler jusqu'&#224; atteindre l'autre c&#244;t&#233;.",
+      "Mettre les rouleaux  au cong&#233;lateur 5-10 minutes pour raffermir le saumon",
+      "Coupeau le rouleau en tranches"
+    ],
+    "source": "https://kaleforniakravings.com/smoked-salmon-sushi-roll-ups-with-citrus-soy-sauce/",
+    "image_url": "images/recipe_10.jpg"
+  },
+  {
+    "id": "builtin-11",
+    "nom": "Bol Mexicain au Poulet",
+    "portions": "Pour 3 Portions",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Pour le Poulet": [
+        "Poitrines de poulet coup&#233; en tranche",
+        "1  C. d&#8217;Huile d&#8217;Olive",
+        "1 C. de Paprika",
+        "&#189; C. de Cumin",
+        "&#189; C. de poudre de Chili",
+        "&#189; C. de Coriandre",
+        "&#188; C. de Origan",
+        "&#189; C. de Poudre d&#8217;Ail"
+      ],
+      "Salsa": [
+        "Tomates Cerises coup&#233;s en 4",
+        "&#188; de tasse de Jalapenos coup&#233; finement",
+        "&#189; Oignon rouge",
+        "&#188; de bouquet de coriandre coup&#233; finement",
+        "1 Lime (Jus)",
+        "1 Tasse de Bl&#233; D&#8217;inde"
+      ],
+      "Pour le Bol": [
+        "Laitue Coup&#233; finement",
+        "1 Tasse d&#8217;Haricots Noirs",
+        "&#188; de Tasse de Cheddar r&#226;p&#233;",
+        "1  Avocat en pur&#233;"
+      ]
+    },
+    "preparation": [
+      "Couper le poulet en tranches,  ajouter l&#8217;Huile et les &#201;pices",
+      "Mettre le poulet au AirFryer &#224; 390 degr&#233; pour 10 minutes",
+      "Combiner tous les &#233;l&#233;ments pour la Salsa",
+      "Mettre  la laitue, les Haricots Noirs, le Fromage et la pur&#233;e d&#8217;Avocat dans 3 bols",
+      "Ajouter la Salsa, le poulet et des croustilles de Ma&#239;s (au Go&#251;t)"
+    ],
+    "source": "https://www.instagram.com/reel/C2v8itaupXb/?igsh=angyemt3ZWJmdzJu",
+    "image_url": "images/recipe_11.jpg"
+  },
+  {
+    "id": "builtin-12",
+    "nom": "Boule de Sushi",
+    "portions": "",
+    "category": "Repas",
+    "temps": "35 min",
+    "ingredients": {
+      "Principal": [
+        "Riz Basmati",
+        "Avocat",
+        "Concombre",
+        "Saumon en cube",
+        "&#201;pice Bagel Plein Go&#251;t",
+        "Mayonnaise &#233;pic&#233;"
+      ]
+    },
+    "preparation": [
+      "Prendre une pellicule plastique et &#233;tendre le riz basmati dessus",
+      "Ajouter le m&#233;lange de Sushi et cr&#233;er une boule",
+      "Laissez  raffermir 5 minutes au frigo",
+      "Mettre l&#8217;assaisonnement dans une assiette et y rouler les boules",
+      "Mettre 5 minutes &#224; 350 degr&#233; au AirFryer",
+      "Ajouter de la mayonnaise &#233;pic&#233; sur le dessus"
+    ],
+    "source": "https://www.instagram.com/reel/C2QVc6Ahz6E/?igsh=MW55aXc4bDZnNzB4NA==",
+    "image_url": "images/recipe_12.jpg"
+  },
+  {
+    "id": "builtin-13",
+    "nom": "Bagel Saumon Fromage &#224; la Cr&#232;me",
+    "portions": "",
+    "category": "Repas",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "Saumon Fum&#233;",
+        "Fromage &#224; la Cr&#232;me",
+        "Aneth",
+        "Oignon rouge",
+        "Citron (Jus)",
+        "C&#226;pre",
+        "Bagel"
+      ]
+    },
+    "preparation": [
+      "Mettre tous les ingr&#233;dients dans un assiettes et hach&#233; le m&#233;lange",
+      "&#201;tendre sur le Bagel"
+    ],
+    "source": "https://www.instagram.com/reel/C2ZpOmqIa6l/?igsh=MXI4eWlxNHJybmU4dg==",
+    "image_url": "images/recipe_13.jpg"
+  },
+  {
+    "id": "builtin-14",
+    "nom": "Wrap Buffalo Pois Chiches",
+    "portions": "",
+    "category": "Repas",
+    "temps": "10 min",
+    "ingredients": {
+      "Principal": [
+        "1 Canne de Pois Chiches",
+        "2 Cup de Chou-Fleur",
+        "Huile d&#8217;Olive",
+        "&#189; Tasse de sauce Buffalo",
+        "&#188; de Tasse de Yogourt Grec",
+        "Pain Pita",
+        "Laitue Hach&#233;"
+      ],
+      "Sauce": [
+        "1/3 de tasse de vinaigre de vin blanc",
+        "1 C. de Sriracha",
+        "1 C. de poudre de chili",
+        "1 C.  de paprika",
+        "1 C. de Poudre d&#8217;ail",
+        "1/2 C. de poudre d&#8217;oignon",
+        "1/2 C. de miel"
+      ]
+    },
+    "preparation": [
+      "Mettre les Pois Chiches et le Chou-Fleur dans le AirFryer &#224; 350 degr&#233; pour 20 minutes",
+      "Faire le m&#233;lange pour la Sauce et ajouter le yogourt, les Pois Chiches et le Chou-Fleur",
+      "Mettre le m&#233;lange et la laitue dans le pita et remettre au Airfryer pour 5 minutes"
+    ],
+    "source": "https://www.instagram.com/reel/C2vfzZSxezM/?igsh=b3M4a3U1YWFwem56",
+    "image_url": "images/recipe_14.jpg"
+  },
+  {
+    "id": "builtin-15",
+    "nom": "Bol Arc-en-Ciel",
+    "portions": "Pour 2 Portions",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "2 portion de Nouille de Riz",
+        "&#189; Concombre anglais en Julienne",
+        "2 Carottes en Julienne",
+        "&#188; de Chou rouge Hach&#233;",
+        "1 tasse d'Edamame",
+        "1 Avocat coup&#233; en Cube",
+        "1 Mangue coup&#233; en Cube"
+      ],
+      "Sauce": [
+        "1 Lime (Jus)",
+        "&#188; de Tasse de Beurre de Peanut",
+        "2 C. de Vinaigre de Riz",
+        "1 C. de Sirop D&#8217;&#201;rable",
+        "2 C. de Sriracha",
+        "1 C. de Sauce Soya"
+      ]
+    },
+    "preparation": [
+      "Faire bouillir les nouilles de Riz",
+      "Couper les l&#233;gumes",
+      "M&#233;langer les ingr&#233;dients pour la Sauce",
+      "Assembler les l&#233;gumes, les Nouilles de Riz et la sauce dans deux Bols pour servir"
+    ],
+    "source": "https://www.instagram.com/reel/C2-9EvhJH6X/?igsh=ZjcxbjBkZmhjbDhh",
+    "image_url": "images/recipe_15.jpg"
+  },
+  {
+    "id": "builtin-16",
+    "nom": "Bouch&#233; de Saumon BangBang",
+    "portions": "Pour 2 Portions",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Sauce Sucr&#233;/&#201;pic&#233;",
+        "2 Filet de Saumon",
+        "1 C. de Poudre d&#8217;Ail",
+        "1 C. de Paprika",
+        "&#188; de Tasse de Chapelure Panko",
+        "1 &#188; de Tasse de Riz Basmati"
+      ]
+    },
+    "preparation": [
+      "Couper le Saumon en morceaux et mettre l&#8217;assaisonnement et la sauce Sucr&#233;/&#201;pic&#233;",
+      "Tremper chaque Morceaux dans la chapelure",
+      "Mettre au four &#224; 350 degr&#233; pour 15 minutes",
+      "Assembl&#233; l&#8217;assiette et ajouter les oignon vert sur le dessus"
+    ],
+    "source": "https://www.instagram.com/reel/C3aaXpWIQVf/?igsh=MWE3bDRuenQ1bWFlMQ==",
+    "image_url": "images/recipe_16.jpg"
+  },
+  {
+    "id": "builtin-17",
+    "nom": "Bol Crevettes, Chili Lime",
+    "portions": "",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Crevettes",
+        "Poudre de chili",
+        "Cumin",
+        "Paprika",
+        "Poudre d&#8217;ail",
+        "Vermicelle de Riz",
+        "Lime (Jus)"
+      ],
+      "Sauce": [
+        "Mangues",
+        "Avocats",
+        "Oignon Rouge",
+        "Coriandre",
+        "Jus de Lime"
+      ]
+    },
+    "preparation": [
+      "M&#233;langer les &#233;pices et les crevettes",
+      "Mettre au AirFryer &#224; 350 degr&#233; pour 8 minutes",
+      "Couper les ingr&#233;dients pour la Salsa",
+      "Assembl&#233;e le bol avec les crevettes"
+    ],
+    "source": "https://www.instagram.com/reel/C3S4hcmN552/?igsh=MWptcXFtOXNhdnRqYQ==",
+    "image_url": "images/recipe_17.jpg"
+  },
+  {
+    "id": "builtin-18",
+    "nom": "Bol de Poulet Buffalo",
+    "portions": "Pour 4 Portions",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "2 Poitrines de Poulet",
+        "Poudre d&#8217;ail",
+        "&#189; Tasse de Sauce Buffalo"
+      ],
+      "Bol": [
+        "2 Tasse de Riz ( Chou-Fleur au choix)",
+        "8 Tasse de Salade",
+        "1 Tasse de Carottes rap&#233;s",
+        "1 Tasse de Cornichon",
+        "2 Avocat en Cube",
+        "&#189; Tasse d&#8217;oignon vert"
+      ],
+      "Sauce Ranch": [
+        "1 Tasse de Yogourt Grec",
+        "2  C. d&#8217;assaisonnement ranch",
+        "1-2 C. de lait D&#8217;amande",
+        "1 C. de Jus de lime",
+        "1 C. de Cidre de pomme ou Vinaigre de vin blanc"
+      ]
+    },
+    "preparation": [
+      "Faire cuire le poulet &#224; la po&#234;le 6-7 minutes de chaque c&#244;t&#233;",
+      "Faire la Sauce Buffalo, y ajouter le poulet et m&#233;langer",
+      "Faire Bouillir le Riz",
+      "Couper les l&#233;gumes",
+      "M&#233;langer les ingr&#233;dients pour la sauce Ranch",
+      "Assembler l&#8217;Assiette"
+    ],
+    "source": "https://healthylittlepeach.com/healthy-buffalo-chicken-bowls-with-ranch-dressing/",
+    "image_url": "images/recipe_18.jpg"
+  },
+  {
+    "id": "builtin-19",
+    "nom": "Salade Poulet/Avocat",
+    "portions": "",
+    "category": "Repas",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "Poitrines de Poulet",
+        "Tomate Cerise",
+        "Bl&#233; D&#8217;inde",
+        "Oignon Rouge",
+        "Oignon Vert",
+        "Concombre",
+        "Avocat",
+        "Laitue Romaine"
+      ],
+      "Sauce Salade": [
+        "1 Citron (Jus)",
+        "3 C. Huile d&#8217;Olive",
+        "1 C.  de Miel",
+        "1 C. Coriandre",
+        "Poivre"
+      ],
+      "Assaisonnement Poulet": [
+        "1 C. de Poudre de Piment Rouge",
+        "&#189; C. de Poivre Noir",
+        "&#188; de C. de Cumin",
+        "&#188; de Citron (Jus)",
+        "3 C. D&#8217;huile d&#8217;Olive"
+      ]
+    },
+    "preparation": [
+      "Assaisonner le Poulet et mettre au four &#224; 400 degr&#233; pour 20 &#224; 25 Minutes",
+      "Faire la Vinaigrette",
+      "Assembler la salade",
+      "Ajouter le poulet"
+    ],
+    "source": "https://www.instagram.com/reel/C3XRKs5NfST/?igsh=ZWNvOTZwdWdiMGYz",
+    "image_url": "images/recipe_19.jpg"
+  },
+  {
+    "id": "builtin-20",
+    "nom": "Chili Style Marocain",
+    "portions": "Pour 4 Portions",
+    "category": "Repas",
+    "temps": "45 min",
+    "ingredients": {
+      "Principal": [
+        "3 Gousse d&#8217;ail",
+        "1 Oignon Rouge",
+        "1 Courgette",
+        "1 Carotte",
+        "1 Patate Douce",
+        "1 Tomate &#233;minc&#233;",
+        "700g de Pois Chiche",
+        "200 ml de Bouillon (LowSalt)",
+        "100g de Datte coup&#233; en petit morceau",
+        "1 C. de Cumin",
+        "&#189; C. de Coriandre",
+        "1 C. de Cannelle"
+      ]
+    },
+    "preparation": [
+      "Coup&#233; l&#8217;ail, l&#8217;oignon, les carottes, courgette et patate douce en petit morceaux",
+      "Dans une casserole, mettre 1 C. D&#8217;huile D&#8217;Olive et l&#8217;ail , l&#8217;oignon, la courgette et les carottes. Faire cuire &#224; feux doux pour 10 minutes en brassant fr&#233;quemment",
+      "Ajouter les &#233;pices,  patate douce et Pois Chiche (avec l&#8217;eau des Pois Chiche)",
+      "Ajouter les tomates, le bouillon et les dattes.",
+      "Bien m&#233;langer et couvrir pour environ 40 minutes &#224; feux doux",
+      "S&#233;parer en 6 portions et ajouter de la coriandre"
+    ],
+    "source": "https://www.instagram.com/reel/C3qLRP3Kae7/?igsh=MTh4cmw1c3lxeXF1dw==",
+    "image_url": "images/recipe_20.jpg"
+  },
+  {
+    "id": "builtin-21",
+    "nom": "Salade Chou Sauce Peanut &#201;pic&#233;",
+    "portions": "",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Chou",
+        "Avocat",
+        "Concombre",
+        "Oignon rouge",
+        "Coriandre"
+      ],
+      "Vinaigrette": [
+        "Beurre de peanut en poudre",
+        "&#189; Lime (Jus)",
+        "Eau",
+        "Sriracha",
+        "Ail"
+      ]
+    },
+    "preparation": [
+      "Coup&#233; l&#8217;ail, l&#8217;oignon, les carottes, courgette et patate douce en petit morceaux",
+      "Dans une casserole, mettre 1 C. D&#8217;huile D&#8217;Olive et l&#8217;ail , l&#8217;oignon, la courgette et les carottes. Faire cuire &#224; feux doux pour 10 minutes en brassant fr&#233;quemment",
+      "Ajouter les &#233;pices,  patate douce et Pois Chiche (avec l&#8217;eau des Pois Chiche)",
+      "Ajouter les tomates, le bouillon et les dattes.",
+      "Bien m&#233;langer et couvrir pour environ 40 minutes &#224; feux doux",
+      "S&#233;parer en 6 portions et ajouter de la coriandre"
+    ],
+    "source": "https://www.instagram.com/reel/C3ih0lZIWFo/?igsh=c2RpcXI1MWx3ZnM0",
+    "image_url": "images/recipe_21.jpg"
+  },
+  {
+    "id": "builtin-22",
+    "nom": "One Pan Sweet Chili Salmon",
+    "portions": "",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "Saumon",
+        "Riz Basmatti",
+        "150g Petits Pois",
+        "Legume congel&#233;",
+        "&#189; Oignon Jaune",
+        "4 C. de Sauce Soya",
+        "2 C. de Miel",
+        "1 C. De Poudre de Chili",
+        "1 Oignon Vert",
+        "Graine de s&#233;same"
+      ]
+    },
+    "preparation": [
+      "Mettre les l&#233;gumes sur la po&#234;le &#224; haute intensit&#233; pendant 5 minutes",
+      "Descendre la temp&#233;rature et ajouter le saumon badigeonner de la sauce Chili",
+      "Lorsque le saumon est pr&#234;t, ajouter le riz cuit au m&#233;lange",
+      "Ajouter les graine de s&#233;same"
+    ],
+    "source": "https://www.instagram.com/reel/C3YOEZJoST_/?igsh=bnlmZjN3cDN2Ym5z",
+    "image_url": "images/recipe_22.jpg"
+  },
+  {
+    "id": "builtin-23",
+    "nom": "Salade de Thon",
+    "portions": "Pour 2 Portions",
+    "category": "Repas",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "1 Canne de thon",
+        "&#188; de Tasse de Bl&#233; d&#8217;Inde",
+        "&#188; de Tasse de Concombre",
+        "&#188; de Tasse d&#8217;Oignon rouge",
+        "1 C.  de Persil",
+        "2 C. de Yogourt Grec",
+        "2 C. de Fromage Cottage"
+      ]
+    },
+    "preparation": [
+      "M&#233;langer tous les ingr&#233;dients dans un bol",
+      "&#201;tendre sur Galette de Riz"
+    ],
+    "source": "https://www.instagram.com/reel/C29OTM9PXGJ/?igsh=b3hsNWVvdW4ydmd6",
+    "image_url": "images/recipe_23.jpg"
+  },
+  {
+    "id": "builtin-24",
+    "nom": "M&#233;lange Avocat/Thon",
+    "portions": "",
+    "category": "Repas",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "1 Canne de Thon",
+        "1 Avocat",
+        "Mayonnaise &#201;pic&#233;",
+        "Oignons verts hach&#233;s",
+        "Feuilles de Nori"
+      ]
+    },
+    "preparation": [
+      "M&#233;langer tous les ingr&#233;dients dans un bol",
+      "&#201;tendre sur Galette de Riz ou Feuilles de Nori"
+    ],
+    "source": "https://www.instagram.com/reel/C2bEYBQvOFm/?igsh=MmRheW9jbnhrMWtp",
+    "image_url": "images/recipe_24.jpg"
+  },
+  {
+    "id": "builtin-25",
+    "nom": "Orzo Saumon Petits Pois et Bl&#233; D&#8217;inde",
+    "portions": "",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "2 Filet de Saumon",
+        "&#189; Oignon",
+        "&#190; de tasse de Petits Pois",
+        "&#190; de tasse de Bl&#233; D&#8217;Inde",
+        "500 ml de Bouillon de L&#233;gumes",
+        "&#190; de tasse d&#8217;Orzo",
+        "100 ml de Cr&#232;me 15%",
+        "2 C. de Fromage &#224; la Cr&#232;me",
+        "Marinade Sucr&#233;/&#201;pic&#233;"
+      ]
+    },
+    "preparation": [
+      "Badigeonner  la marinade sur le saumon et mettre &#224; 400 degr&#233; pendant 15 minutes au Airfryer",
+      "Couper les oignons et les ajouter avec les petit pois dans une po&#234;le",
+      "Faire frire &#224; feu m&#233;dium pendant 10 minutes",
+      "Ajouter l&#8217;Orzo et laisser frire quelque minutes",
+      "Ajouter le bouillon de L&#233;gume et la Cr&#232;me",
+      "Couvrir et laisser mijoter &#224; feu  m&#233;dium pendant 10 minutes",
+      "Ajouter le Fromage &#224; la Cr&#232;me et le saumon",
+      "M&#233;langer et laisser mijoter un autre 10 minutes environ"
+    ],
+    "source": "https://www.instagram.com/reel/C2u7sQ4oBXK/?igsh=MWd0dDAyZzY4Y2g3Mg==",
+    "image_url": "images/recipe_25.jpg"
+  },
+  {
+    "id": "builtin-26",
+    "nom": "Bol de Hummus Garni",
+    "portions": "",
+    "category": "Repas",
+    "temps": "10 min",
+    "ingredients": {
+      "Poulet": [
+        "1 lb de poulet",
+        "Sel et poivre",
+        "Poudre d'ail",
+        "Paprika"
+      ],
+      "Tzatziki": [
+        "1 tasse de yogourt grec",
+        "1 mini concombre, r&#226;p&#233;",
+        "Jus de &#189; citron",
+        "1 c. &#224; th&#233; de poudre d'ail",
+        "2 c. &#224; th&#233; d'aneth",
+        "Sel au go&#251;t"
+      ],
+      "Pour le Bol": [
+        "Hummus",
+        "Cayenne (optionnel)",
+        "Tzatziki",
+        "Poulet",
+        "Concombre",
+        "Tomates cerises",
+        "Oignon rouge",
+        "Olives marin&#233;es",
+        "Feta &#233;miett&#233;e",
+        "Huile d'olive",
+        "Aneth",
+        "Quartier de citron"
+      ]
+    },
+    "preparation": [
+      "Assaisonner le poulet avec sel, poivre, poudre d'ail et paprika. Cuire &#224; la po&#234;le ou au four.",
+      "Pr&#233;parer le tzatziki en m&#233;langeant tous les ingr&#233;dients dans un bol.",
+      "Monter le bol : une couche de hummus, un filet de cayenne, le tzatziki, le poulet coup&#233;.",
+      "Garnir de concombre, tomates cerises, oignon rouge, olives, feta, aneth et un filet d'huile d'olive. Servir avec un quartier de citron."
+    ],
+    "source": "",
+    "image_url": "images/recipe_26.jpg"
+  },
+  {
+    "id": "builtin-27",
+    "nom": "Salade de P&#226;tes Poulet Pesto",
+    "portions": "Pour 4 portions",
+    "category": "Repas",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "2 poitrines de poulet (poch&#233;es et effiloch&#233;es)",
+        "300g de p&#226;tes au choix (non cuites)",
+        "180g de pesto au basilic",
+        "&#188; tasse de yogourt grec",
+        "Sel et poivre",
+        "1 grosse poign&#233;e d'&#233;pinards b&#233;b&#233;",
+        "1 barquette de tomates cerises, tranch&#233;es",
+        "&#189; tasse de feta &#233;miett&#233;e",
+        "Coriandre, hach&#233;e finement"
+      ]
+    },
+    "preparation": [
+      "Cuire les p&#226;tes selon les instructions sur l'emballage.",
+      "M&#233;langer le pesto, le yogourt grec, le sel et le poivre.",
+      "Dans un grand bol, ajouter tous les ingr&#233;dients et bien m&#233;langer.",
+      "Servir dans des bols. Bonne app&#233;tit!"
+    ],
+    "source": "https://kizactivelife.com/pesto-chicken-pasta-salad/",
+    "image_url": "images/recipe_27.jpg"
+  },
+  {
+    "id": "builtin-28",
+    "nom": "Flatbread Poulet Pesto",
+    "portions": "Pour 2 portions",
+    "category": "Repas",
+    "temps": "20 min",
+    "ingredients": {
+      "Poulet": [
+        "250g de poitrine de poulet, coup&#233;e en d&#233;s",
+        "Poudre d'ail",
+        "Poudre d'oignon",
+        "Herbes m&#233;lang&#233;es"
+      ],
+      "Garnitures": [
+        "2 Flatbreads (pains plats)",
+        "2 c. &#224; soupe de pesto vert (+ extra pour garnir)",
+        "Mozzarella (mini billes ou r&#226;p&#233;e)",
+        "&#189; Poivron rouge, tranch&#233;",
+        "&#189; Oignon rouge, tranch&#233;",
+        "Parmesan r&#226;p&#233;",
+        "Poivre noir",
+        "Feuilles de basilic frais"
+      ]
+    },
+    "preparation": [
+      "Dans une po&#234;le, cuire le poulet en d&#233;s avec la poudre d'ail, poudre d'oignon et herbes. Retirer quand cuit. Pr&#233;chauffer le four &#224; 350&#176;F (180&#176;C).",
+      "Placer les flatbreads sur une plaque et &#233;tendre 1 c. &#224; soupe de pesto vert sur chacun.",
+      "Garnir de mozzarella, poulet cuit et oignon rouge. R&#226;per du parmesan par-dessus et cuire au four 10 minutes.",
+      "&#192; la sortie du four, ajouter du parmesan, du poivre noir, des feuilles de basilic et un peu plus de pesto. Bonne app&#233;tit!"
+    ],
+    "source": "",
+    "image_url": "images/recipe_28.jpg"
+  },
+  {
+    "id": "builtin-29",
+    "nom": "Lasagne Poulet Patate Douce (Sans P&#226;tes)",
+    "portions": "",
+    "category": "Repas",
+    "temps": "1h",
+    "ingredients": {
+      "Principal": [
+        "2 grosses patates douces, tranch&#233;es mince en longueur",
+        "Huile d'olive",
+        "8 hauts de cuisses de poulet d&#233;soss&#233;s, coup&#233;s en d&#233;s",
+        "1 c. &#224; soupe de paprika fum&#233;",
+        "1 c. &#224; soupe d'assaisonnement Badia complet",
+        "1 c. &#224; th&#233; de poivre",
+        "1 c. &#224; th&#233; de basilic",
+        "1 c. &#224; th&#233; d'assaisonnement italien",
+        "1 c. &#224; soupe d'ail hach&#233;",
+        "1&#189; tasse de cr&#232;me &#224; fouetter",
+        "1 c. &#224; th&#233; de poivre",
+        "1 c. &#224; soupe d'assaisonnement Badia complet",
+        "&#189; bloc de fromage &#224; la cr&#232;me",
+        "&#189; tasse de parmesan r&#226;p&#233;",
+        "1 contenant de ricotta",
+        "1 oeuf",
+        "Sel",
+        "Persil frais hach&#233;",
+        "1 c. &#224; th&#233; d'assaisonnement italien",
+        "Mozzarella r&#226;p&#233;e"
+      ]
+    },
+    "preparation": [
+      "Pr&#233;chauffer le four &#224; 375&#176;F.",
+      "Peler les patates douces et trancher mince en longueur. Frotter avec huile d'olive et cuire 12 minutes jusqu'&#224; tendret&#233;.",
+      "Dans un bol, m&#233;langer le poulet avec paprika fum&#233;, assaisonnement Badia, poivre, basilic, assaisonnement italien et huile d'olive.",
+      "Cuire le poulet dans un po&#234;lon jusqu'&#224; cuisson compl&#232;te, mettre de c&#244;t&#233;.",
+      "Dans le m&#234;me po&#234;lon, cuire l'ail hach&#233;. Ajouter la cr&#232;me &#224; fouetter et laisser chauffer.",
+      "Ajouter le poivre, fromage &#224; la cr&#232;me, parmesan et m&#233;langer jusqu'&#224; consistance lisse.",
+      "Ajouter le poulet cuit.",
+      "Dans un bol, m&#233;langer la ricotta, oeuf, sel, persil et assaisonnement italien.",
+      "Monter les couches: sauce poulet &#8594; patates douces &#8594; m&#233;lange ricotta &#8594; mozzarella. R&#233;p&#233;ter.",
+      "Cuire &#224; 375&#176;F pendant 35 minutes.",
+      "Gratiner &#224; 500&#176;F pendant 2-3 minutes jusqu'&#224; dor&#233;."
+    ],
+    "source": "https://www.instagram.com/cozykitchenwithsteph/",
+    "image_url": "images/recipe_29.jpg"
+  },
+  {
+    "id": "builtin-30",
+    "nom": "Alfredo Poulet au Fromage Cottage",
+    "portions": "",
+    "category": "Repas",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "8 oz de poitrine de poulet",
+        "Cro&#251;te d'amandes optionnelle: 1 oeuf, &#188; tasse de farine d'amandes",
+        "1 courge spaghetti",
+        "1&#190; tasse de fromage cottage 2%",
+        "&#8531; tasse de parmesan r&#226;p&#233;",
+        "&#189; c. &#224; th&#233; de chaque: sel, poivre, poudre d'ail, assaisonnement italien"
+      ]
+    },
+    "preparation": [
+      "Pr&#233;chauffer le four &#224; 425&#176;F. Couper la courge en deux, enlever les graines et cuire c&#244;t&#233; coup&#233; vers le bas pendant 40 minutes, ou jusqu'&#224; ce que les fils se d&#233;tachent facilement.",
+      "Si cro&#251;te d'amandes: tremper le poulet dans l'oeuf battu, enrober de farine d'amandes et po&#234;ler 5 minutes de chaque c&#244;t&#233;. Sinon, simplement assaisonner et cuire.",
+      "Au m&#233;langeur, combiner le fromage cottage, parmesan et assaisonnements jusqu'&#224; consistance lisse. Ajouter un peu d'eau si n&#233;cessaire.",
+      "Servir la sauce sur la courge spaghetti et le poulet!"
+    ],
+    "source": "https://www.instagram.com/caitlincalahannutrition/",
+    "image_url": "images/recipe_30.jpg"
+  },
+  {
+    "id": "builtin-31",
+    "nom": "Riz Sauvage \"Dirty\"",
+    "portions": "",
+    "category": "Repas",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "1 lb de boeuf hach&#233; (ou prot&#233;ine au choix)",
+        "1 tasse d'oignons en d&#233;s",
+        "Poivrons et c&#233;leri en d&#233;s",
+        "3 gousses d'ail hach&#233;",
+        "&#201;pices: sel, paprika, poudre de chili, &#189; c. &#224; th&#233; de thym, persil, poivre noir, &#188; c. &#224; th&#233; de cayenne",
+        "&#8531; tasse de p&#226;te de tomate (une demi-canne)",
+        "3 tasses de riz sauvage cuit"
+      ]
+    },
+    "preparation": [
+      "Dans un grand po&#234;lon &#224; feu moyen-&#233;lev&#233;, cuire le boeuf hach&#233; (ou prot&#233;ine au choix), 1 tasse d'oignons en d&#233;s, poivrons, c&#233;leri, 3 gousses d'ail et les &#233;pices.",
+      "Une fois le boeuf cuit et les l&#233;gumes ramollis, ajouter la p&#226;te de tomate et 3 tasses de riz sauvage cuit. Cuire &#224; feu moyen 5 minutes en m&#233;langeant.",
+      "Servir avec du persil frais et des oignons verts."
+    ],
+    "source": "https://www.instagram.com/mirsmicros/",
+    "image_url": "images/recipe_31.jpg"
+  },
+  {
+    "id": "builtin-32",
+    "nom": "Bols Fajita Steak Chipotle Miel",
+    "portions": "3 portions",
+    "category": "Repas",
+    "temps": "30 min",
+    "ingredients": {
+      "Steak chipotle miel": [
+        "1 lb de bifteck de surlonge, coup&#233; en bouch&#233;es",
+        "2 c. &#224; soupe de pur&#233;e de chipotle",
+        "1 c. &#224; soupe de miel",
+        "Jus de &#189; lime (~1 c. &#224; soupe)",
+        "Poudre d'ail, poudre d'oignon, poivre noir",
+        "Mariner 20+ minutes",
+        "Huile d'olive l&#233;g&#232;re pour la cuisson"
+      ],
+      "Poivrons et oignons": [
+        "1-2 poivrons oranges, tranch&#233;s",
+        "&#189; oignon rouge",
+        "Huile d'olive l&#233;g&#232;re en spray",
+        "Assaisonnement southwest chipotle"
+      ],
+      "Salade de ma&#239;s": [
+        "1 tasse de ma&#239;s grill&#233;",
+        "1 c. &#224; soupe de jalape&#241;o",
+        "1 c. &#224; soupe d'oignon rouge",
+        "2 c. &#224; soupe de mayo l&#233;g&#232;re",
+        "&#189; c. &#224; soupe de cilantro",
+        "&#189; c. &#224; soupe de jus de lime",
+        "Assaisonnement \"elote\""
+      ],
+      "Guacamole": [
+        "1 avocat &#233;cras&#233;",
+        "&#189; jalape&#241;o (environ 1 c. &#224; soupe)",
+        "2 c. &#224; soupe d'oignon rouge",
+        "1 c. &#224; soupe de cilantro",
+        "Jus de lime et sel au go&#251;t"
+      ],
+      "Pico de gallo": [
+        "3 tomates Roma moyennes, &#233;p&#233;pin&#233;es et coup&#233;es",
+        "1 jalape&#241;o",
+        "&#188; d'oignon rouge",
+        "Jus de &#189; lime",
+        "1-2 c. &#224; soupe de cilantro",
+        "Sel et poivre au go&#251;t"
+      ],
+      "Riz cilantro lime": [
+        "2 tasses de riz blanc cuit",
+        "2 c. &#224; soupe de cilantro",
+        "Jus d'une lime",
+        "Sel"
+      ]
+    },
+    "preparation": [
+      "Mariner le steak avec la pur&#233;e chipotle, miel, lime et &#233;pices pendant 20+ minutes.",
+      "Cuire le steak &#224; feu vif 2 minutes de chaque c&#244;t&#233;. Retirer et ajouter les poivrons et oignons dans le m&#234;me po&#234;lon.",
+      "Pr&#233;parer la salade de ma&#239;s, le guacamole et le pico de gallo selon les ingr&#233;dients.",
+      "Pr&#233;parer le riz cilantro lime en m&#233;langeant le riz cuit avec cilantro, jus de lime et sel.",
+      "Assembler les bols: riz, steak chipotle, pico de gallo, &#188; tasse de laitue, poivrons et oignons, ma&#239;s, &#188; tasse de fromage r&#226;p&#233;, guacamole."
+    ],
+    "source": "https://www.instagram.com/nutritionwithnat/",
+    "image_url": "images/recipe_32.jpg"
+  },
+  {
+    "id": "builtin-33",
+    "nom": "Boulettes Buffalo Poulet Fromage Cottage",
+    "portions": "",
+    "category": "Repas",
+    "temps": "35 min",
+    "ingredients": {
+      "Principal": [
+        "1 lb de poulet hach&#233;",
+        "&#189; tasse de fromage cottage",
+        "&#189; tasse de parmesan r&#226;p&#233;",
+        "&#190; tasse de farine d'amandes",
+        "&#8531; tasse de sauce buffalo",
+        "1 oeuf",
+        "1 c. &#224; th&#233; de sel, poivre noir, poudre d'ail, poudre d'oignon, thym",
+        "Oignons verts hach&#233;s (facultatif)"
+      ]
+    },
+    "preparation": [
+      "Pr&#233;chauffer le four &#224; 400&#176;F.",
+      "M&#233;langer tous les ingr&#233;dients dans un grand bol.",
+      "Utiliser une cuill&#232;re &#224; cr&#232;me glac&#233;e pour former des boulettes et d&#233;poser sur une plaque.",
+      "Cuire &#224; 400&#176;F pendant 20 minutes et gratiner &#224; la fin pour un ext&#233;rieur croustillant.",
+      "Servir avec vos l&#233;gumes favoris ou dans un bol avec du riz, vinaigrette ranch et sauce buffalo."
+    ],
+    "source": "https://www.instagram.com/dayamifrommiami/",
+    "image_url": "images/recipe_33.jpg"
+  },
+  {
+    "id": "builtin-34",
+    "nom": "Salade Caprese &#224; l'Avocat",
+    "portions": "",
+    "category": "Repas",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "2 tasses de tomates cerises coup&#233;es en deux (rouges et jaunes si possible)",
+        "225 g de billes de mozzarella fra&#238;ches (bocconcini)",
+        "2 avocats m&#251;rs tranch&#233;s",
+        "2 cuill&#232;res &#224; soupe d'huile d'olive",
+        "1 cuill&#232;re &#224; soupe de gla&#231;age balsamique",
+        "1 cuill&#232;re &#224; soupe de jus de citron",
+        "&#189; cuill&#232;re &#224; caf&#233; d'assaisonnement italien",
+        "&#189; cuill&#232;re &#224; caf&#233; de sel",
+        "&#188; cuill&#232;re &#224; caf&#233; de poivre noir",
+        "10 &#224; 12 feuilles de basilic frais d&#233;chir&#233;es",
+        "Flocons de piment (optionnel)",
+        "Pain grill&#233; ou crackers pour servir (optionnel)"
+      ]
+    },
+    "preparation": [
+      "Couper les tomates cerises en deux et trancher les avocats. Arroser les avocats de jus de citron pour &#233;viter l'oxydation.",
+      "Disposer sur un grand plat les tomates, les tranches d'avocat et les billes de mozzarella en alternant les couleurs.",
+      "Arroser uniform&#233;ment d'huile d'olive et du reste de jus de citron.",
+      "Ajouter de fins filets de gla&#231;age balsamique.",
+      "Assaisonner avec l'assaisonnement italien, le sel et le poivre.",
+      "Parsemer de feuilles de basilic d&#233;chir&#233;es et, si d&#233;sir&#233;, de flocons de piment.",
+      "Servir imm&#233;diatement pour conserver toute la fra&#238;cheur."
+    ],
+    "source": "https://www.mirecettes.com",
+    "image_url": "images/recipe_34.jpg"
+  },
+  {
+    "id": "builtin-35",
+    "nom": "Biscuits Banane et Chocolat Noir",
+    "portions": "Pour 2 G&#233;ants biscuits",
+    "category": "Collations",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "1 Banane en pur&#233;e",
+        "&#188; de tasse de beurre d&#8217;amande (ou noix, peanut,etc)",
+        "&#189; C. d&#8217;extrait de Vanille",
+        "&#190; de tasse de gruau",
+        "&#188; de tasse de p&#233;pite au Chocolat Noir"
+      ]
+    },
+    "preparation": [
+      "Mettre tous les ingr&#233;dients dans un bol et m&#233;langer",
+      "Laisser reposer dans le frigo pour 10 min",
+      "Cr&#233;er les biscuits sur une plaque",
+      "Cuire &#224; 350 degr&#233; pour 15 minutes",
+      "Laisser refroidir"
+    ],
+    "source": "https://www.instagram.com/reel/CwNeSaAqfzr/?igsh=MWF3ZmRrMzlzcHhmOQ==",
+    "image_url": "images/recipe_35.jpg"
+  },
+  {
+    "id": "builtin-36",
+    "nom": "Barres Sucr&#233;/Sal&#233;e",
+    "portions": "",
+    "category": "Collations",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "&#8531; de tasse de beurre d&#8217;amande (ou noix, peanut,etc)",
+        "&#8531; de tasse de miel",
+        "1 C. d&#8217;extrait de Vanille",
+        "2 Galette de Riz l&#233;g&#232;re",
+        "&#188; de tasse de peanut hach&#233;s",
+        "4 Dattes (coup&#233;e en petits morceaux)"
+      ]
+    },
+    "preparation": [
+      "Mettre le beurre d&#8217;amande, le miel et la vanille dans un bol et m&#233;langer jusqu&#8217;&#224; se que ce soit lisse",
+      "Ajouter les galettes de riz &#233;miett&#233; et les peanut et m&#233;langer",
+      "Prendre un moule &#224; pain 9x5 et mettre du papier parchemin",
+      "&#201;tendre le mix dans le moule et &#233;galiser",
+      "Ajouter les date sur le dessus et peser pour qu&#8217;elles tiennent sur la barre",
+      "Mettre au cong&#233;lateur  et faire fondre le chocolat noir dans un petit bol avec de l&#8217;huile de coco",
+      "Ajouter le chocolat sur la barre avec un peu de sel de mer",
+      "Remettre au cong&#233;lateur pour 30-40 minutes minimum"
+    ],
+    "source": "https://www.instagram.com/reel/CwicD5ZMosx/?igsh=OWVsc2U1dXhkNjI0",
+    "image_url": "images/recipe_36.jpg"
+  },
+  {
+    "id": "builtin-37",
+    "nom": "P&#226;te &#224; Biscuit Pois Chiches",
+    "portions": "",
+    "category": "Collations",
+    "temps": "10 min",
+    "ingredients": {
+      "Principal": [
+        "&#188; de tasse de Sirop d&#8217;&#233;rable",
+        "&#190; de tasse de Farine d&#8217;Avoine",
+        "1 &#189;  tasse de Pois Chiches",
+        "&#189; tasse de Beurre d&#8217;amande",
+        "&#189; tasse de P&#233;pites de Chocolat Noir"
+      ]
+    },
+    "preparation": [
+      "Mettre tout les ingr&#233;dient dans un mixeur (sauf les P&#233;pites de Chocolat)",
+      "Mixer jusqu&#8217;&#224; ce que la texture soit lisse",
+      "Ajouter les P&#233;pites de Chocolat",
+      "Faire des petites boule avec le m&#233;lange et r&#233;frig&#233;rer"
+    ],
+    "source": "https://www.rainbownourishments.com/chickpea-cookie-dough/",
+    "image_url": "images/recipe_37.jpg"
+  },
+  {
+    "id": "builtin-38",
+    "nom": "Barre Prot&#233;in&#233; au Chocolat",
+    "portions": "Pour 6 Portions",
+    "category": "Collations",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "&#189; Tasse de Farine",
+        "&#188; de Tasse de Beurre d&#8217;Amande",
+        "2 Tasses de poudre de Prot&#233;ines au Chocolat",
+        "100 ml de lait d&#8217;Amande",
+        "50 ml de Sirop d&#8217;&#233;rable (ou Miel)",
+        "&#189; Tasse de Chocolat Noir"
+      ]
+    },
+    "preparation": [
+      "Ajouter tous les ingr&#233;dients dans un bol (sauf le Chocolat Noir)",
+      "M&#233;langer",
+      "Prendre un moule &#224; pain 9x5 et mettre du papier parchemin",
+      "&#201;tendre le m&#233;lange uniform&#233;ment dans le moule",
+      "Mettre au cong&#233;lateur",
+      "Faire fondre le Chocolat noir",
+      "Ajouter le Chocolat noir sur la mixture",
+      "Laisser raffermir le m&#233;lange  au cong&#233;lateur pour minimum 30 minutes"
+    ],
+    "source": "https://www.instagram.com/reel/C2pxeeTJhGo/?igsh=MTloZHZhZ3VkaWIyaQ==",
+    "image_url": "images/recipe_38.jpg"
+  },
+  {
+    "id": "builtin-39",
+    "nom": "Pois Chiches Prot&#233;in&#233;s au Chocolat",
+    "portions": "",
+    "category": "Collations",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "1 Canne de Pois Chiche",
+        "&#188; de Tasse de Chocolat Noir",
+        "1 C. d&#8217;Huile de Coco",
+        "1 Tasse de Poudre de Proteine au Chocolat",
+        "Flocon de Sel de Mer"
+      ]
+    },
+    "preparation": [
+      "Mettre les Pois Chiches dans le AirFryer &#224; 350 degr&#233; pour 20 minutes",
+      "Faire fondre le Chocolat Noir avec l&#8217;Huile de Coco au micro-onde pour 20 Secondes",
+      "Mettre le Chocolat, la Poudre de Proteine et  les Pois Chiches dans un bol",
+      "M&#233;langer",
+      "&#201;tendre tout le m&#233;lange sur une plaque avec papier parchemin",
+      "Mettre au cong&#233;lateur"
+    ],
+    "source": "https://www.instagram.com/reel/C2ZpOmqIa6l/?igsh=MXI4eWlxNHJybmU4dg==",
+    "image_url": "images/recipe_39.jpg"
+  },
+  {
+    "id": "builtin-40",
+    "nom": "Barres Gruau Prot&#233;in&#233;",
+    "portions": "",
+    "category": "Collations",
+    "temps": "15 min",
+    "ingredients": {
+      "Principal": [
+        "1 tasse d&#8217;Avoine",
+        "2 tasse de poudre de  Prot&#233;ine",
+        "2 C. de beurre d&#8217;Amande",
+        "1 C. de Miel",
+        "5-6 C. de lait d&#8217;Amande"
+      ]
+    },
+    "preparation": [
+      "Mettre l&#8217;Avoine, la Poudre de Prot&#233;ine et le Miel dans un Bol",
+      "M&#233;langer et ajouter le lait d&#8217;Amande",
+      "Prendre un moule &#224; pain 9x5 et mettre du papier parchemin",
+      "&#201;tendre le m&#233;lange uniform&#233;ment dans le moule",
+      "Laisse refroidir dans le Frigo pour au moins 20 minutes"
+    ],
+    "source": "https://www.instagram.com/reel/C2-4WOGRdhY/?igsh=YzByNGY2MXdwbXA1",
+    "image_url": "images/recipe_40.jpg"
+  },
+  {
+    "id": "builtin-41",
+    "nom": "Coupes de Cajou au Chocolat",
+    "portions": "",
+    "category": "Collations",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "1 &#189; tasses de dattes Medjool moelleuses (225g)",
+        "1 tasse de cajous (140g)",
+        "Pinc&#233;e de sel de mer (optionnel)",
+        "&#189; tasse de chocolat noir (75g)"
+      ]
+    },
+    "preparation": [
+      "D&#233;noyauter les dattes et les mettre au robot culinaire avec les cajous. Si vos dattes sont dures, ajouter 1-2 c. &#224; soupe d'eau en mixant. Ajouter un peu de sel de mer pour un go&#251;t caramel sal&#233;.",
+      "Rouler en boules et placer dans un moule &#224; mini-cupcakes. Presser avec un doigt ou le manche d'une cuill&#232;re en bois pour cr&#233;er un petit creux.",
+      "Faire fondre le chocolat noir au bain-marie et verser une cuill&#232;re dans chaque creux. R&#233;frig&#233;rer pour faire prendre."
+    ],
+    "source": "https://helenridgeway.com/recipes/",
+    "image_url": "images/recipe_41.jpg"
+  },
+  {
+    "id": "builtin-42",
+    "nom": "Barres Shortbread Coco et Chocolat",
+    "portions": "",
+    "category": "Collations",
+    "temps": "25 min",
+    "ingredients": {
+      "Base": [
+        "2 tasses de farine d'amande",
+        "&#188; tasse de sirop d'&#233;rable (ajouter plus si trop sec)"
+      ],
+      "Caramel": [
+        "&#189; tasse de beurre de noix (amande)",
+        "&#8531; tasse de sirop d'&#233;rable",
+        "3 c. &#224; soupe de noix de coco r&#226;p&#233;e"
+      ],
+      "Garniture": [
+        "Chocolat noir",
+        "Noix de coco r&#226;p&#233;e"
+      ]
+    },
+    "preparation": [
+      "M&#233;langer les ingr&#233;dients de la base et presser dans un moule carr&#233;. Mettre au cong&#233;lateur.",
+      "M&#233;langer les ingr&#233;dients du caramel et &#233;tendre sur la base.",
+      "Avant de mettre au frigo, ajouter la couche de chocolat fondu m&#233;lang&#233; avec la noix de coco r&#226;p&#233;e (le chocolat solidifie vite!).",
+      "Laisser prendre au frigo jusqu'&#224; ce que ce soit ferme. Couper en barres et d&#233;guster!"
+    ],
+    "source": "",
+    "image_url": "images/recipe_42.jpg"
+  },
+  {
+    "id": "builtin-43",
+    "nom": "Muffins Banane Chocolat Prot&#233;in&#233;s",
+    "portions": "12 muffins",
+    "category": "Collations",
+    "temps": "30 min",
+    "ingredients": {
+      "Principal": [
+        "3 bananes &#233;cras&#233;es",
+        "2 oeufs",
+        "&#188; tasse de miel",
+        "1 c. &#224; soupe d'extrait de vanille",
+        "1 tasse de fromage cottage, m&#233;lang&#233;",
+        "&#189; tasse de sucre de coco ou sirop d'&#233;rable",
+        "1 c. &#224; th&#233; de bicarbonate de soude",
+        "1 c. &#224; th&#233; de poudre &#224; p&#226;te",
+        "1 c. &#224; th&#233; de cannelle",
+        "2 tasses de farine (peut &#234;tre sans gluten)",
+        "&#189; tasse de p&#233;pites de chocolat noir"
+      ]
+    },
+    "preparation": [
+      "Pr&#233;chauffer le four &#224; 350&#176;F et pr&#233;parer un moule &#224; muffins pour 12.",
+      "M&#233;langer tous les ingr&#233;dients humides, puis ajouter graduellement les ingr&#233;dients secs.",
+      "Ajouter les p&#233;pites de chocolat en dernier. Ne pas trop m&#233;langer!",
+      "Cuire 22-23 minutes."
+    ],
+    "source": "https://www.instagram.com/allie.dailywellness/",
+    "image_url": "images/recipe_43.jpg"
+  },
+  {
+    "id": "builtin-44",
+    "nom": "Frites de Carottes",
+    "portions": "",
+    "category": "Collations",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "3-4  Carottes, coup&#233; en longueur",
+        "2-3 C. d&#8217;Huile D&#8217;Olive",
+        "Poudre de Chili",
+        "Poudre d&#8217;onion",
+        "Paprika",
+        "Origan/Basilic"
+      ],
+      "Sauce": [
+        "&#8531; de tasse de Yogourt Grec",
+        "1 C. d&#8217;Huile d&#8217;olive",
+        "&#189; C. de Miel",
+        "Chili,  Paprika, Basilic"
+      ]
+    },
+    "preparation": [
+      "Couper les Carottes en longueur",
+      "Mettre dans un bol avec l&#8217;huile et les &#233;pices",
+      "&#201;taler sur une plaque &#224; 350 degr&#233; pendant 20-30 minutes",
+      "M&#233;langer les ingr&#233;dients pour la sauce"
+    ],
+    "source": "https://www.instagram.com/reel/C2NYMB9K9hC/?igsh=N3FnZHowYTRhbHV2",
+    "image_url": "images/recipe_44.jpg"
+  },
+  {
+    "id": "builtin-45",
+    "nom": "G&#226;teau Prot&#233;in&#233; au Chocolat",
+    "portions": "Pour 2 Portions",
+    "category": "Collations",
+    "temps": "20 min",
+    "ingredients": {
+      "Principal": [
+        "&#189; Tasse d&#8217;avoine",
+        "&#8532; de Tasse D&#8217;eau",
+        "1 Tasse de Prot&#233;ine en Poudre",
+        "2 C. de Poudre de Cacao",
+        "&#189; C. de Sirop d'&#233;rable (ou Miel)",
+        "1 C. de Beurre D&#8217;amande"
+      ]
+    },
+    "preparation": [
+      "Mettre tous les ingr&#233;dients dans un Blender",
+      "Verser dans un bol",
+      "Mettre au Micro-Onde pour 1 &#224; 2 minutes"
+    ],
+    "source": "https://www.instagram.com/reel/C3R8vRYxh32/?igsh=aTdzc3N3c29uajht",
+    "image_url": "images/recipe_45.jpg"
+  },
+  {
+    "id": "builtin-46",
+    "nom": "Pain aux Bananes, Fraises et Chocolat",
+    "portions": "",
+    "category": "Collations",
+    "temps": "1h",
+    "ingredients": {
+      "Principal": [
+        "3 bananes moyennes, m&#251;res et &#233;cras&#233;es",
+        "&#190; tasse de sucre (blanc, brun ou de coco)",
+        "1 gros &#339;uf, temp&#233;rature ambiante",
+        "&#8531; tasse d'huile de coco, fondue",
+        "1 &#189; c. &#224; th&#233; d'extrait de vanille",
+        "&#189; c. &#224; th&#233; de bicarbonate de soude",
+        "1 &#189; tasses de farine tout usage sans gluten",
+        "1 c. &#224; th&#233; de cannelle",
+        "&#189; tasse de p&#233;pites de chocolat noir",
+        "&#189; tasse de fraises coup&#233;es en d&#233;s"
+      ]
+    },
+    "preparation": [
+      "M&#233;langer les bananes &#233;cras&#233;es, le sucre, l'huile de coco fondue, l'&#339;uf et la vanille dans un bol.",
+      "Ajouter les ingr&#233;dients secs tamis&#233;s et bien m&#233;langer au batteur &#224; main.",
+      "Incorporer le chocolat et les fraises, puis verser dans un moule &#224; pain chemis&#233;.",
+      "Cuire au four &#224; 350&#176;F pendant 55-60 minutes. Retirer et laisser refroidir avant de trancher."
+    ],
+    "source": "",
+    "image_url": "images/recipe_46.jpg"
+  },
+  {
+    "id": "builtin-47",
+    "nom": "Pain aux Bananes G&#226;teau aux Carottes",
+    "portions": "",
+    "category": "Collations",
+    "temps": "1h",
+    "ingredients": {
+      "Ingr&#233;dients humides": [
+        "1&#189; de carottes r&#226;p&#233;es",
+        "2-3 bananes m&#251;res",
+        "&#189; tasse d'huile d'olive",
+        "&#189; tasse de yogourt grec",
+        "&#190; de tasse de sirop d'&#233;rable",
+        "1 oeuf",
+        "1 cuill&#232;re &#224; th&#233; d'extrait de vanille"
+      ],
+      "Ingr&#233;dients secs": [
+        "1&#189; tasse de farine",
+        "1 cuill&#232;re &#224; th&#233; de poudre &#224; p&#226;te",
+        "1 cuill&#232;re &#224; th&#233; de bicarbonate de soude",
+        "1 cuill&#232;re &#224; th&#233; de cannelle moulue",
+        "1 cuill&#232;re &#224; th&#233; de muscade",
+        "1 scoop de prot&#233;ine vanille (facultatif)"
+      ],
+      "Cr&#233;mage": [
+        "1 bloc de fromage &#224; la cr&#232;me faible en gras",
+        "&#189; tasse de yogourt grec",
+        "1 cuill&#232;re &#224; th&#233; d'extrait de vanille",
+        "2-3 cuill&#232;res &#224; soupe de sirop d'&#233;rable (ou plus au go&#251;t)",
+        "1 scoop de prot&#233;ine vanille (facultatif)"
+      ]
+    },
+    "preparation": [
+      "Dans un m&#233;langeur, broyer les carottes (ou r&#226;per &#224; la main).",
+      "Ajouter le reste des ingr&#233;dients humides et m&#233;langer jusqu'&#224; texture homog&#232;ne.",
+      "Dans un autre bol, m&#233;langer les ingr&#233;dients secs.",
+      "Ajouter les ingr&#233;dients humides aux secs et bien m&#233;langer.",
+      "Ajouter les noix hach&#233;es et d&#233;poser dans un moule &#224; pain.",
+      "Cuire au four &#224; 350 degr&#233;s de 45 &#224; 55 minutes ou jusqu'&#224; ce qu'un cure-dent en ressorte propre.",
+      "Pr&#233;parer le cr&#233;mage en m&#233;langeant tous les ingr&#233;dients et &#233;taler sur le pain refroidi."
+    ],
+    "source": "https://www.instagram.com/catherine.hamel_/",
+    "image_url": "images/recipe_47.jpg"
+  },
+  {
+    "id": "builtin-48",
+    "nom": "Beignets aux Pommes Sans Sucre",
+    "portions": "",
+    "category": "Collations",
+    "temps": "25 min",
+    "ingredients": {
+      "Principal": [
+        "2 petites pommes coup&#233;es finement (environ 70g)",
+        "1 gros oeuf",
+        "1 c. &#224; soupe d'huile de coco fondue",
+        "1 c. &#224; th&#233; de cannelle",
+        "Pinc&#233;e de poudre &#224; p&#226;te",
+        "&#188; tasse de flocons d'avoine (environ 25g)",
+        "&#188; tasse de farine de riz (environ 25g)"
+      ],
+      "Garniture optionnelle": [
+        "Sirop d'&#233;rable",
+        "Sucre glac&#233;",
+        "Beurre de coco ou beurre de monkfruit"
+      ]
+    },
+    "preparation": [
+      "Pr&#233;chauffer le four &#224; 190&#176;C / 380&#176;F.",
+      "Dans un bol, casser l'oeuf et ajouter l'huile de coco fondue. Fouetter.",
+      "Couper les pommes finement et les ajouter au bol.",
+      "Ajouter la cannelle, les flocons d'avoine, la farine et la poudre &#224; p&#226;te. M&#233;langer.",
+      "Placer sur une plaque &#224; cuisson avec du papier parchemin en formant des petits tas.",
+      "Cuire 14-17 minutes ou jusqu'&#224; dor&#233;."
+    ],
+    "source": "https://www.instagram.com/yourwellnessgirly/",
+    "image_url": "images/recipe_48.jpg"
+  },
+  {
+    "id": "builtin-49",
+    "nom": "Pain Pita aux &#201;pinards",
+    "portions": "Pour 2 Portions",
+    "category": "Autres",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "1 Tasse d&#8217;&#201;pinards",
+        "2 Oeufs"
+      ]
+    },
+    "preparation": [
+      "Blender les deux ingr&#233;dients",
+      "Faire cuire sur la po&#234;le"
+    ],
+    "source": "https://www.instagram.com/reel/C2csYUKOFFt/?igsh=ZXYwb2E4MzBwbXpl",
+    "image_url": "images/recipe_49.jpg"
+  },
+  {
+    "id": "builtin-50",
+    "nom": "Smoothie",
+    "portions": "",
+    "category": "Autres",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "Poudre de Prot&#233;ine",
+        "&#201;pinard",
+        "Fruit",
+        "Chou-Fleur",
+        "Greens",
+        "Collag&#232;ne",
+        "Lait d&#8217;amande"
+      ]
+    },
+    "preparation": [],
+    "source": "https://www.instagram.com/reel/C3TKNsIPy_F/?igsh=MzJxOWoxZWw5bDNw",
+    "image_url": "images/recipe_50.jpg"
+  },
+  {
+    "id": "builtin-51",
+    "nom": "Marinade Sucr&#233;/&#201;pic&#233;",
+    "portions": "",
+    "category": "Autres",
+    "temps": "5 min",
+    "ingredients": {
+      "Principal": [
+        "Sauce Soya",
+        "Sauce Tha&#239;",
+        "Ail (Petit pot Couvercle vert)",
+        "Miel",
+        "Sriracha"
+      ]
+    },
+    "preparation": [
+      "M&#233;langer tout ensemble",
+      "Ajouter oignons  verts et &#233;pices Plein Go&#251;t sur le poulet ou saumon"
+    ],
+    "source": "https://www.instagram.com/reel/CUajzpHlEWm/?igsh=Yzdld3UxbzRsZnJh",
+    "image_url": "images/recipe_51.jpg"
+  }
+];
+
+</script>
+  <script>
+    // ==========================================
+    // STATE
+    // ==========================================
+    let allRecipes = [];
+    let activeFilter = 'all';
+    let uploadedFiles = [];
+    let parsedRecipe = null;
+    let foodPhotoBase64 = null;
+
+    // ==========================================
+    // LOAD RECIPES
+    // ==========================================
+    function loadRecipes() {
+      loadFavorites();
+
+      // Built-in recipes
+      allRecipes = [...(typeof BUILTIN_RECIPES !== 'undefined' ? BUILTIN_RECIPES : [])];
+
+      // Filter deleted builtin recipes
+      let deleted = [];
+      try { deleted = JSON.parse(localStorage.getItem('alexanne_deleted') || '[]'); } catch(e) {}
+      allRecipes = allRecipes.filter(r => !deleted.includes(String(r.id)));
+
+      // Apply overrides for edited builtin recipes
+      try {
+        const overrides = JSON.parse(localStorage.getItem('alexanne_overrides') || '{}');
+        allRecipes = allRecipes.map(r => overrides[r.id] ? { ...r, ...overrides[r.id] } : r);
+      } catch(e) {}
+
+      // Load locally saved recipes (added via IA)
+      try {
+        const saved = localStorage.getItem('alexanne_extra_recipes');
+        if (saved) {
+          const extras = JSON.parse(saved);
+          allRecipes = [...allRecipes, ...extras];
+        }
+      } catch(e) {}
+
+      renderRecipes();
+      renderFilters();
+      renderSidebar();
+      document.getElementById('recipeCount').textContent = allRecipes.length + ' recettes';
+
+      // Restore API key if saved
+      const savedKey = localStorage.getItem('alexanne_api_key');
+      if (savedKey) document.getElementById('apiKeyInput').value = savedKey;
+    }
+
+    // ==========================================
+    // RENDER
+    // ==========================================
+    function renderRecipes() {
+      const grid = document.getElementById('recipeGrid');
+      const modals = document.getElementById('modalsContainer');
+      let cardsHtml = '';
+      let modalsHtml = '';
+
+      const recipesToRender = getSortedRecipes();
+      recipesToRender.forEach((r, i) => {
+        const rid = 'recipe-' + r.id;
+        const imgStyle = r.image_url
+          ? `background-image: url('${r.image_url}')`
+          : `background: linear-gradient(135deg, #F5C4BA 0%, #E8836D 100%)`;
+        const placeholder = r.image_url ? '' : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:3rem;"></div>';
+
+        const isFav = favorites.has(String(r.id));
+        cardsHtml += `
+          <div class="recipe-card" data-category="${esc(r.category)}" data-id="${esc(String(r.id))}" data-ingredients="${esc(JSON.stringify(r.ingredients))}" onclick="openRecipe('${rid}')" style="animation-delay: ${(i % 12) * 0.05}s">
+            <div class="card-image" style="${imgStyle}">${placeholder}
+              <span class="card-category">${esc(r.category)}</span>
+              ${isFav ? '<span class="card-fav-badge">*</span>' : ''}
+            </div>
+            <div class="card-content">
+              <h3>${esc(r.nom)}</h3>
+              <div class="card-meta">
+                ${r.portions ? '<span class="card-portions">' + esc(r.portions) + '</span>' : ''}
+                ${r.temps ? '<span class="card-time"> ' + esc(r.temps) + '</span>' : ''}
+              </div>
+            </div>
+          </div>`;
+
+        // Ingredients
+        let ingHtml = '';
+        const ingredients = typeof r.ingredients === 'string' ? JSON.parse(r.ingredients) : r.ingredients;
+        for (const [section, items] of Object.entries(ingredients || {})) {
+          if (section !== 'Principal') ingHtml += `<li class="ing-section">${esc(section)}</li>`;
+          (items || []).forEach(item => {
+            ingHtml += `<li><span class="bullet">.</span> ${esc(item)}</li>`;
+          });
+        }
+
+        // Steps
+        const prep = typeof r.preparation === 'string' ? JSON.parse(r.preparation) : r.preparation;
+        let stepsHtml = '';
+        (prep || []).forEach((step, si) => {
+          stepsHtml += `<li><span class="step-num">${si+1}.</span> ${esc(step)}</li>`;
+        });
+
+        const sourceHtml = r.source
+          ? `<div class="modal-source"><a href="${esc(r.source)}" target="_blank">Voir la source -></a></div>`
+          : '';
+
+        const modalImg = r.image_url
+          ? `<div class="modal-image" style="background-image: url('${r.image_url}')"></div>`
+          : `<div class="modal-image" style="background: linear-gradient(135deg, #F5C4BA 0%, #E8836D 100%); display:flex;align-items:center;justify-content:center;font-size:4rem;"></div>`;
+
+        const isFavModal = favorites.has(String(r.id));
+        modalsHtml += `
+          <div id="${rid}" class="modal">
+            <div class="modal-content">
+              <button class="modal-close" onclick="closeRecipe()">&times;</button>
+              <button class="fav-btn" onclick="toggleFav('${r.id}'); event.stopPropagation();" title="Favori">${isFavModal ? '*' : '*'}</button>
+              <div class="modal-header">
+                ${modalImg}
+                <div class="modal-title-area">
+                  <p class="modal-label">RECETTE</p>
+                  <h2>${esc(r.nom)}</h2>
+                  ${r.portions ? '<p class="modal-portions">' + esc(r.portions) + '</p>' : ''}
+                  ${r.temps ? '<p class="modal-portions"> ' + esc(r.temps) + '</p>' : ''}
+                  <span class="modal-cat-badge">${esc(r.category)}</span>
+                </div>
+              </div>
+              <div class="modal-body">
+                <div class="modal-section"><h3>Ingr&#233;dients</h3><ul class="ingredients-list">${ingHtml}</ul></div>
+                <div class="modal-section"><h3>Pr&#233;paration</h3><ol class="steps-list">${stepsHtml}</ol></div>
+                ${sourceHtml}
+                ${r.macros ? `<div class="macros-bar">
+                  ${r.macros.cal ? '<span class="macro-badge macro-cal"> ' + esc(r.macros.cal) + ' cal</span>' : ''}
+                  ${r.macros.prot ? '<span class="macro-badge macro-prot"> ' + esc(r.macros.prot) + 'g prot</span>' : ''}
+                  ${r.macros.carb ? '<span class="macro-badge macro-carb"> ' + esc(r.macros.carb) + 'g carb</span>' : ''}
+                  ${r.macros.fat ? '<span class="macro-badge macro-fat"> ' + esc(r.macros.fat) + 'g lip</span>' : ''}
+                </div>` : ''}
+                <div class="recipe-notes-section">
+                  <h4> Mes notes <span class="notes-saved-badge" id="notesBadge-${r.id}">OK Sauvegard&#233;</span></h4>
+                  <textarea class="recipe-notes-textarea" id="notes-${r.id}" placeholder="Ajoute tes trucs perso ici... ex: plus de sriracha, parfait pour meal prep..." oninput="saveNote('${r.id}')">${esc(getNoteFor(r.id))}</textarea>
+                </div>
+                <div class="btn-row" style="margin-top:16px">
+                  <button class="btn-secondary" onclick="openGroceryModal('${r.id}'); closeRecipe();"> &#201;picerie</button>
+                </div>
+                <div class="btn-row" style="margin-top:8px">
+                  <button class="btn-secondary" onclick="openShareModal('${r.id}'); closeRecipe();"> Partager</button>
+                  <button class="btn-secondary" onclick="openEditModal('${r.id}'); closeRecipe();"> Modifier</button>
+                  <button class="btn-danger" style="flex:1;padding:12px;border-radius:10px;font-size:0.95rem" onclick="openDeleteModal('${r.id}', '${esc(r.nom)}'); closeRecipe();"> Supprimer</button>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      });
+
+      cardsHtml += '<div id="noResults" class="no-results">Aucune recette trouv&#233;e </div>';
+      grid.innerHTML = cardsHtml;
+      modals.innerHTML = modalsHtml;
+
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeRecipe(); });
+      });
+    }
+
+    function renderFilters() {
+      const counts = {};
+      allRecipes.forEach(r => { counts[r.category] = (counts[r.category] || 0) + 1; });
+      const categories = ['Repas', 'D&#233;jeuner', 'Collations', 'Autres'];
+
+      let html = `<button class="filter-btn ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">Toutes</button>`;
+      html += `<button class="filter-btn ${activeFilter === 'favoris' ? 'active' : ''}" data-filter="favoris">* Favoris <span class="count">(${favorites.size})</span></button>`;
+      categories.forEach(cat => {
+        const count = counts[cat] || 0;
+        html += `<button class="filter-btn ${activeFilter === cat ? 'active' : ''}" data-filter="${cat}">${cat} <span class="count">(${count})</span></button>`;
+      });
+
+      document.getElementById('filterBar').innerHTML = html;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeFilter = btn.dataset.filter;
+          filterRecipes();
+        });
+      });
+    }
+
+    // ==========================================
+    // FILTER & SEARCH
+    // ==========================================
+    function filterRecipes() {
+      const search = document.getElementById('searchBar').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.recipe-card');
+      let visible = 0;
+      cards.forEach(card => {
+        const cat = card.dataset.category;
+        const id = card.dataset.id;
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        let ingText = '';
+        try { ingText = JSON.stringify(JSON.parse(card.dataset.ingredients)).toLowerCase(); } catch(e) {}
+        const matchCat = activeFilter === 'all' || cat === activeFilter || (activeFilter === 'favoris' && favorites.has(id));
+        const matchSearch = !search || name.includes(search) || ingText.includes(search);
+        if (matchCat && matchSearch) { card.style.display = ''; visible++; }
+        else { card.style.display = 'none'; }
+      });
+      document.getElementById('noResults').classList.toggle('visible', visible === 0);
+    }
+
+    // ==========================================
+    // RECIPE MODAL
+    // ==========================================
+    function openRecipe(id) {
+      document.getElementById(id).classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeRecipe() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.remove('open'));
+      document.body.style.overflow = '';
+    }
+
+    // ==========================================
+    // ADD RECIPE MODAL
+    // ==========================================
+    function openAddModal() {
+      document.getElementById('addModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      goToStep(1);
+      // Restore API key
+      const savedKey = localStorage.getItem('alexanne_api_key');
+      if (savedKey) document.getElementById('apiKeyInput').value = savedKey;
+    }
+    function closeAddModal() {
+      document.getElementById('addModal').classList.remove('open');
+      document.body.style.overflow = '';
+      resetAddForm();
+    }
+    function goToStep(n) {
+      document.getElementById('addStep1').style.display = n === 1 ? '' : 'none';
+      document.getElementById('addStep2').style.display = n === 2 ? '' : 'none';
+      document.getElementById('addStep3').style.display = n === 3 ? '' : 'none';
+    }
+    function resetAddForm() {
+      uploadedFiles = [];
+      parsedRecipe = null;
+      foodPhotoBase64 = null;
+      document.getElementById('uploadPreviews').innerHTML = '';
+      document.getElementById('analyzeBtn').disabled = true;
+      document.getElementById('addMessage').innerHTML = '';
+      document.getElementById('addMessage1').innerHTML = '';
+      document.getElementById('fileInput').value = '';
+    }
+
+    // File upload handling
+    const fileInput = document.getElementById('fileInput');
+    const uploadZone = document.getElementById('uploadZone');
+
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault(); uploadZone.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+    function handleFiles(files) {
+      const previews = document.getElementById('uploadPreviews');
+      Array.from(files).forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+        if (uploadedFiles.length >= 5) return;
+        uploadedFiles.push(file);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          previews.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+      document.getElementById('analyzeBtn').disabled = uploadedFiles.length === 0;
+    }
+
+    // ==========================================
+    // IMAGE COMPRESSION (fix bug 413)
+    // ==========================================
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const maxSize = 800;
+            let w = img.width, h = img.height;
+            if (w > maxSize || h > maxSize) {
+              if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+              else { w = Math.round(w * maxSize / h); h = maxSize; }
+            }
+            canvas.width = w;
+            canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+            resolve(dataUrl.split(',')[1]);
+          };
+          img.onerror = reject;
+          img.src = reader.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ==========================================
+    // AI ANALYSIS &mdash; appel direct &#224; l'API Anthropic
+    // ==========================================
+    async function analyzeImages() {
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey || !apiKey.startsWith('sk-')) {
+        document.getElementById('addMessage1').innerHTML =
+          '<div class="error-msg">Entre ta cl&#233; API Anthropic pour continuer (commence par sk-ant-...).</div>';
+        return;
+      }
+      // Save key locally
+      localStorage.setItem('alexanne_api_key', apiKey);
+
+      goToStep(2);
+
+      try {
+        const imageContents = [];
+        let largestSize = 0;
+
+        for (const file of uploadedFiles) {
+          const base64 = await fileToBase64(file);
+          imageContents.push({
+            type: 'image',
+            source: { type: 'base64', media_type: 'image/jpeg', data: base64 }
+          });
+          if (file.size > largestSize) {
+            largestSize = file.size;
+            foodPhotoBase64 = base64;
+          }
+        }
+
+        imageContents.push({
+          type: 'text',
+          text: `Analyse ces images de recette et retourne un JSON UNIQUEMENT (pas de markdown, pas de texte autour) avec cette structure exacte:
+{
+  "nom": "Nom de la recette",
+  "category": "Repas" | "D&#233;jeuner" | "Collations" | "Autres",
+  "portions": "Pour X portions (ou vide si pas mentionn&#233;)",
+  "temps": "Temps total de pr&#233;paration (ex: 20 min, 1h, vide si pas mentionn&#233;)",
+  "ingredients": {
+    "Principal": ["ingr&#233;dient 1", "ingr&#233;dient 2"],
+    "Nom Section Optionnelle": ["ingr&#233;dient A"]
+  },
+  "preparation": ["&#201;tape 1", "&#201;tape 2"],
+  "source": ""
+}
+IMPORTANT: R&#233;dige TOUT en fran&#231;ais &mdash; le nom de la recette, les ingr&#233;dients, les &#233;tapes de pr&#233;paration et les noms de sections. Si la recette source est en anglais, traduis tout en fran&#231;ais.
+Retourne SEULEMENT le JSON, rien d'autre.`
+        });
+
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true'
+          },
+          body: JSON.stringify({
+            model: 'claude-opus-4-5',
+            max_tokens: 2000,
+            messages: [{ role: 'user', content: imageContents }]
+          })
+        });
+
+        if (!response.ok) {
+          const err = await response.json();
+          throw new Error(err.error?.message || 'Erreur API: ' + response.status);
+        }
+
+        const data = await response.json();
+        const text = data.content[0].text.trim();
+
+        // Strip markdown fences if present
+        const clean = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
+        parsedRecipe = JSON.parse(clean);
+
+        populatePreview(parsedRecipe);
+        goToStep(3);
+
+      } catch (err) {
+        console.error('AI error:', err);
+        goToStep(1);
+        document.getElementById('addMessage1').innerHTML =
+          `<div class="error-msg">Erreur: ${esc(err.message)}</div>`;
+      }
+    }
+
+    function populatePreview(recipe) {
+      document.getElementById('prevNom').value = recipe.nom || '';
+      document.getElementById('prevCategory').value = recipe.category || 'Repas';
+      document.getElementById('prevPortions').value = recipe.portions || '';
+      document.getElementById('prevTemps').value = recipe.temps || '';
+      document.getElementById('prevSource').value = recipe.source || '';
+
+      let ingLines = [];
+      for (const [section, items] of Object.entries(recipe.ingredients || {})) {
+        if (section !== 'Principal') ingLines.push('## ' + section);
+        (items || []).forEach(item => ingLines.push(item));
+      }
+      document.getElementById('prevIngredients').value = ingLines.join('\n');
+      document.getElementById('prevPreparation').value = (recipe.preparation || []).join('\n');
+    }
+
+    // ==========================================
+    // SAVE RECIPE &mdash; sauvegarde locale (localStorage)
+    // ==========================================
+    function saveRecipe() {
+      const saveBtn = document.getElementById('saveBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Sauvegarde...';
+
+      try {
+        const ingText = document.getElementById('prevIngredients').value;
+        const ingredients = {};
+        let currentSection = 'Principal';
+        ingText.split('\n').forEach(line => {
+          line = line.trim();
+          if (!line) return;
+          if (line.startsWith('## ')) {
+            currentSection = line.replace('## ', '');
+            return;
+          }
+          if (!ingredients[currentSection]) ingredients[currentSection] = [];
+          ingredients[currentSection].push(line);
+        });
+
+        const preparation = document.getElementById('prevPreparation').value
+          .split('\n').map(s => s.trim()).filter(s => s);
+
+        const newRecipe = {
+          id: 'local-' + Date.now(),
+          nom: document.getElementById('prevNom').value,
+          category: document.getElementById('prevCategory').value,
+          portions: document.getElementById('prevPortions').value,
+          temps: document.getElementById('prevTemps').value,
+          source: document.getElementById('prevSource').value,
+          ingredients,
+          preparation,
+          image_url: foodPhotoBase64 ? 'data:image/jpeg;base64,' + foodPhotoBase64 : null,
+        };
+
+        // Save to localStorage
+        let extras = [];
+        try {
+          const saved = localStorage.getItem('alexanne_extra_recipes');
+          if (saved) extras = JSON.parse(saved);
+        } catch(e) {}
+        extras.push(newRecipe);
+        localStorage.setItem('alexanne_extra_recipes', JSON.stringify(extras));
+
+        closeAddModal();
+        loadRecipes();
+
+      } catch (err) {
+        document.getElementById('addMessage').innerHTML =
+          `<div class="error-msg">Erreur: ${esc(err.message)}</div>`;
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Sauvegarder';
+      }
+    }
+
+    // ==========================================
+    // EDIT RECIPE
+    // ==========================================
+    let editPhotoBase64 = null;
+    let editOriginalImageUrl = null;
+
+    function openEditModal(recipeId) {
+      const r = allRecipes.find(x => String(x.id) === String(recipeId));
+      if (!r) return;
+
+      document.getElementById('editRecipeId').value = recipeId;
+      document.getElementById('editNom').value = r.nom || '';
+      document.getElementById('editCategory').value = r.category || 'Repas';
+      document.getElementById('editPortions').value = r.portions || '';
+      document.getElementById('editTemps').value = r.temps || '';
+      document.getElementById('editMacroCal').value = r.macros?.cal || '';
+      document.getElementById('editMacroProt').value = r.macros?.prot || '';
+      document.getElementById('editMacroCarb').value = r.macros?.carb || '';
+      document.getElementById('editMacroFat').value = r.macros?.fat || '';
+      document.getElementById('editSource').value = r.source || '';
+      document.getElementById('editMessage').innerHTML = '';
+      editPhotoBase64 = null;
+      editOriginalImageUrl = r.image_url || null;
+
+      // Ingredients
+      const ingredients = typeof r.ingredients === 'string' ? JSON.parse(r.ingredients) : r.ingredients;
+      let ingLines = [];
+      for (const [section, items] of Object.entries(ingredients || {})) {
+        if (section !== 'Principal') ingLines.push('## ' + section);
+        (items || []).forEach(item => ingLines.push(item));
+      }
+      document.getElementById('editIngredients').value = ingLines.join('\n');
+
+      // Steps
+      const prep = typeof r.preparation === 'string' ? JSON.parse(r.preparation) : r.preparation;
+      document.getElementById('editPreparation').value = (prep || []).join('\n');
+
+      // Photo
+      const preview = document.getElementById('editPhotoPreview');
+      const noPhoto = document.getElementById('editNoPhoto');
+      if (r.image_url) {
+        preview.src = r.image_url;
+        preview.style.display = 'block';
+        noPhoto.style.display = 'none';
+      } else {
+        preview.style.display = 'none';
+        noPhoto.style.display = 'flex';
+      }
+
+      document.getElementById('editModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.remove('open');
+      document.body.style.overflow = '';
+      editPhotoBase64 = null;
+      editOriginalImageUrl = null;
+    }
+
+    // Handle photo change in edit modal
+    document.getElementById('editPhotoInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      fileToBase64(file).then(b64 => {
+        editPhotoBase64 = b64;
+        const preview = document.getElementById('editPhotoPreview');
+        preview.src = 'data:image/jpeg;base64,' + b64;
+        preview.style.display = 'block';
+        document.getElementById('editNoPhoto').style.display = 'none';
+      });
+    });
+
+    function saveEdit() {
+      const recipeId = document.getElementById('editRecipeId').value;
+
+      // Parse ingredients
+      const ingText = document.getElementById('editIngredients').value;
+      const ingredients = {};
+      let currentSection = 'Principal';
+      ingText.split('\n').forEach(line => {
+        line = line.trim();
+        if (!line) return;
+        if (line.startsWith('## ')) { currentSection = line.replace('## ', ''); return; }
+        if (!ingredients[currentSection]) ingredients[currentSection] = [];
+        ingredients[currentSection].push(line);
+      });
+
+      const preparation = document.getElementById('editPreparation').value
+        .split('\n').map(s => s.trim()).filter(s => s);
+
+      const imageUrl = editPhotoBase64
+        ? 'data:image/jpeg;base64,' + editPhotoBase64
+        : editOriginalImageUrl;
+
+      const macros = {
+        cal: document.getElementById('editMacroCal').value || null,
+        prot: document.getElementById('editMacroProt').value || null,
+        carb: document.getElementById('editMacroCarb').value || null,
+        fat: document.getElementById('editMacroFat').value || null,
+      };
+      const hasMacros = Object.values(macros).some(v => v);
+
+      const updated = {
+        id: recipeId,
+        nom: document.getElementById('editNom').value,
+        category: document.getElementById('editCategory').value,
+        portions: document.getElementById('editPortions').value,
+        temps: document.getElementById('editTemps').value,
+        source: document.getElementById('editSource').value,
+        macros: hasMacros ? macros : null,
+        ingredients,
+        preparation,
+        image_url: imageUrl,
+      };
+
+      // Check if it's a builtin recipe or a local one
+      const isBuiltin = String(recipeId).startsWith('builtin-');
+
+      if (isBuiltin) {
+        // Save override in localStorage
+        let overrides = {};
+        try { overrides = JSON.parse(localStorage.getItem('alexanne_overrides') || '{}'); } catch(e) {}
+        overrides[recipeId] = updated;
+        localStorage.setItem('alexanne_overrides', JSON.stringify(overrides));
+      } else {
+        // Update in extras list
+        let extras = [];
+        try { extras = JSON.parse(localStorage.getItem('alexanne_extra_recipes') || '[]'); } catch(e) {}
+        const idx = extras.findIndex(x => String(x.id) === String(recipeId));
+        if (idx >= 0) extras[idx] = updated;
+        else extras.push(updated);
+        localStorage.setItem('alexanne_extra_recipes', JSON.stringify(extras));
+      }
+
+      closeEditModal();
+      loadRecipes();
+    }
+
+    // ==========================================
+    // FAVORITES
+    // ==========================================
+    let favorites = new Set();
+
+    function loadFavorites() {
+      try {
+        const saved = localStorage.getItem('alexanne_favorites');
+        if (saved) favorites = new Set(JSON.parse(saved));
+      } catch(e) {}
+    }
+
+    function saveFavorites() {
+      localStorage.setItem('alexanne_favorites', JSON.stringify([...favorites]));
+    }
+
+    function toggleFav(recipeId) {
+      const id = String(recipeId);
+      if (favorites.has(id)) favorites.delete(id);
+      else favorites.add(id);
+      saveFavorites();
+      renderRecipes();
+      renderFilters();
+      renderSidebar();
+    }
+
+    // ==========================================
+    // RANDOM RECIPE
+    // ==========================================
+    function openRandomRecipe() {
+      const visible = [...document.querySelectorAll('.recipe-card')]
+        .filter(c => c.style.display !== 'none');
+      if (!visible.length) return;
+      const card = visible[Math.floor(Math.random() * visible.length)];
+      card.click();
+    }
+
+    // ==========================================
+    // GROCERY LIST
+    // ==========================================
+    function openGroceryModal(recipeId) {
+      const r = allRecipes.find(x => String(x.id) === String(recipeId));
+      if (!r) return;
+      groceryRecipeData = r;
+      currentMultiplier = 1;
+      document.getElementById('groceryRecipeName').textContent = r.nom;
+      document.getElementById('multValue').textContent = '1&#215;';
+      document.getElementById('multPortions').textContent = r.portions ? 'Base : ' + r.portions : '';
+      renderGroceryItems();
+      document.getElementById('groceryModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeGroceryModal() {
+      document.getElementById('groceryModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function copyGroceryList() {
+      const items = [...document.querySelectorAll('#groceryList li:not(.grocery-section-title)')]
+        .filter(li => !li.classList.contains('checked'))
+        .map(li => '. ' + li.querySelector('span:last-child').textContent);
+      const recipeName = document.getElementById('groceryRecipeName').textContent;
+      const text = `Liste d'&#233;picerie &mdash; ${recipeName}\n\n${items.join('\n')}`;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.grocery-copy-btn');
+        btn.textContent = 'OK Copi&#233;!';
+        setTimeout(() => btn.textContent = ' Copier la liste', 2000);
+      });
+    }
+
+    // ==========================================
+    // DELETE RECIPE
+    // ==========================================
+    let recipeToDelete = null;
+
+    function openDeleteModal(recipeId, recipeName) {
+      recipeToDelete = recipeId;
+      document.getElementById('deleteRecipeName').textContent = `"${recipeName}" sera supprim&#233;e d&#233;finitivement.`;
+      document.getElementById('deleteModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.remove('open');
+      document.body.style.overflow = '';
+      recipeToDelete = null;
+    }
+
+    function confirmDelete() {
+      if (!recipeToDelete) return;
+      const id = String(recipeToDelete);
+      const isBuiltin = id.startsWith('builtin-');
+
+      if (isBuiltin) {
+        // Add to deleted list
+        let deleted = [];
+        try { deleted = JSON.parse(localStorage.getItem('alexanne_deleted') || '[]'); } catch(e) {}
+        if (!deleted.includes(id)) deleted.push(id);
+        localStorage.setItem('alexanne_deleted', JSON.stringify(deleted));
+      } else {
+        let extras = [];
+        try { extras = JSON.parse(localStorage.getItem('alexanne_extra_recipes') || '[]'); } catch(e) {}
+        extras = extras.filter(r => String(r.id) !== id);
+        localStorage.setItem('alexanne_extra_recipes', JSON.stringify(extras));
+      }
+
+      favorites.delete(id);
+      saveFavorites();
+      closeDeleteModal();
+      loadRecipes();
+    }
+
+    // ==========================================
+    // NOTES PERSONNELLES
+    // ==========================================
+    function getNoteFor(recipeId) {
+      try {
+        const notes = JSON.parse(localStorage.getItem('alexanne_notes') || '{}');
+        return notes[String(recipeId)] || '';
+      } catch(e) { return ''; }
+    }
+
+    let notesTimer = {};
+    function saveNote(recipeId) {
+      clearTimeout(notesTimer[recipeId]);
+      notesTimer[recipeId] = setTimeout(() => {
+        const val = document.getElementById('notes-' + recipeId)?.value || '';
+        let notes = {};
+        try { notes = JSON.parse(localStorage.getItem('alexanne_notes') || '{}'); } catch(e) {}
+        notes[String(recipeId)] = val;
+        localStorage.setItem('alexanne_notes', JSON.stringify(notes));
+        const badge = document.getElementById('notesBadge-' + recipeId);
+        if (badge) { badge.classList.add('show'); setTimeout(() => badge.classList.remove('show'), 1500); }
+      }, 800);
+    }
+    // ==========================================
+    // SHARE RECIPE
+    // ==========================================
+    let shareRecipeData = null;
+
+    function openShareModal(recipeId) {
+      const r = allRecipes.find(x => String(x.id) === String(recipeId));
+      if (!r) return;
+      shareRecipeData = r;
+      document.getElementById('shareSubtitle').textContent = r.nom;
+      document.getElementById('sharePreview').classList.remove('visible');
+      document.getElementById('shareCanvasWrap').classList.remove('visible');
+      document.getElementById('shareMsg').innerHTML = '';
+      document.getElementById('shareModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeShareModal() {
+      document.getElementById('shareModal').classList.remove('open');
+      document.body.style.overflow = '';
+      shareRecipeData = null;
+    }
+
+    function buildShareText(r) {
+      const ingredients = typeof r.ingredients === 'string' ? JSON.parse(r.ingredients) : r.ingredients;
+      const prep = typeof r.preparation === 'string' ? JSON.parse(r.preparation) : r.preparation;
+
+      let text = ` ${r.nom}\n`;
+      if (r.portions) text += ` ${r.portions}\n`;
+      if (r.temps) text += ` ${r.temps}\n`;
+      text += `\n INGR&#201;DIENTS\n`;
+      for (const [section, items] of Object.entries(ingredients || {})) {
+        if (section !== 'Principal') text += `\n${section.toUpperCase()}\n`;
+        (items || []).forEach(item => { text += `. ${item}\n`; });
+      }
+      text += `\n PR&#201;PARATION\n`;
+      (prep || []).forEach((step, i) => { text += `${i+1}. ${step}\n`; });
+      if (r.source) text += `\n Source : ${r.source}`;
+      text += `\n\n&mdash; Alexanne's Cookbook `;
+      return text;
+    }
+
+    function shareAsText() {
+      if (!shareRecipeData) return;
+      const text = buildShareText(shareRecipeData);
+      const preview = document.getElementById('sharePreview');
+      preview.textContent = text;
+      preview.classList.add('visible');
+      document.getElementById('shareCanvasWrap').classList.remove('visible');
+
+      navigator.clipboard.writeText(text).then(() => {
+        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">OK Texte copi&#233; dans le presse-papiers!</div>';
+        setTimeout(() => document.getElementById('shareMsg').innerHTML = '', 3000);
+      }).catch(() => {
+        document.getElementById('shareMsg').innerHTML = '<div class="success-msg"> S&#233;lectionne et copie le texte ci-dessus.</div>';
+      });
+    }
+
+    function shareNative() {
+      if (!shareRecipeData) return;
+      const text = buildShareText(shareRecipeData);
+      if (navigator.share) {
+        navigator.share({ title: shareRecipeData.nom, text }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(text).then(() => {
+          document.getElementById('shareMsg').innerHTML = '<div class="success-msg">OK Texte copi&#233; &mdash; partage non disponible sur ce navigateur.</div>';
+          setTimeout(() => document.getElementById('shareMsg').innerHTML = '', 3000);
+        });
+      }
+    }
+
+    function generateShareImage() {
+      if (!shareRecipeData) return;
+      const r = shareRecipeData;
+      const canvas = document.getElementById('shareCanvas');
+      const ctx = canvas.getContext('2d');
+      const W = 600, H = 800;
+      canvas.width = W; canvas.height = H;
+
+      const salmon = getComputedStyle(document.documentElement).getPropertyValue('--salmon').trim() || '#E8836D';
+      const salmonLight = getComputedStyle(document.documentElement).getPropertyValue('--salmon-light').trim() || '#F5C4BA';
+      const salmonBg = '#FDF0ED';
+
+      // Background
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, W, H);
+
+      // Top color band
+      ctx.fillStyle = salmon;
+      ctx.fillRect(0, 0, W, 180);
+
+      const drawImage = () => {
+        // Title area
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 26px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+        ctx.textAlign = 'center';
+        // Wrap title
+        const words = r.nom.split(' ');
+        let line = '', lines = [], maxW = 500;
+        words.forEach(word => {
+          const test = line + word + ' ';
+          if (ctx.measureText(test).width > maxW && line) { lines.push(line.trim()); line = word + ' '; }
+          else line = test;
+        });
+        lines.push(line.trim());
+        lines.forEach((l, i) => ctx.fillText(l, W/2, 80 + i * 34));
+
+        // Portions / temps badges
+        let badgeY = 80 + lines.length * 34 + 10;
+        ctx.font = '14px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+        let badges = [];
+        if (r.portions) badges.push(' ' + r.portions);
+        if (r.temps) badges.push(r.temps);
+        if (badges.length) {
+          ctx.fillStyle = 'rgba(255,255,255,0.25)';
+          const badgeText = badges.join('   ');
+          const bw = ctx.measureText(badgeText).width + 24;
+          ctx.roundRect(W/2 - bw/2, badgeY, bw, 26, 13);
+          ctx.fill();
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillText(badgeText, W/2, badgeY + 17);
+        }
+
+        // Photo or placeholder
+        const photoY = 180;
+        const photoH = 200;
+        if (r.image_url && !r.image_url.startsWith('images/')) {
+          const img = new Image();
+          img.onload = () => {
+            ctx.save();
+            ctx.drawImage(img, 0, photoY, W, photoH);
+            drawContent(photoY + photoH);
+          };
+          img.onerror = () => {
+            drawPlaceholder(photoY, photoH, salmon, salmonLight);
+            drawContent(photoY + photoH);
+          };
+          img.src = r.image_url;
+        } else if (r.image_url && r.image_url.startsWith('images/')) {
+          const img = new Image();
+          img.onload = () => { ctx.drawImage(img, 0, photoY, W, photoH); drawContent(photoY + photoH); };
+          img.onerror = () => { drawPlaceholder(photoY, photoH, salmon, salmonLight); drawContent(photoY + photoH); };
+          img.src = r.image_url;
+        } else {
+          drawPlaceholder(photoY, photoH, salmon, salmonLight);
+          drawContent(photoY + photoH);
+        }
+      };
+
+      function drawPlaceholder(y, h, c1, c2) {
+        const grad = ctx.createLinearGradient(0, y, W, y + h);
+        grad.addColorStop(0, c2); grad.addColorStop(1, c1);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, y, W, h);
+        ctx.font = '60px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('', W/2, y + h/2 + 20);
+      }
+
+      function drawContent(startY) {
+        const ingredients = typeof r.ingredients === 'string' ? JSON.parse(r.ingredients) : r.ingredients;
+        const prep = typeof r.preparation === 'string' ? JSON.parse(r.preparation) : r.preparation;
+        let y = startY + 24;
+        const pad = 32;
+
+        // Section helper
+        function section(title, items, isSteps) {
+          if (!items || !items.length) return;
+          ctx.fillStyle = salmon;
+          ctx.font = 'bold 15px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+          ctx.textAlign = 'left';
+          ctx.fillText(title.toUpperCase(), pad, y); y += 6;
+          ctx.fillStyle = salmon;
+          ctx.fillRect(pad, y, 40, 2); y += 14;
+
+          ctx.fillStyle = '#333333';
+          ctx.font = '13px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+          const maxItems = isSteps ? 4 : 8;
+          const shown = items.slice(0, maxItems);
+          shown.forEach((item, idx) => {
+            const prefix = isSteps ? `${idx+1}. ` : '. ';
+            const text = prefix + item;
+            // simple word wrap
+            const words = text.split(' ');
+            let line = '';
+            words.forEach(word => {
+              const test = line + word + ' ';
+              if (ctx.measureText(test).width > W - pad*2 && line) {
+                if (y < H - 60) { ctx.fillText(line.trim(), pad, y); y += 18; }
+                line = '    ' + word + ' ';
+              } else line = test;
+            });
+            if (y < H - 60) { ctx.fillText(line.trim(), pad, y); y += 18; }
+          });
+          if (items.length > maxItems) {
+            ctx.fillStyle = '#999';
+            ctx.font = 'italic 12px Arial';
+            ctx.fillText(`+ ${items.length - maxItems} autres...`, pad, y); y += 18;
+          }
+          y += 10;
+        }
+
+        // Ingredients
+        const allIng = [];
+        for (const [sec, items] of Object.entries(ingredients || {})) (items||[]).forEach(i => allIng.push(i));
+        section('Ingr&#233;dients', allIng, false);
+
+        // Steps
+        section('Pr&#233;paration', prep, true);
+
+        // Footer
+        ctx.fillStyle = salmon;
+        ctx.fillRect(0, H - 44, W, 44);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Alexanne\'s Cookbook ', W/2, H - 16);
+
+        document.getElementById('shareCanvasWrap').classList.add('visible');
+        document.getElementById('sharePreview').classList.remove('visible');
+        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">OK Image pr&#234;te &mdash; appuie longuement dessus sur mobile pour la sauvegarder.</div>';
+      }
+
+      drawImage();
+    }
+
+    function downloadShareImage() {
+      const canvas = document.getElementById('shareCanvas');
+      if (!canvas.width || !shareRecipeData) {
+        generateShareImage();
+        setTimeout(() => _doDownload(), 1500);
+        return;
+      }
+      _doDownload();
+    }
+
+    function _doDownload() {
+      const canvas = document.getElementById('shareCanvas');
+      const r = shareRecipeData;
+      const link = document.createElement('a');
+      link.download = (r ? r.nom.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'recette') + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // ==========================================
+    // SORT
+    // ==========================================
+    let currentSort = 'temps-asc';
+
+    function parseTempsMinutes(temps) {
+      if (!temps) return 9999;
+      var h = temps.match(/(\d+)\s*h/i);
+      var m = temps.match(/(\d+)\s*min/i);
+      return (h ? parseInt(h[1]) * 60 : 0) + (m ? parseInt(m[1]) : 0);
+    }
+
+    function sortAndRender() {
+      currentSort = document.getElementById('sortSelect').value;
+      renderRecipes();
+      renderSidebar();
+    }
+
+    function getSortedRecipes() {
+      var sorted = allRecipes.map(function(r, idx) { return Object.assign({}, r, {_idx: idx}); });
+      if (currentSort === 'temps-asc') {
+        sorted.sort(function(a, b) { return parseTempsMinutes(a.temps) - parseTempsMinutes(b.temps); });
+      } else if (currentSort === 'temps-desc') {
+        sorted.sort(function(a, b) { return parseTempsMinutes(b.temps) - parseTempsMinutes(a.temps); });
+      } else if (currentSort === 'recent') {
+        sorted.sort(function(a, b) {
+          var idA = String(a.id), idB = String(b.id);
+          var tsA = idA.startsWith('local-') ? parseInt(idA.replace('local-','')) : 0;
+          var tsB = idB.startsWith('local-') ? parseInt(idB.replace('local-','')) : 0;
+          if (tsA > 0 && tsB === 0) return -1;
+          if (tsA === 0 && tsB > 0) return 1;
+          if (tsA > 0 && tsB > 0) return tsB - tsA;
+          return b._idx - a._idx;
+        });
+      } else {
+        sorted.sort(function(a, b) { return a._idx - b._idx; });
+      }
+      return sorted.map(function(r) { var o = Object.assign({}, r); delete o._idx; return o; });
+    }
+
+    // ==========================================
+    // SIDEBAR
+    // ==========================================
+    var sidebarOpen = true;
+    var sidebarCatOpen = {'Repas': true, 'Dejeuner': true, 'Collations': true, 'Autres': true};
+
+    function toggleSidebar() {
+      sidebarOpen = !sidebarOpen;
+      var sidebar = document.getElementById('sidebar');
+      var openBtn = document.getElementById('sidebarOpenBtn');
+      sidebar.classList.toggle('collapsed', !sidebarOpen);
+      if (openBtn) openBtn.classList.toggle('visible', !sidebarOpen);
+    }
+
+    function openMobileSidebar() {
+      document.getElementById('sidebar').classList.add('mobile-open');
+      document.getElementById('sidebarOverlay').classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileSidebar() {
+      var s = document.getElementById('sidebar');
+      var o = document.getElementById('sidebarOverlay');
+      if (s) s.classList.remove('mobile-open');
+      if (o) o.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+
+    function renderSidebar() {
+      var searchEl = document.getElementById('sidebarSearch');
+      var query = searchEl ? searchEl.value.toLowerCase().trim() : '';
+      var categories = ['Repas', 'Dejeuner', 'Collations', 'Autres'];
+      var container = document.getElementById('sidebarContent');
+      if (!container) return;
+      var html = '';
+      categories.forEach(function(cat) {
+        var items = allRecipes.filter(function(r) { return r.category === cat; });
+        if (query) items = items.filter(function(r) { return r.nom.toLowerCase().includes(query); });
+        if (!items.length) return;
+        var isOpen = query ? true : (sidebarCatOpen[cat] !== false);
+        var maxH = isOpen ? (items.length * 44 + 'px') : '0';
+        var arrowCls = 'sidebar-cat-arrow' + (isOpen ? ' open' : '');
+        var itemsHtml = '';
+        items.forEach(function(r) {
+          var favDot = favorites.has(String(r.id)) ? '<span class="fav-dot">*</span>' : '';
+          var timeSpan = r.temps ? '<span style="font-size:0.72rem;color:var(--salmon);margin-left:auto;white-space:nowrap">' + esc(r.temps) + '</span>' : '';
+          var rid = String(r.id);
+          itemsHtml += '<div class="sidebar-item" id="sidebarItem-' + rid + '" onclick="openRecipeFromSidebar(\'' + rid + '\')">' + favDot + '<span>' + esc(r.nom) + '</span>' + timeSpan + '</div>';
+        });
+        html += '<div class="sidebar-category">'
+          + '<div class="sidebar-cat-header" onclick="toggleSidebarCat(\'' + cat + '\')">'
+          + '<span class="sidebar-cat-name">' + cat + '</span>'
+          + '<span style="display:flex;align-items:center;gap:6px">'
+          + '<span class="sidebar-cat-count">' + items.length + '</span>'
+          + '<span class="' + arrowCls + '" id="arrow-' + cat + '">></span>'
+          + '</span></div>'
+          + '<div class="sidebar-items" id="sidebarCat-' + cat + '" style="max-height:' + maxH + '">' + itemsHtml + '</div>'
+          + '</div>';
+      });
+      container.innerHTML = html || '<p style="padding:16px;color:var(--gray);font-size:0.85rem;">Aucun resultat</p>';
+    }
+
+    function toggleSidebarCat(cat) {
+      sidebarCatOpen[cat] = !sidebarCatOpen[cat];
+      var el = document.getElementById('sidebarCat-' + cat);
+      var arrow = document.getElementById('arrow-' + cat);
+      if (!el) return;
+      var items = allRecipes.filter(function(r) { return r.category === cat; });
+      el.style.maxHeight = sidebarCatOpen[cat] ? (items.length * 44 + 'px') : '0';
+      if (arrow) arrow.classList.toggle('open', sidebarCatOpen[cat]);
+    }
+
+    function openRecipeFromSidebar(recipeId) {
+      document.querySelectorAll('.sidebar-item').forEach(function(el) { el.classList.remove('active'); });
+      var item = document.getElementById('sidebarItem-' + recipeId);
+      if (item) item.classList.add('active');
+      closeMobileSidebar();
+      openRecipe('recipe-' + recipeId);
+    }
+
+    // ==========================================
+    // GROCERY MULTIPLIER
+    // ==========================================
+    var currentMultiplier = 1;
+    var groceryRecipeData = null;
+
+    function changeMultiplier(delta) {
+      currentMultiplier = Math.max(1, Math.min(10, currentMultiplier + delta));
+      document.getElementById('multValue').textContent = currentMultiplier + 'X';
+      if (groceryRecipeData) {
+        var base = groceryRecipeData.portions || '';
+        document.getElementById('multPortions').textContent = base ? 'Base : ' + base : '';
+        renderGroceryItems();
+      }
+    }
+
+    function renderGroceryItems() {
+      var r = groceryRecipeData;
+      if (!r) return;
+      var list = document.getElementById('groceryList');
+      list.innerHTML = '';
+      var ingredients = typeof r.ingredients === 'string' ? JSON.parse(r.ingredients) : r.ingredients;
+      for (var section in ingredients) {
+        if (!ingredients.hasOwnProperty(section)) continue;
+        if (section !== 'Principal') {
+          var sep = document.createElement('li');
+          sep.className = 'grocery-section-title';
+          sep.textContent = section.toUpperCase();
+          sep.style.cssText = 'cursor:default;border:none;padding-bottom:2px;';
+          list.appendChild(sep);
+        }
+        var items = ingredients[section] || [];
+        items.forEach(function(item) {
+          var li = document.createElement('li');
+          var multiplied = currentMultiplier > 1 ? multiplyIngredient(item, currentMultiplier) : item;
+          li.innerHTML = '<span class="check-box"></span><span>' + esc(multiplied) + '</span>';
+          li.addEventListener('click', function() {
+            li.classList.toggle('checked');
+            li.querySelector('.check-box').textContent = li.classList.contains('checked') ? 'OK' : '';
+          });
+          list.appendChild(li);
+        });
+      }
+    }
+
+    function multiplyIngredient(item, mult) {
+      return item.replace(/(\d+(?:[.,]\d+)?)/g, function(match) {
+        var num = parseFloat(match.replace(',', '.'));
+        var result = num * mult;
+        var rounded = Number.isInteger(result) ? result : Math.round(result * 4) / 4;
+        return String(rounded).replace('.', ',');
+      });
+    }
+
+    // ==========================================
+    // UTILS
+    // ==========================================
+    function esc(str) {
+      if (!str) return '';
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    // Keyboard
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { closeRecipe(); closeAddModal(); closeEditModal(); closeGroceryModal(); closeDeleteModal(); closeShareModal(); }
+    });
+    document.getElementById('shareModal').addEventListener('click', (e) => {
+      if (e.target.id === 'shareModal') closeShareModal();
+    });
+    document.getElementById('addModal').addEventListener('click', (e) => {
+      if (e.target.id === 'addModal') closeAddModal();
+    });
+    document.getElementById('editModal').addEventListener('click', (e) => {
+      if (e.target.id === 'editModal') closeEditModal();
+    });
+    document.getElementById('groceryModal').addEventListener('click', (e) => {
+      if (e.target.id === 'groceryModal') closeGroceryModal();
+    });
+    document.getElementById('deleteModal').addEventListener('click', (e) => {
+      if (e.target.id === 'deleteModal') closeDeleteModal();
+    });
+
+    // ==========================================
+    // INIT
+    // ==========================================
+    loadRecipes();
+  </script>
+</body>
+</html>
