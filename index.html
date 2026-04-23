@@ -758,24 +758,24 @@
 
   <div class="filters-bar" id="filtersBar">
     <select class="sort-select" id="sortSelect" onchange="sortAndRender()">
-      <option value="temps-asc">â± Plus rapide d'abord</option>
-      <option value="temps-desc">â± Plus long d'abord</option>
-      <option value="recent">â¨ Ajout récent</option>
+      <option value="temps-asc"> Plus rapide d'abord</option>
+      <option value="temps-desc"> Plus long d'abord</option>
+      <option value="recent"> Ajout récent</option>
     </select>
     <div class="filters" id="filterBar"></div>
   </div>
 
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
-  <button class="mobile-index-btn" onclick="openMobileSidebar()">â° Index des recettes</button>
+  <button class="mobile-index-btn" onclick="openMobileSidebar()">&#9776; Index des recettes</button>
 
-  <button class="sidebar-open-btn" id="sidebarOpenBtn" onclick="toggleSidebar()">â¡ INDEX</button>
+  <button class="sidebar-open-btn" id="sidebarOpenBtn" onclick="toggleSidebar()">&#8801; INDEX</button>
 
   <div class="app-layout">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-toggle">
         <span class="sidebar-title">Index</span>
-        <button class="sidebar-collapse-btn" onclick="toggleSidebar()" title="Fermer">â</button>
+        <button class="sidebar-collapse-btn" onclick="toggleSidebar()" title="Fermer">&#10005;</button>
       </div>
       <input type="text" class="sidebar-search" id="sidebarSearch" placeholder="Filtrer..." oninput="renderSidebar()">
       <div id="sidebarContent"></div>
@@ -920,7 +920,7 @@
       <p class="grocery-recipe-name" id="groceryRecipeName"></p>
       <div class="portion-multiplier">
         <span>Portions :</span>
-        <button class="mult-btn" onclick="changeMultiplier(-1)">â</button>
+        <button class="mult-btn" onclick="changeMultiplier(-1)">-</button>
         <span class="mult-value" id="multValue">1À</span>
         <button class="mult-btn" onclick="changeMultiplier(1)">+</button>
         <span class="mult-label" id="multPortions"></span>
@@ -2674,13 +2674,13 @@ const BUILTIN_RECIPES = [
           <div class="recipe-card" data-category="${esc(r.category)}" data-id="${esc(String(r.id))}" data-ingredients="${esc(JSON.stringify(r.ingredients))}" onclick="openRecipe('${rid}')" style="animation-delay: ${(i % 12) * 0.05}s">
             <div class="card-image" style="${imgStyle}">${placeholder}
               <span class="card-category">${esc(r.category)}</span>
-              ${isFav ? '<span class="card-fav-badge">â­</span>' : ''}
+              ${isFav ? '<span class="card-fav-badge">&#9733;</span>' : ''}
             </div>
             <div class="card-content">
               <h3>${esc(r.nom)}</h3>
               <div class="card-meta">
                 ${r.portions ? '<span class="card-portions">' + esc(r.portions) + '</span>' : ''}
-                ${r.temps ? '<span class="card-time">â± ' + esc(r.temps) + '</span>' : ''}
+                ${r.temps ? '<span class="card-time"> ' + esc(r.temps) + '</span>' : ''}
               </div>
             </div>
           </div>`;
@@ -2691,7 +2691,7 @@ const BUILTIN_RECIPES = [
         for (const [section, items] of Object.entries(ingredients || {})) {
           if (section !== 'Principal') ingHtml += `<li class="ing-section">${esc(section)}</li>`;
           (items || []).forEach(item => {
-            ingHtml += `<li><span class="bullet">â</span> ${esc(item)}</li>`;
+            ingHtml += `<li><span class="bullet">&bull;</span> ${esc(item)}</li>`;
           });
         }
 
@@ -2703,7 +2703,7 @@ const BUILTIN_RECIPES = [
         });
 
         const sourceHtml = r.source
-          ? `<div class="modal-source"><a href="${esc(r.source)}" target="_blank">Voir la source â</a></div>`
+          ? `<div class="modal-source"><a href="${esc(r.source)}" target="_blank">Voir la source &#8599;</a></div>`
           : '';
 
         const modalImg = r.image_url
@@ -2715,14 +2715,14 @@ const BUILTIN_RECIPES = [
           <div id="${rid}" class="modal">
             <div class="modal-content">
               <button class="modal-close" onclick="closeRecipe()">&times;</button>
-              <button class="fav-btn" onclick="toggleFav('${r.id}'); event.stopPropagation();" title="Favori">${isFavModal ? 'â­' : 'â'}</button>
+              <button class="fav-btn" onclick="toggleFav('${r.id}'); event.stopPropagation();" title="Favori">${isFavModal ? '&#9733;' : 'â'}</button>
               <div class="modal-header">
                 ${modalImg}
                 <div class="modal-title-area">
                   <p class="modal-label">RECETTE</p>
                   <h2>${esc(r.nom)}</h2>
                   ${r.portions ? '<p class="modal-portions">' + esc(r.portions) + '</p>' : ''}
-                  ${r.temps ? '<p class="modal-portions">â± ' + esc(r.temps) + '</p>' : ''}
+                  ${r.temps ? '<p class="modal-portions"> ' + esc(r.temps) + '</p>' : ''}
                   <span class="modal-cat-badge">${esc(r.category)}</span>
                 </div>
               </div>
@@ -2737,7 +2737,7 @@ const BUILTIN_RECIPES = [
                   ${r.macros.fat ? '<span class="macro-badge macro-fat">ð« ' + esc(r.macros.fat) + 'g lip</span>' : ''}
                 </div>` : ''}
                 <div class="recipe-notes-section">
-                  <h4>ð Mes notes <span class="notes-saved-badge" id="notesBadge-${r.id}">â Sauvegardé</span></h4>
+                  <h4>ð Mes notes <span class="notes-saved-badge" id="notesBadge-${r.id}">&#10003; Sauvegardé</span></h4>
                   <textarea class="recipe-notes-textarea" id="notes-${r.id}" placeholder="Ajoute tes trucs perso ici... ex: plus de sriracha, parfait pour meal prep..." oninput="saveNote('${r.id}')">${esc(getNoteFor(r.id))}</textarea>
                 </div>
                 <div class="btn-row" style="margin-top:16px">
@@ -2768,7 +2768,7 @@ const BUILTIN_RECIPES = [
       const categories = ['Repas', 'Déjeuner', 'Collations', 'Autres'];
 
       let html = `<button class="filter-btn ${activeFilter === 'all' ? 'active' : ''}" data-filter="all">Toutes</button>`;
-      html += `<button class="filter-btn ${activeFilter === 'favoris' ? 'active' : ''}" data-filter="favoris">â­ Favoris <span class="count">(${favorites.size})</span></button>`;
+      html += `<button class="filter-btn ${activeFilter === 'favoris' ? 'active' : ''}" data-filter="favoris">&#9733; Favoris <span class="count">(${favorites.size})</span></button>`;
       categories.forEach(cat => {
         const count = counts[cat] || 0;
         html += `<button class="filter-btn ${activeFilter === cat ? 'active' : ''}" data-filter="${cat}">${cat} <span class="count">(${count})</span></button>`;
@@ -3272,12 +3272,12 @@ Retourne SEULEMENT le JSON, rien d'autre.`
     function copyGroceryList() {
       const items = [...document.querySelectorAll('#groceryList li:not(.grocery-section-title)')]
         .filter(li => !li.classList.contains('checked'))
-        .map(li => 'â¢ ' + li.querySelector('span:last-child').textContent);
+        .map(li => '&bull; ' + li.querySelector('span:last-child').textContent);
       const recipeName = document.getElementById('groceryRecipeName').textContent;
       const text = `Liste d'épicerie â ${recipeName}\n\n${items.join('\n')}`;
       navigator.clipboard.writeText(text).then(() => {
         const btn = document.querySelector('.grocery-copy-btn');
-        btn.textContent = 'â Copié!';
+        btn.textContent = '&#9989; Copié!';
         setTimeout(() => btn.textContent = 'ð Copier la liste', 2000);
       });
     }
@@ -3376,11 +3376,11 @@ Retourne SEULEMENT le JSON, rien d'autre.`
 
       let text = `ð½ï¸ ${r.nom}\n`;
       if (r.portions) text += `ð¥ ${r.portions}\n`;
-      if (r.temps) text += `â± ${r.temps}\n`;
+      if (r.temps) text += ` ${r.temps}\n`;
       text += `\nð¦ INGRÀDIENTS\n`;
       for (const [section, items] of Object.entries(ingredients || {})) {
         if (section !== 'Principal') text += `\n${section.toUpperCase()}\n`;
-        (items || []).forEach(item => { text += `â¢ ${item}\n`; });
+        (items || []).forEach(item => { text += `&bull; ${item}\n`; });
       }
       text += `\nð©âð³ PRÀPARATION\n`;
       (prep || []).forEach((step, i) => { text += `${i+1}. ${step}\n`; });
@@ -3398,7 +3398,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
       document.getElementById('shareCanvasWrap').classList.remove('visible');
 
       navigator.clipboard.writeText(text).then(() => {
-        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">â Texte copié dans le presse-papiers!</div>';
+        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">&#9989; Texte copié dans le presse-papiers!</div>';
         setTimeout(() => document.getElementById('shareMsg').innerHTML = '', 3000);
       }).catch(() => {
         document.getElementById('shareMsg').innerHTML = '<div class="success-msg">ð Sélectionne et copie le texte ci-dessus.</div>';
@@ -3412,7 +3412,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
         navigator.share({ title: shareRecipeData.nom, text }).catch(() => {});
       } else {
         navigator.clipboard.writeText(text).then(() => {
-          document.getElementById('shareMsg').innerHTML = '<div class="success-msg">â Texte copié â partage non disponible sur ce navigateur.</div>';
+          document.getElementById('shareMsg').innerHTML = '<div class="success-msg">&#9989; Texte copié â partage non disponible sur ce navigateur.</div>';
           setTimeout(() => document.getElementById('shareMsg').innerHTML = '', 3000);
         });
       }
@@ -3459,7 +3459,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
         ctx.font = '14px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
         let badges = [];
         if (r.portions) badges.push('ð¥ ' + r.portions);
-        if (r.temps) badges.push('â± ' + r.temps);
+        if (r.temps) badges.push(' ' + r.temps);
         if (badges.length) {
           ctx.fillStyle = 'rgba(255,255,255,0.25)';
           const badgeText = badges.join('   ');
@@ -3527,7 +3527,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
           const maxItems = isSteps ? 4 : 8;
           const shown = items.slice(0, maxItems);
           shown.forEach((item, idx) => {
-            const prefix = isSteps ? `${idx+1}. ` : 'â¢ ';
+            const prefix = isSteps ? `${idx+1}. ` : '&bull; ';
             const text = prefix + item;
             // simple word wrap
             const words = text.split(' ');
@@ -3567,7 +3567,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
 
         document.getElementById('shareCanvasWrap').classList.add('visible');
         document.getElementById('sharePreview').classList.remove('visible');
-        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">â Image prÀªte â appuie longuement dessus sur mobile pour la sauvegarder.</div>';
+        document.getElementById('shareMsg').innerHTML = '<div class="success-msg">&#9989; Image prÀªte â appuie longuement dessus sur mobile pour la sauvegarder.</div>';
       }
 
       drawImage();
