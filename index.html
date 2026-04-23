@@ -4312,7 +4312,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
     // ==========================================
     // SORT
     // ==========================================
-    let currentSort = 'temps-asc';
+    let currentSort = 'recent';
 
     function parseTempsMinutes(temps) {
       if (!temps) return 9999;
@@ -4353,7 +4353,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
     // SIDEBAR
     // ==========================================
     var sidebarOpen = true;
-    var sidebarCatOpen = {'Repas': true, 'Dejeuner': true, 'Collations': true, 'Autres': true};
+    var sidebarCatOpen = {'Repas': true, 'Déjeuner': true, 'Collations': true, 'Autres': true};
 
     function toggleSidebar() {
       sidebarOpen = !sidebarOpen;
@@ -4380,7 +4380,7 @@ Retourne SEULEMENT le JSON, rien d'autre.`
     function renderSidebar() {
       var searchEl = document.getElementById('sidebarSearch');
       var query = searchEl ? searchEl.value.toLowerCase().trim() : '';
-      var categories = ['Repas', 'Dejeuner', 'Collations', 'Autres'];
+      var categories = ['Repas', 'Déjeuner', 'Collations', 'Autres'];
       var container = document.getElementById('sidebarContent');
       if (!container) return;
       var html = '';
